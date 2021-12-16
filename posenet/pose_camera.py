@@ -14,18 +14,14 @@
 
 import argparse
 import collections
-from functools import partial
-import re
 import time
+from functools import partial
 
-
-import numpy as np
-from PIL import Image
 import svgwrite
-import gstreamer
 
-from pose_engine import PoseEngine
+import gstreamer
 from pose_engine import KeypointType
+from pose_engine import PoseEngine
 
 EDGES = (
     (KeypointType.NOSE, KeypointType.LEFT_EYE),
@@ -121,13 +117,13 @@ def run(inf_callback, render_callback):
     inference_size = (input_shape[2], input_shape[1])
 
     output = gstreamer.run_pipeline(partial(inf_callback, engine), partial(render_callback, engine),
-                           src_size, inference_size,
-                           mirror=args.mirror,
-                           videosrc=args.videosrc,
-                           h264=args.h264,
-                           jpeg=args.jpeg
-                           
-                           )
+                                    src_size, inference_size,
+                                    mirror=args.mirror,
+                                    videosrc=args.videosrc,
+                                    h264=args.h264,
+                                    jpeg=args.jpeg
+
+                                    )
     print(output)
 
 
