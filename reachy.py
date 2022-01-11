@@ -32,30 +32,28 @@ def sad_antennas(reachy):
 
 def main():
     global first_play
-    reachy = "reachy"
-    reachy = ReachySDK(host='localhost')
-    reachy.turn_on('head')
-    reachy.turn_on('r_arm')
-    game_launcher.main(reachy)
-    reachy.head.look_at(0.95, -0.9, -0.3, 1.0)
     camera = Thread(target=pose_camera.main, daemon=True)
     camera.start()
-    sad_antennas(reachy)
+    config.detection = 2
     while True:
         if config.detection == 1:
             happy_antennas(reachy)
         elif config.detection == 0:
             sad_antennas(reachy)
         elif config.detection == 2 and not first_play:
+            reachy = "reachy"
+            reachy = ReachySDK(host='localhost')
+            reachy.turn_on('head')
+            reachy.turn_on('r_arm')
+            reachy.head.look_at(0.95, -0.9, -0.3, 1.0)
+            sad_antennas(reachy)
             reachy.head.l_antenna.goal_position = 0.0
             reachy.head.r_antenna.goal_position = 0.0
             print("Play !")
             first_play = True
-    reachy.turn_off('head')
-    reachy.turn_off('r_arm')
-
-def play():
-    os.system("echo -e 'reachy\n' | sudo -S systemctl start tictactoe_launcher.service")
+            game_launcher.main(reachy, '/home/reachy/reachy_mobile_reachy/gamelog')
+            reachy.turn_off('head')
+            reachy.turn_off('r_arm')
 
 if __name__ == '__main__':
     main()
