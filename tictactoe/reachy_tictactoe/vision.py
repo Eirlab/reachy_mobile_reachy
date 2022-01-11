@@ -142,7 +142,7 @@ def get_board_configuration(image):
     # morphology treatment then find contours
     kernel = cv.getStructuringElement(cv.MORPH_RECT, (3, 3))
     close = cv.morphologyEx(thresh, cv.MORPH_CLOSE, kernel, iterations=2)
-    cnts = cv.findContours(close, cv.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    cnts = cv.findContours(close, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
 
     # find the largest contour
