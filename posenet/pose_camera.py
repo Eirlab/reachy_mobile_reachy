@@ -19,10 +19,19 @@ from functools import partial
 
 import svgwrite
 
-import config
-import gstreamer
-from pose_engine import KeypointType
-from pose_engine import PoseEngine
+if __package__ is None or __package__ == '':
+    import config
+    import gstreamer
+    from pose_engine import KeypointType
+    from pose_engine import PoseEngine
+else:
+    from . import config
+    from . import gstreamer
+    from .pose_engine import KeypointType
+    from .pose_engine import PoseEngine
+
+
+
 
 EDGES = (
     (KeypointType.NOSE, KeypointType.LEFT_EYE),
@@ -98,7 +107,7 @@ def run(inf_callback, render_callback):
     parser.add_argument('--jpeg', help='Use image/jpeg input', action='store_true')
     args = parser.parse_args()
 
-    default_model = 'models/mobilenet/posenet_mobilenet_v1_075_%d_%d_quant_decoder_edgetpu.tflite'
+    default_model = 'posenet/models/mobilenet/posenet_mobilenet_v1_075_%d_%d_quant_decoder_edgetpu.tflite'
     if args.res == '480x360':
         src_size = (640, 480)
         appsink_size = (480, 360)
