@@ -132,7 +132,6 @@ def run(inf_callback, render_callback):
                                     videosrc=args.videosrc,
                                     h264=args.h264,
                                     jpeg=args.jpeg
-
                                     )
     print(output)
 
@@ -173,6 +172,7 @@ def main():
                 if config.counter >= 30:
                     config.counter = 0
                     config.detection = 2
+                    return
             else:
                 config.detection = 0
             time.sleep(0.1)
