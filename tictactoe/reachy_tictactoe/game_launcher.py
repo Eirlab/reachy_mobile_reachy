@@ -19,6 +19,7 @@ def run_game_loop(tictactoe_playground):
     logger.info('Checking if the board is completly empty.')
     boardEmpty = np.zeros((3, 3), dtype=np.uint8).flatten()
     ok, board = tictactoe_playground.analyze_board()
+
     ok = False
 
     while not ok:
@@ -134,7 +135,7 @@ def run_game_loop(tictactoe_playground):
     logger.info('Game end')
 
 
-def main(reachy):
+def main(reachy, log):
     import argparse
 
     from datetime import datetime
@@ -148,6 +149,7 @@ def main(reachy):
         n = len(glob(f'{args.log_file}*.log')) + 1
 
         now = datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')
+        args.log_file = log
         args.log_file += f'-{n}-{now}.log'
 
     logger = zzlog.setup(
