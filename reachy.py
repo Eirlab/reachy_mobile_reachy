@@ -32,14 +32,16 @@ def sad_antennas(reachy):
 
 def main():
     global first_play
-    camera = Thread(target=pose_camera.main, daemon=True)
-    camera.start()
+    # camera = Thread(target=pose_camera.main, daemon=True)
+    # camera.start()
     config.detection = 2
     while True:
         if config.detection == 1:
-            happy_antennas(reachy)
+            print('hello')
+            # happy_antennas(reachy)
         elif config.detection == 0:
-            sad_antennas(reachy)
+            # sad_antennas(reachy)
+            1 == 1
         elif config.detection == 2 and not first_play:
             reachy = "reachy"
             reachy = ReachySDK(host='localhost')
