@@ -112,18 +112,26 @@ class TictactoePlayground(object):
 
         #self.reachy.head.look_at(x=1, y=0, z=0, duration=1.5) 
         #TC self.reachy.head.look_at(0.5, 0, z=-0.6, duration=1)
-        self.reachy.head.look_at(x=1, y=0, z=-0.55, duration=1) 
+        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
+        time.sleep(1)
+        self.reachy.head.look_at(x=1, y=0, z=-0.6, duration=1)
         time.sleep(1)
         # Wait an image from the camera
         #TC self.wait_for_img()
-        #TC success, img = self.reachy.head.right_camera.read() 
+        #TC success, img = self.reachy.head.right_camera.read()
+        print("Waiting for image")
         img = self.reachy.right_camera.wait_for_new_frame()
-        time.sleep(5)
+        self.reachy.turn_off('head')
 
+        print("Receving new frame")
+
+        time.sleep(3)
+        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
+        self.reachy.turn_on('head')
         # TEMP:
         import cv2 as cv
         i = np.random.randint(1000)
-        path = f'/tmp/snap.{i}.jpg'
+        path = f'/home/reachy/reachy_mobile_reachy/tictactoe/images/{i}.jpg'
         cv.imwrite(path, img)
 
         logger.info(
@@ -155,7 +163,7 @@ class TictactoePlayground(object):
                 'img_path': path,
             },
         )
-
+        self.reachy.turn_on('head')
         #TC self.reachy.head.compliant = False
         self.reachy.head.look_at(1, 0, 0, duration=1.5)
 
