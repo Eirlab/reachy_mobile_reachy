@@ -3,11 +3,10 @@ Allows you to play a game of tictactoe with the reachy
 """
 import argparse
 import logging
-from datetime import datetime
-from glob import glob
-
 import numpy as np
 import zzlog
+from datetime import datetime
+from glob import glob
 
 if __package__ is None or __package__ == '':
     from tictactoe_playground import TictactoePlayground
@@ -30,7 +29,10 @@ def run_game_loop(tictactoe_playground):
     status = False
     while not status:
         status, board = tictactoe_playground.analyze_board()
-        status = not np.any(board)
+        if np.any(board):
+            status = False
+        else:
+            status = True
     while True:
         logger.info('Board cleaned')
         if tictactoe_playground.is_ready(board):
