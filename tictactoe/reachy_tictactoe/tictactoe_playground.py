@@ -49,12 +49,16 @@ class TictactoePlayground(object):
         #        interpolation_mode='minjerk',
         #    )
         self.reachy.turn_on('head')
-        self.reachy.head.look_at(x=1, y=0, z=0, duration=1.5)
+        #self.reachy.head.look_at(x=1, y=0, z=0, duration=1.5)
+        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
+        time.sleep(1)
+        self.reachy.head.look_at(x=1, y=0, z=-0.6, duration=1)
+        time.sleep(1)
+        self.reachy.turn_off('head')
         self.reachy.head.l_antenna.speed_limit = 50.0
         self.reachy.head.r_antenna.speed_limit = 50.0
         self.reachy.head.l_antenna.goal_position = 0
         self.reachy.head.r_antenna.goal_position = 0
-        self.goto_rest_position()
         
 
     def __enter__(self):
@@ -108,27 +112,27 @@ class TictactoePlayground(object):
     def analyze_board(self):
         #TC for disk in self.reachy.head.neck.disks:
         #    disk.compliant = False
-        self.reachy.turn_on('head')
+        #self.reachy.turn_on('head')
 
         #self.reachy.head.look_at(x=1, y=0, z=0, duration=1.5) 
         #TC self.reachy.head.look_at(0.5, 0, z=-0.6, duration=1)
-        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
-        time.sleep(1)
-        self.reachy.head.look_at(x=1, y=0, z=-0.6, duration=1)
-        time.sleep(1)
+        #self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
+        #time.sleep(1)
+        #self.reachy.head.look_at(x=1, y=0, z=-0.6, duration=1)
+        #time.sleep(1)
         # Wait an image from the camera
         #TC self.wait_for_img()
         #TC success, img = self.reachy.head.right_camera.read()
         print("Waiting for image")
-        self.reachy.turn_off('head')
+        #self.reachy.turn_off('head')
         img = self.reachy.right_camera.wait_for_new_frame()
 
 
         print("Receving new frame")
 
         time.sleep(3)
-        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
-        self.reachy.turn_on('head')
+        #self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
+        #self.reachy.turn_on('head')
         # TEMP:
         import cv2 as cv
         i = np.random.randint(1000)
@@ -166,7 +170,7 @@ class TictactoePlayground(object):
         )
         self.reachy.turn_on('head')
         #TC self.reachy.head.compliant = False
-        self.reachy.head.look_at(1, 0, 0, duration=1.5)
+        #self.reachy.head.look_at(1, 0, 0, duration=1.5)
 
         return ok, board
 
@@ -226,6 +230,7 @@ class TictactoePlayground(object):
 
         self.goto_base_position()
         self.reachy.turn_on('r_arm')
+        self.reachy.turn_on('head')
         self.reachy.head.look_at(0.5, 0, -0.4, duration=1)
         #TC TrajectoryPlayer(self.reachy, moves['shuffle-board']).play(wait=True)
         path = '/home/reachy/dev/reachy-tictactoe_2021/reachy_tictactoe/moves-2021_nemo/shuffle-board.npz'
@@ -293,7 +298,7 @@ class TictactoePlayground(object):
         return board
 
     def play_pawn(self, grab_index, box_index):
-        self.reachy.head.look_at(x=1, y=0, z=-0.55, duration=1) 
+        #self.reachy.head.look_at(x=1, y=0, z=-0.55, duration=1) 
 
         self.reachy.r_arm.r_gripper.speed_limit = 80
         self.reachy.r_arm.r_gripper.compliant = False
@@ -559,7 +564,7 @@ class TictactoePlayground(object):
     def goto_rest_position(self, duration=2.0):
         # FIXME: Why is it needed?
         time.sleep(0.1)
-        self.reachy.head.look_at(x=1, y=0, z=0, duration=1) 
+        #self.reachy.head.look_at(x=1, y=0, z=0, duration=1) 
         self.goto_base_position(0.6 * duration)
         time.sleep(0.1)
 
