@@ -22,9 +22,6 @@ else:
     from . import config
 
 from PIL import Image
-from PIL import ImageDraw
-import numpy as np
-import os
 
 
 def happy_antennas(reachy):
@@ -45,39 +42,32 @@ def happy_antennas(reachy):
     reachy.head.l_antenna.goal_position = 0.0
     reachy.head.r_antenna.goal_position = 0.0
 
+
 def main(reachy):
-    while(True):
+    while True:
         numpy_image = reachy.right_camera.wait_for_new_frame()
-        #pil_image = Image.open(f'/home/reachy/reachy_mobile_reachy/posenet/images/509.jpg')
         pil_image = Image.fromarray(numpy_image, 'RGB')
-        #pil_image.show()
         engine = PoseEngine(
             'posenet/models/mobilenet/posenet_mobilenet_v1_075_481_641_quant_decoder_edgetpu.tflite')
         poses, inference_time = engine.DetectPosesInImage(pil_image)
         reachy.head.l_antenna.speed_limit = 85.0
         reachy.head.r_antenna.speed_limit = 85.0
-        #print(config.counter)
-        for pose in poses:
-            #if pose.score < 0.4: continue    #a quoi ça sert ?
-            pose = pose.keypoints
+        for i in range(len(poses)):
+            pose = poses[i].keypoints
             shoulder = pose[KeypointType.LEFT_SHOULDER]
             wrist = pose[KeypointType.LEFT_WRIST]
             difference = shoulder.point.y - wrist.point.y
-            #print(difference)
             if difference > 0:
-                config.detection = 1
-                config.counter += 1
-                if config.counter==2:
+                config.detection[i] = 1
+                config.counter[i] += 1
+                if config.counter[i] == 2:
                     reachy.head.l_antenna.goal_position = 0.0
-                elif config.counter == 3:
+                elif config.counter[i] == 3:
                     reachy.head.r_antenna.goal_position = 0.0
-                if config.counter >= 5: #passe de 30 a 5
+                if config.counter[i] >= 2:
                     happy_antennas(reachy)
-                    config.counter = 0
-                    config.detection = 2
-                    print("YOUPI")
+                    config.counter[i] = 0
+                    config.detection[i] = 2
                     return
-            else:
-                config.detection = 0
-        time.sleep(1)
-
+                config.detection[i] = 0
+        time.sleep(1.0)

@@ -12,22 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pycoral.utils import edgetpu
-from PIL import Image
-from tflite_runtime.interpreter import load_delegate
-from tflite_runtime.interpreter import Interpreter
-
 import collections
 import enum
 import math
-import numpy as np
 import os
-import platform
-import sys
 import time
 
+import numpy as np
+from PIL import Image
+from pycoral.utils import edgetpu
+from tflite_runtime.interpreter import Interpreter
+from tflite_runtime.interpreter import load_delegate
 
-#TODO: Adds support for window and MAC
+# TODO: Adds support for window and MAC
 EDGETPU_SHARED_LIB = 'libedgetpu.so.1'
 POSENET_SHARED_LIB = os.path.join(
     'posenet/posenet_lib', os.uname().machine, 'posenet_decoder.so')
@@ -55,7 +52,7 @@ class KeypointType(enum.IntEnum):
 
 
 Point = collections.namedtuple('Point', ['x', 'y'])
-Point.distance = lambda a, b: math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
+Point.distance = lambda a, b: math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2)
 Point.distance = staticmethod(Point.distance)
 
 Keypoint = collections.namedtuple('Keypoint', ['point', 'score'])
