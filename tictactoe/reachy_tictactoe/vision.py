@@ -47,12 +47,7 @@ model_path = os.path.join(dir_path, 'models')
 # path_model_board = '/home/reachy/dev/reachy-tictactoe/reachy_tictactoe/models/ttt-valid-board.tflite'
 # path_label_board = '/home/reachy/dev/reachy-tictactoe/reachy_tictactoe/models/ttt-valid-board.txt'
 
-path_model = '/home/reachy/dev/reachy-tictactoe_2021/reachy_tictactoe/models/tflite39927/output_tflite_graph_edgetpu.tflite'
-path_label = '/home/reachy/dev/reachy-tictactoe_2021/reachy_tictactoe/models/tflite39927/label.txt'
 
-labels = read_label_file(path_label) if path_label else {}
-interpreter = make_interpreter(path_model)
-interpreter.allocate_tensors()
 
 # TC valid_classifier = ClassificationEngine(os.path.join(model_path, 'ttt-valid-board.tflite'))
 # TC valid_labels = dataset_utils.read_label_file(os.path.join(model_path, 'ttt-valid-board.txt'))
@@ -97,11 +92,18 @@ def get_board_configuration(image):
     # boardEmpty = np.zeros((3, 3), dtype=np.uint8)
 
     # size for crop the image taking by the reachy's camera
-    # y1 = 370
-    # y2 = 650
-    # x1 = 30
-    # x2 = 380
+    # y1 = 150
+    # y2 = 450
+    # x1 = 90
+    # x2 = 420
+    y1 = 360
+    y2 = 650
+    x1 = 50
+    x2 = 410
     # dim = (300,300)
+    image = image[y1:y2, x1:x2]
+
+    # image = cv.resize(image, dim)
 
     # try:
     #     custom_board_cases = get_board_cases(img)
@@ -130,50 +132,49 @@ def get_board_configuration(image):
     # TRAITEMENT DE L'IMAGE POUR CROP
 
     # Load image and convert to grayscale
-    gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
-    blur = cv.medianBlur(gray, 5)
-
-    # filter out noise, then threshold
-    sharpen_kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
-    sharpen = cv.filter2D(blur, -1, sharpen_kernel)
-    thresh = cv.threshold(sharpen, 140, 255, cv.THRESH_BINARY_INV)[1]
-
-    # morphology treatment then find contours
-    kernel = cv.getStructuringElement(cv.MORPH_RECT, (3, 3))
-    close = cv.morphologyEx(thresh, cv.MORPH_CLOSE, kernel, iterations=2)
-    cnts = cv.findContours(close, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
-    cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-
-    # find the largest contour
-    max_cnt = None
-    max_area = 0
-    maximum = 100000
-    for c in cnts:
-        area = cv.contourArea(c)
-        if max_area < area < maximum:
-            max_area = area
-            max_cnt = c
-
-    # crop the largest contour
-    x, y, w, h = cv.boundingRect(max_cnt)
-    x = x - 10 if x - 10 > 0 else x
-    y = y - 10 if y - 10 > 0 else y
-    h = h + 10 if h + 10 < image.shape[0] else h
-    w = w + 10 if w + 10 < image.shape[1] else w
-    image = image[y:y + h, x:x + w]
-    plt.imshow(image)
-    plt.show()
+    # gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
+    # blur = cv.medianBlur(gray, 5)
+    #
+    # # filter out noise, then threshold
+    # sharpen_kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
+    # sharpen = cv.filter2D(blur, -1, sharpen_kernel)
+    # thresh = cv.threshold(sharpen, 140, 255, cv.THRESH_BINARY_INV)[1]
+    #
+    # # morphology treatment then find contours
+    # kernel = cv.getStructuringElement(cv.MORPH_RECT, (3, 3))
+    # close = cv.morphologyEx(thresh, cv.MORPH_CLOSE, kernel, iterations=2)
+    # cnts = cv.findContours(close, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    # cnts = cnts[0] if len(cnts) == 2 else cnts[1]
+    #
+    # # find the largest contour
+    # max_cnt = None
+    # max_area = 0
+    # maximum = 100000
+    # for c in cnts:
+    #     area = cv.contourArea(c)
+    #     if max_area < area < maximum:
+    #         max_area = area
+    #         max_cnt = c
+    #
+    # # crop the largest contour
+    # x, y, w, h = cv.boundingRect(max_cnt)
+    # x = x - 10 if x - 10 > 0 else x
+    # y = y - 10 if y - 10 > 0 else y
+    # h = h + 10 if h + 10 < image.shape[0] else h
+    # w = w + 10 if w + 10 < image.shape[1] else w
+    # image = image[y:y + h, x:x + w]
+    # plt.imshow(image)
+    # plt.show()
 
     # PASSAGE DANS LE RESEAU DE NEURONES
-    path_model = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/models/tflite39927/output_tflite_graph_edgetpu.tflite'
-    path_label = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/models/tflite39927/label.txt'
+    path_model = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/models/tfliteV6/output_tflite_graph_edgetpu.tflite'
+    path_label = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/models/tfliteV6/label.txt'
 
-    # labels = read_label_file(path_label) if path_label else {}
+
+    labels = read_label_file(path_label) if path_label else {}
     interpreter = make_interpreter(path_model)
     interpreter.allocate_tensors()
 
-    # image = image[y1:y2, x1:x2]
-    # image = cv.resize(image, dim)
     image = Image.fromarray(image)
 
     _, scale = common.set_resized_input(interpreter, image.size, lambda size: image.resize(size, Image.ANTIALIAS))
@@ -197,8 +198,7 @@ def get_board_configuration(image):
 
     ok = False
     logger.info(f'Taille objs = {len(objs)}')
-    if (
-            len(objs) == 9):  # la détection doit détecter 9 objets dans l'image (1 par cases) si ce n'est pas le cas il faut recommencer la détection
+    if (len(objs) == 9):  # la détection doit détecter 9 objets dans l'image (1 par cases) si ce n'est pas le cas il faut recommencer la détection
         ok = True
         Ly = [e.bbox.ymin for e in objs]
         index_y_all = np.argsort(Ly)[::-1]

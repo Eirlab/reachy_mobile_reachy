@@ -24,9 +24,18 @@ def run_game_loop(tictactoe_playground):
 
     while not ok:
         ok, board = tictactoe_playground.analyze_board()
-        if np.array_equal(board, boardEmpty) == False:  # board is not equal to a array of zero (not empty)
-            logger.info('JE PASSE DANS LE FALSE EQUAL => PAS EGAUX LES DEUX MATRICE ')
-            ok = False
+        # if np.array_equal(board, boardEmpty) == False:  # board is not equal to a array of zero (not empty)
+        #     logger.info('JE PASSE DANS LE FALSE EQUAL')
+        #     ok = False
+
+        if np.any(board):
+            ok=False
+        else:
+            ok=True
+        #for i in board :
+            # if i == 1 or i == 2 : # board is not equal to 1 or 2 (cube or cylinder)
+            #     ok = False
+            #     logger.info('YA DES CUBE OU CYLINDRE')
 
             # ok = False
     # while not ok:

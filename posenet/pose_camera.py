@@ -100,7 +100,7 @@ def run(inf_callback, render_callback):
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--mirror', help='flip video horizontally', action='store_false')
     parser.add_argument('--model', help='.tflite model path.', required=False)
-    parser.add_argument('--res', help='Resolution', default='640x480',
+    parser.add_argument('--res', help='Resolution', default='480x360',
                         choices=['480x360', '640x480', '1280x720'])
     parser.add_argument('--videosrc', help='Which video source to use', default='/dev/video4')
     parser.add_argument('--h264', help='Use video/x-h264 input', action='store_true')
@@ -133,7 +133,6 @@ def run(inf_callback, render_callback):
                                     h264=args.h264,
                                     jpeg=args.jpeg
                                     )
-    print(output)
 
 
 def main():
@@ -166,19 +165,22 @@ def main():
         for pose in outputs:
             draw_pose(svg_canvas, pose, src_size, inference_box)
             difference = pose[0][KeypointType.LEFT_SHOULDER].point.y - pose[0][KeypointType.LEFT_WRIST].point.y
+            config.counter = 50
+            difference = 4
             if difference > 0:
                 config.detection = 1
                 config.counter += 1
                 if config.counter >= 30:
                     config.counter = 0
                     config.detection = 2
-                    return
             else:
                 config.detection = 0
             time.sleep(0.1)
         return (svg_canvas.tostring(), False)
 
     run(run_inference, render_overlay)
+    if config.detection == 2:
+        return
 
 
 if __name__ == '__main__':
