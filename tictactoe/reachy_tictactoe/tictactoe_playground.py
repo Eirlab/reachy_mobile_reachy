@@ -49,7 +49,7 @@ class TictactoePlayground(object):
         #        interpolation_mode='minjerk',
         #    )
         self.reachy.turn_on('head')
-        self.reachy.head.look_at(x=1, y=0, z=0, duration=1.5) 
+        self.reachy.head.look_at(x=1, y=0, z=0, duration=1.5)
         self.reachy.head.l_antenna.speed_limit = 50.0
         self.reachy.head.r_antenna.speed_limit = 50.0
         self.reachy.head.l_antenna.goal_position = 0
@@ -120,8 +120,9 @@ class TictactoePlayground(object):
         #TC self.wait_for_img()
         #TC success, img = self.reachy.head.right_camera.read()
         print("Waiting for image")
-        img = self.reachy.right_camera.wait_for_new_frame()
         self.reachy.turn_off('head')
+        img = self.reachy.right_camera.wait_for_new_frame()
+
 
         print("Receving new frame")
 
