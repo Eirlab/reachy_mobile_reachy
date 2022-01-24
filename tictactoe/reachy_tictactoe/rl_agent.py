@@ -1,7 +1,6 @@
-import os
 import operator
+import os
 import numpy as np
-
 
 q = os.path.join(os.path.dirname(__file__), 'Q-value.npz')
 Q = np.load(q)
@@ -21,8 +20,4 @@ def value_actions(board, next_player=1):
         possibilities[action] = val
 
     possibilities = sorted(possibilities.items(), key=operator.itemgetter(1))
-
-    #if next_player == 1:
-    #    possibilities = list(reversed(possibilities))
-
     return possibilities
