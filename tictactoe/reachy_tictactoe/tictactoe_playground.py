@@ -303,6 +303,13 @@ class TictactoePlayground(object):
 
         return 'nobody'
 
+    @staticmethod
+    def is_end(board):
+        if np.sum(board == 0) == 0:
+            return True
+        else:
+            return False
+
     def run_celebration(self):
         logger.info('Reachy is playing its win behavior')
         behavior.happy(self.reachy)
