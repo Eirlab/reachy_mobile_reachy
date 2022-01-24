@@ -1,6 +1,12 @@
+"""
+Allows you to play a game of tictactoe with the reachy
+"""
+import argparse
 import logging
-import numpy as np
+from datetime import datetime
+from glob import glob
 
+import numpy as np
 import zzlog
 
 if __package__ is None or __package__ == '':
@@ -12,83 +18,37 @@ logger = logging.getLogger('reachy.tictactoe')
 
 
 def run_game_loop(tictactoe_playground):
+    """
+    Orchestrates the game loop
+    :param tictactoe_playground: an instance of TictactoePlayground
+    :return: the winner of the game
+    """
     logger.info('Game start')
-
-    #    count_head_down = 0
-    # Check that the boad is empty (the 9 box of the grid have to be empty)
-    logger.info('Checking if the board is completly empty.')
-    boardEmpty = np.zeros((3, 3), dtype=np.uint8).flatten()
-    ok, board = tictactoe_playground.analyze_board()
-
-    ok = False
-
-    while not ok:
-        ok, board = tictactoe_playground.analyze_board()
-        # if np.array_equal(board, boardEmpty) == False:  # board is not equal to a array of zero (not empty)
-        #     logger.info('JE PASSE DANS LE FALSE EQUAL')
-        #     ok = False
-
-        if np.any(board):
-            ok=False
-        else:
-            ok=True
-        #for i in board :
-            # if i == 1 or i == 2 : # board is not equal to 1 or 2 (cube or cylinder)
-            #     ok = False
-            #     logger.info('YA DES CUBE OU CYLINDRE')
-
-            # ok = False
-    # while not ok:
-    #     logger.info('Waiting for board to be cleaned.')
-    #     ok, board = tictactoe_playground.analyze_board()
-
-    # Wait for the board to be cleaned and ready to be played
+    # Check that the board is empty (the 9 box of the grid have to be empty)
+    logger.info('Checking if the board is completely empty.')
+    status, board = tictactoe_playground.analyze_board()
+    status = False
+    while not status:
+        status, board = tictactoe_playground.analyze_board()
+        status = not np.any(board)
     while True:
         logger.info('Board cleaned')
-        # ok, board = tictactoe_playground.analyze_board()
-        #       count_head_down += 1
-        # logger.info(
-        #    'Waiting for board to be cleaned.',
-        #    extra={
-        #        'board': board,
-        #    },
-        # )
         if tictactoe_playground.is_ready(board):
-            #            count_head_down = 0
             break
-
-        #       if count_head_down == 20:
-        #           logger.info("No one to play with apparently, Reachy goes into sleep mode.")
-        #           tictactoe_playground.enter_sleep_mode()
-
         tictactoe_playground.run_random_idle_behavior()
-
     last_board = tictactoe_playground.reset()
-    logger.info(f'taille last_board = {np.shape(last_board)}')
-
-    # Decide who goes first
+    logger.info(f'size last_board = {np.shape(last_board)}')
     reachy_turn = tictactoe_playground.coin_flip()
-
     if reachy_turn:
         tictactoe_playground.run_my_turn()
     else:
         tictactoe_playground.run_your_turn()
-
-    # Start game loop
     while True:
-        ok, board = tictactoe_playground.analyze_board()
-        logger.info(f'ok = {ok}')
-        # if board is None:
-        #    logger.warning('Invalid board detected')
-        #    continue
-
-        # We found an invalid board
-        if ok == False:
+        status, board = tictactoe_playground.analyze_board()
+        logger.info(f'ok = {status}')
+        if not status:
             logger.warning('Invalid board detected')
             continue
-
-        # When it's human's turn to play
-        # We wait for a change in board while running random idle behavior
         if not reachy_turn:
             if tictactoe_playground.has_human_played(board, last_board):
                 reachy_turn = True
@@ -98,17 +58,16 @@ def run_game_loop(tictactoe_playground):
             else:
                 tictactoe_playground.run_random_idle_behavior()
 
-        # If we have detected some cheating or any issue
-        # We reset the whole game
+        # If we have detected some cheating or any issue We reset the whole game
         if (tictactoe_playground.incoherent_board_detected(board) or
                 tictactoe_playground.cheating_detected(board, last_board, reachy_turn)):
             # Check again to be sure
-            logger.info('/!\ LAAAAAAAAAAAAAAAAAAAAAAAAAAA QUELQUN TRICHE ')
-            ok, double_check_board = tictactoe_playground.analyze_board()
+            logger.info('! Incoherent board detected')
+            status, double_check_board = tictactoe_playground.analyze_board()
             logger.info(f'recheck board : {double_check_board}')
-            if np.any(
-                    double_check_board != last_board):  # the board checked it's differente that the last board (the good one)
-                # We're pretty sure somthing weird happened!
+            # the board checked it's different that the last board (the good one)
+            if np.any(double_check_board != last_board):
+                # We're pretty sure something weird happened!
                 tictactoe_playground.shuffle_board()
                 break
             else:
@@ -138,18 +97,18 @@ def run_game_loop(tictactoe_playground):
                 tictactoe_playground.run_defeat_behavior()
             else:
                 tictactoe_playground.run_defeat_behavior()
-
             return winner
 
     logger.info('Game end')
 
 
 def main(reachy, log):
-    import argparse
-
-    from datetime import datetime
-    from glob import glob
-
+    """
+    Main function to run the game
+    :param reachy: an instance of Reachy sdk
+    :param log: an instance of Logger
+    :return: None
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument('--log-file')
     args = parser.parse_args()
@@ -161,12 +120,12 @@ def main(reachy, log):
         args.log_file = log
         args.log_file += f'-{n}-{now}.log'
 
-    logger = zzlog.setup(
+    logger_reachy = zzlog.setup(
         logger_root='',
         filename=args.log_file,
     )
 
-    logger.info(
+    logger_reachy.info(
         'Creating a Tic Tac Toe playground.'
     )
 
@@ -178,7 +137,7 @@ def main(reachy, log):
         while True:
             winner = run_game_loop(tictactoe_playground)
             game_played += 1
-            logger.info(
+            logger_reachy.info(
                 'Game ended',
                 extra={
                     'game_number': game_played,
@@ -187,12 +146,8 @@ def main(reachy, log):
             )
 
             if tictactoe_playground.need_cooldown():
-                logger.warning('Reachy needs cooldown')
+                logger_reachy.warning('Reachy needs cooldown')
                 tictactoe_playground.enter_sleep_mode()
                 tictactoe_playground.wait_for_cooldown()
                 tictactoe_playground.leave_sleep_mode()
-                logger.info('Reachy cooldown finished')
-
-
-if __name__ == '__main__':
-    main()
+                logger_reachy.info('Reachy cooldown finished')
