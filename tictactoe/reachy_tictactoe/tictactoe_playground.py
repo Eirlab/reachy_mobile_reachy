@@ -95,6 +95,7 @@ class TictactoePlayground(object):
         return coin
 
     def analyze_board(self):
+        time.sleep(6)
         print("Waiting for image")
         img = self.reachy.right_camera.wait_for_new_frame()
         print("Receiving new frame")
@@ -182,21 +183,7 @@ class TictactoePlayground(object):
     def choose_next_action(board):
         actions = value_actions(board)
         # If empty board starts with a random actions for diversity
-        if np.all(board == 0):
-            while True:
-                i = np.random.randint(0, 9)
-                a, _ = actions[i]
-                if a != 8:
-                    break
-        elif np.sum(board) == piece2id['cube']:
-            a, _ = actions[0]
-            if a == 8:
-                i = 1
-            else:
-                i = 0
-        else:
-            i = 0
-        best_action, value = actions[i]
+        best_action = actions[0]
         logger.info(
             'Selecting Reachy next action',
             extra={
@@ -205,7 +192,7 @@ class TictactoePlayground(object):
                 'selected action': best_action,
             },
         )
-        return best_action, value
+        return best_action, None
 
     def play(self, action, actual_board):
         board = actual_board.copy()
@@ -480,8 +467,11 @@ class TictactoePlayground(object):
         )
         listMotor = []
         for key, obj in temperatures.items():
-            if obj > 45:
-                listMotor.append(key)
+            try:
+                if obj > 45:
+                    listMotor.append(key)
+            except ValueError:
+                pass
         return listMotor
 
     def wait_for_cooldown(self):
