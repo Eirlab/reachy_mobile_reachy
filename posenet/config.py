@@ -1,3 +1,3 @@
-detection = 0
-counter = 0
+detection = [0] * 20
+counter = [0] * 20
 run = True
