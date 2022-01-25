@@ -27,5 +27,5 @@ jobs:
       - name: Deploy mdbook
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.RONOCO_TOKEN }}
+          github_token: ${{ secrets.REACHY_DOC_TOKEN }}
           publish_dir: ./docs
