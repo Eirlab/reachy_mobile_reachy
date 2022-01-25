@@ -22,7 +22,7 @@ jobs:
 
       - run: |
           cargo install mdbook-toc
-          cd ronoco-documentation/
+          cd reachy_mobile_documentation/
           mdbook build -d ../docs
       - name: Deploy mdbook
         uses: peaceiris/actions-gh-pages@v3
