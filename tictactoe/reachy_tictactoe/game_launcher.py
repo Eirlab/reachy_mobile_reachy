@@ -145,4 +145,5 @@ def main(reachy, log):
             tictactoe_playground.wait_for_cooldown()
             tictactoe_playground.leave_sleep_mode()
             logger_reachy.info('Reachy cooldown finished')
+        return winner
 
