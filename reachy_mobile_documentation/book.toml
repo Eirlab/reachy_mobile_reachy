@@ -1,0 +1,16 @@
+[book]
+authors = [""]
+language = "en"
+multilingual = false
+
+src = "src"
+title = "Reachy Mobile Reachy"
+
+[preprocessor.toc]
+command = "mdbook-toc"
+renderer = ["html"]
+
+
+[output.html]
+default-theme = "ayu"
+fold.enable = true
