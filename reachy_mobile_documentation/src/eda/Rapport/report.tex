@@ -1,0 +1,43 @@
+\documentclass{rapportECL}
+
+% configuration file
+\input{config/common-config}
+
+\begin{document}
+
+\DateduRapport{05 / 12 / 2021}
+\titre{Reachy Mobile} %Titre du fichier .pdf
+\UE{IT387} %Nom de la UE
+\sujet{État de l'art Projet Robotique} %Nom du sujet
+\lfoot{\textsc{Barrais}, \textsc{Cognet}, \textsc{Constans Protopappas}, \textsc{Delpeuch}}
+
+\eleves{\textsc{Barrais} Marius \\ \textsc{Cognet} Jean-Baptiste \\
+\textsc{Constans Protopappas} Théa \\
+\textsc{Delpeuch} Sébastien} %Nom des élèves
+\client{EirLab Community \\ \textsc{Mollard} Yoan}
+\encadrant{\textsc{Fabre} Rémi}
+\professeur{\textsc{Padois} Vincent}
+
+
+%----------- Initialisation -------------------
+
+\fairemarges %Afficher les marges
+\fairepagedegarde %Créer la page de garde
+
+%%%%%%%%%%%%%%
+%  Sections  %
+%%%%%%%%%%%%%%
+
+\begin{spacing}{1.5}
+\input{sections/abstract}
+\newpage
+\tableofcontents
+\newpage
+\input{sections/introduction}
+\input{sections/navigation}
+\input{sections/interactions}
+\input{sections/detection-game}
+\input{sections/conclusion}
+\input{sections/bibliography}
+\end{spacing}
+\end{document}
