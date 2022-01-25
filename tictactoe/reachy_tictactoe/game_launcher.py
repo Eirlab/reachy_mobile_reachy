@@ -22,6 +22,7 @@ def run_game_loop(tictactoe_playground):
     :param tictactoe_playground: an instance of TictactoePlayground
     :return: the winner of the game
     """
+    logger.setLevel(logging.WARNING)
     logger.info('Game start')
     # Check that the board is empty (the 9 box of the grid have to be empty)
     logger.info('Checking if the board is completely empty.')
@@ -57,6 +58,7 @@ def run_game_loop(tictactoe_playground):
                 logger.info('Next turn', extra={
                     'next_player': 'Reachy',
                 })
+                tictactoe_playground.run_my_turn()
             else:
                 tictactoe_playground.run_random_idle_behavior()
 
@@ -84,6 +86,7 @@ def run_game_loop(tictactoe_playground):
 
             last_board = board
             reachy_turn = False
+            tictactoe_playground.run_your_turn()
             logger.info('Next turn', extra={
                 'next_player': 'Human',
             })
@@ -135,21 +138,11 @@ def main(reachy, log):
         tictactoe_playground.setup()
 
         game_played = 0
+        winner = run_game_loop(tictactoe_playground)
+        if tictactoe_playground.need_cooldown():
+            logger_reachy.warning('Reachy needs cooldown')
+            tictactoe_playground.enter_sleep_mode()
+            tictactoe_playground.wait_for_cooldown()
+            tictactoe_playground.leave_sleep_mode()
+            logger_reachy.info('Reachy cooldown finished')
 
-        while True:
-            winner = run_game_loop(tictactoe_playground)
-            game_played += 1
-            logger_reachy.info(
-                'Game ended',
-                extra={
-                    'game_number': game_played,
-                    'winner': winner,
-                }
-            )
-
-            if tictactoe_playground.need_cooldown():
-                logger_reachy.warning('Reachy needs cooldown')
-                tictactoe_playground.enter_sleep_mode()
-                tictactoe_playground.wait_for_cooldown()
-                tictactoe_playground.leave_sleep_mode()
-                logger_reachy.info('Reachy cooldown finished')

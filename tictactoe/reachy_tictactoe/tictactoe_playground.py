@@ -183,7 +183,7 @@ class TictactoePlayground(object):
     def choose_next_action(board):
         actions = value_actions(board)
         # If empty board starts with a random actions for diversity
-        best_action = actions[0]
+        best_action = actions
         logger.info(
             'Selecting Reachy next action',
             extra={
@@ -196,8 +196,6 @@ class TictactoePlayground(object):
 
     def play(self, action, actual_board):
         board = actual_board.copy()
-        logger.info('JE PASSE DANS PLAY')
-
         self.play_pawn(
             grab_index=self.pawn_played + 1,
             box_index=action + 1,
@@ -325,20 +323,28 @@ class TictactoePlayground(object):
     def run_my_turn(self):
         self.goto_base_position()
         self.reachy.turn_on('r_arm')
+        self.reachy.turn_on('head')
+        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
         logger.info('My turn')
         path = '/home/reachy/dev/reachy-tictactoe_2021/reachy_tictactoe/moves-2021_nemo/my-turn.npz'
         self.trajectoryPlayer(path)
         logger.info('My turn')
         self.goto_rest_position()
+        self.reachy.head.look_at(x=1, y=0, z=-0.6, duration=1)
+        self.reachy.turn_off('head')
 
     def run_your_turn(self):
         self.goto_base_position()
         self.reachy.turn_on('r_arm')
+        self.reachy.turn_on('head')
+        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
         logger.info('Your turn')
         path = '/home/reachy/dev/reachy-tictactoe_2021/reachy_tictactoe/moves-2021_nemo/your-turn.npz'
         self.trajectoryPlayer(path)
         logger.info('Your  turn')
         self.goto_rest_position()
+        self.reachy.head.look_at(x=1, y=0, z=-0.6, duration=1)
+        self.reachy.turn_off('head')
 
     # Robot lower-level control functions
     def goto_position(self, path):
@@ -347,13 +353,10 @@ class TictactoePlayground(object):
         move = np.load(path)
         move.allow_pickle = 1
         listMoves = move['move'].tolist()
-        logger.info('JE PASSE DANS GOTO')
         listTraj = {}
         for key, val in listMoves.items():
             logger.info('self.' + key + '')
             listTraj[eval('self.' + key)] = float(val)
-
-        logger.info('JE PASSE DANS GOTO')
 
         goto(
             goal_positions=listTraj,
@@ -477,7 +480,7 @@ class TictactoePlayground(object):
             try:
                 if obj > 45:
                     listMotor.append(key)
-            except ValueError:
+            except TypeError:
                 pass
         return listMotor
 
