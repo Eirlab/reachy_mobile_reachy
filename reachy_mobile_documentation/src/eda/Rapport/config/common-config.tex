@@ -1,0 +1,64 @@
+% --------------------- Packages ------------------------
+
+\usepackage[french]{babel} %Langue du document
+\usepackage[utf8]{inputenc} %Caractères spéciaux
+\usepackage[section]{placeins}%Pour placement de section
+\usepackage[T1]{fontenc} %Quelques lettres qui sont pas inclus dans UTF-8
+\usepackage{mathtools} %Paquet pour des équations et symboles mathématiques
+\usepackage{float} %Pour placement d'images
+\usepackage{graphicx} %Paquet pour insérer des images
+\usepackage[justification=centering]{caption} %Pour les légendes centralisées
+\usepackage{subcaption}
+\usepackage{wallpaper}
+\usepackage{nomencl}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,citecolor=blue]{hyperref}
+\usepackage{url}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{pdfpages}
+\usepackage{layout}
+
+%%%%%%%%%%%%%%%
+%  2. Inputs  %
+%%%%%%%%%%%%%%%
+
+\input{config/styles}
+\input{config/header-footer}
+\input{config/listings}
+
+\input{bibliography/config}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%  3. Miscellaneous  %
+%%%%%%%%%%%%%%%%%%%%%%
+
+\graphicspath{ {./images/} }
+
+% A command to apply a style to foreign words
+\newcommand\foreign[1]{\textit{#1}}
+
+% Table padding
+\def\arraystretch{1.2}
+
+% Avoid orphans and widows
+\widowpenalty=10000
+\clubpenalty=10000
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%  5. Custom Commands  %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\input{config/custom-commands}
+
+
+
+\makeatletter
+\makeatother

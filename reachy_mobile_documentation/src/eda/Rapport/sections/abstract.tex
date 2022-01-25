@@ -1,0 +1,13 @@
+{
+\thispagestyle{empty}
+\paragraph{Résumé \\}
+\begin{spacing}{1.5}
+Parmi les différents cobots existant, les cobots de service sont ceux évoluant le plus proche des humains. Les utilisations de ces derniers sont variées (guidage dans un aéroport, aide à la personne ...) et la construction d'un cobot de service implique de relever plusieurs défis.
+
+Dans le cas d'un cobot de service mobile, il est nécessaire de faire en sorte que ce robot puisse se déplacer dans un environnement dynamique et incertain avec une certaine fiabilité. Pour cela une modélisation du monde, comme celle par grille d'occupation probabiliste, est utilisée pour permettre au cobot de traduire ce que ses capteurs perçoivent et sa position dans l'environnement. De plus une stratégie d'élaboration de trajectoires prenant en compte l'incertitude sur l'environnement et le dynamisme de ce dernier est nécessaire. Pour ce défi, les méthodes délibératives et plus particulièrement l'algorithme \textit{riskRRT} permettent de fournir une solutions.
+
+En plus de la navigation, un cobot de service a pour rôle d'interagir avec les humains. Pour cela il est nécessaire d'étudier et de proposer une implémentation des règles sociales par la théorie proxémique. Au-delà du respect des règles sociales, il est nécessaire de mettre en place un moyen de communication entre le cobot et les humains. Plusieurs techniques peuvent être utilisées comme la reconnaissance vocale, la détection de gestes ou l'\textit{eye-contact}. L'intégration de ces règles et de cette communication est une phase clé permettant de passer d'un robot ayant la capacité de naviguer dans une foule à un robot interagissant convenablement avec cette foule.
+
+Finalement, lorsqu'un robot de service est capable de naviguer dans une foule et d'interagir correctement avec des humains, il reste à fournir du contenu lors de ces interactions pour que le cobot ait une réelle utilité. Ces interactions peuvent avoir différentes formes comme guider les utilisateurs vers des points d'intérêts, faire visiter un espace ou dans notre cas jouer à des jeux simples. Dans le cadre des jeux, nous pouvons citer un jeu de plateau, le tictactoe qui nécessite de détecter des formes sur un plateau pour jouer et établir une stratégie de jeux. Ou le chifoumi qui nécessite de détecter la forme de la main pour savoir qui entre le robot et l'humain a gagné. Ces deux détections sont résolues en utilisant du \textit{deep learning} permettant de s'adapter à une grande variété de situations.
+\end{spacing}
+}

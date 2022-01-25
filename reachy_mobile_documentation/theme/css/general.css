@@ -177,7 +177,7 @@ blockquote {
 }
 
 b, strong{
-    color: #FF5964;
+    color: #6181BE;
 }
 
 method{
@@ -185,8 +185,8 @@ method{
     margin-bottom: 6px;
     margin-top: 20px;
     border: none;
-    color: #FFB454;
-    border-left: 3px solid #FF5964;
+    color: #76BBB8;
+    border-left: 3px solid #6181BE;
     padding-left: 5px;
     padding-right: 5px;
     font-size: 110%;
@@ -196,8 +196,8 @@ class{
     display: table;
     margin-top: 30px;
     line-height: normal;
-    color: #FF5964;
-    border-top: 3px solid #FF5964;
+    color: #6181BE;
+    border-top: 3px solid #6181BE;
     padding: 6px;
     position: relative;
     font-weight: bold;
@@ -206,7 +206,7 @@ class{
 
 member{
     border: none;
-    color: #FFB454;
+    color: #76BBB8;
     padding-left: 5px;
     padding-right: 5px;
     font-style : italic;
@@ -214,6 +214,6 @@ member{
 }
 
 em{
-    color: #FFB454;
+    color: #F0887F;
 }
 
