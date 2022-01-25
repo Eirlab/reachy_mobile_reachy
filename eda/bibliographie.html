@@ -1,0 +1,261 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Bibliographie - Reachy Mobile</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Reachy Mobile</li><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../eda/introduction.html"><strong aria-hidden="true">2.</strong> État de l'art</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../eda/introduction.html"><strong aria-hidden="true">2.1.</strong> Introduction</a></li><li class="chapter-item "><a href="../eda/navigation-dans-une-foule.html"><strong aria-hidden="true">2.2.</strong> Navigation dans une foule</a></li><li class="chapter-item "><a href="../eda/acceptation-d-un-robot-dans-la-societe.html"><strong aria-hidden="true">2.3.</strong> Acceptation d'un robot dans la société</a></li><li class="chapter-item "><a href="../eda/contenu-des-interactions-en-utilisant-la-vision-artif-cielle.html"><strong aria-hidden="true">2.4.</strong> Contenu des interactions en utilisant la vision artificielle</a></li><li class="chapter-item "><a href="../eda/conclusion.html"><strong aria-hidden="true">2.5.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="../eda/bibliographie.html" class="active"><strong aria-hidden="true">2.6.</strong> Bibliographie</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Reachy Mobile</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="bibliographie"><a class="header" href="#bibliographie">Bibliographie</a></h1>
+<p><strong>[noa, a]</strong>  3.1. Cross-validation : evaluating estimator performance.</p>
+<p><strong>[noa, b]</strong>  3.2. Tuning the hyper-parameters of an estimator.</p>
+<p><strong>[noa, c]</strong>  CS 230 - Pense-bête de réseaux de neurones convolutionnels.</p>
+<p><strong>[noa, 2020]</strong>  (2020). Cross-Validation in Machine Learning : How to Do It Right.</p>
+<p><strong>[D’Alessandro and Richard, 2015]</strong>  D’Alessandro, C. and Richard, G. (2015).Synthèse de la parole à partir du
+texte.Documents numériques Gestion decontenu.</p>
+<p><strong>[Daou et al., ]</strong>  Daou, A., Pothin, J.-b., Honeine, P., and Bensrhair, A. Amélioration desperformances des réseaux de
+neurones convolutifs en localisation indoor paraugmentation des données. page 7.</p>
+<p><strong>[Delsart, 2011]</strong>  Delsart, V. (2011). Navigation autonome en environnementdynamique : une approche par déformation de
+trajectoire. page 176.</p>
+<p><strong>[Education, 2020]</strong> Education, I. C. (2020). What is Speech Recognition ? | IBM.</p>
+<p><strong>[Fulgenzi et al., 2009]</strong>  Fulgenzi, C., Spalanzani, A., and Laugier, C. (2009).Probabilistic motion planning among
+moving obstacles following typical motionpatterns. In2009 IEEE/RSJ International Conference on Intelligent Robots
+andSystems, pages 4027–4033. ISSN : 2153-0866.</p>
+<p><strong>[Govea, 2007]</strong>
+Govea, D. A. V. (2007).Incremental Learning for Motion Prediction ofPedestrians and Vehicles. phdthesis, Institut
+National Polytechnique de Grenoble -INPG.</p>
+<p><strong>[Hall, 1996]</strong>  Hall, E. (1996).The hidden dimension. PhD thesis, Doubleday AnchorBooks. Doubleday.</p>
+<p><strong>[Hart et al., 1968]</strong>  Hart, P. E., Nilsson, N. J., and Raphael, B. (1968). A Formal Basisfor the Heuristic
+Determination of Minimum Cost Paths.IEEE Transactions onSystems Science and Cybernetics, 4(2) :100–107. Conference
+Name :
+IEEETransactions on Systems Science and Cybernetics.</p>
+<p><strong>[Heaton, 2008]</strong>  Heaton, J. (2008).Introduction to Neural Networks with Java. HeatonResearch, Inc. Google-Books-ID :
+Swlcw7M4uD8C.</p>
+<p><strong>[Hiyadi, 2016]</strong>  Hiyadi, H. (2016)
+.Reconnaissance 3D de gestes pour l’interactionhomme-système. Theses, Université Paris-Saclay ;
+Universitéd’Evry-Val-d’Essonne ; Université Mohammed V de Rabat. Issue : 2016SACLE052.</p>
+<p><strong>[Howard et al., 2017]</strong>  Howard, A. G., Zhu, M., Chen, B., Kalenichenko, D., Wang, W.,Weyand, T., Andreetto, M., and
+Adam, H. (2017). MobileNets :
+EfficientConvolutional Neural Networks for Mobile Vision Applications.arXiv :1704.04861**[cs]**. arXiv :
+1704.04861.</p>
+<p><strong>[Joosse et al., 2014]</strong>  Joosse, M., Poppe, R., Lohse, M., and Evers, V. (2014). Culturaldifferences in how an
+engagement-seeking robot should approach a group ofpeople. InCABS ’14.</p>
+<p><strong>[Khatib, 1985]</strong>  Khatib, O. (1985). Real-time obstacle avoidance for manipulators andmobile robots. In1985 IEEE
+International Conference on Robotics and AutomationProceedings, volume 2, pages 500–505.</p>
+<p><strong>[Liu et al., 2019]</strong>  Liu, L., Ouyang, W., Wang, X., Liu, X., Fieguth, P., Pietikainen, M.,and Chen, J. (2019). Deep
+Learning for Generic Object Detection : A Survey |SpringerLink.</p>
+<p><strong>[Liénard, 1977]</strong>  Liénard, J.-S. (1977).Les processsus de la communication parlée.Masson edition.</p>
+<p><strong>[Lobo et al., 2006]</strong>  Lobo, J., Marques, L., Dias, J., Nunes, U., and de Almeida, A.(2006). Sensors for mobile robot
+navigation. pages 50–81.</p>
+<p><strong>[Martinez-Gomez and Fraichard, 2009]</strong>  Martinez-Gomez, L. and Fraichard, T. (
+2009).Collision avoidance in dynamic environments : An ICS-based solution and itscomparative evaluation. In2009 IEEE
+International Conference on Robotics andAutomation, pages 100–105. ISSN : 1050-4729.</p>
+<p><strong>[Minguez and Montano, 2000]</strong>
+Minguez, J. and Montano, L. (2000). Nearnessdiagram navigation (ND) : a new real time collision avoidance approach.
+InProceedings. 2000 IEEE/RSJ International Conference on Intelligent Robots andSystems (IROS 2000) (Cat. No.00CH37113),
+volume 3, pages 2094–2100 vol.3.</p>
+<p><strong>[Moras, ]</strong>  Moras, J. Grilles de perception évidentielles pour la navigation robotique enmilieu urbain. page 198.</p>
+<p><strong>[Mosseri and Lang, 2018]</strong>  Mosseri, I. and Lang, O. (2018). Looking to Listen :Audio-Visual Speech Separation.</p>
+<p><strong>[Pagac et al., 1998]</strong>  Pagac, D., Nebot, E., and Durrant-Whyte, H. (1998). Anevidential approach to map-building for
+autonomous vehicles.Robotics andAutomation, IEEE Transactions on, 14 :623–629.</p>
+<p><strong>[Satake et al., 2009]</strong>
+Satake, S., Kanda, T., Glas, D., Imai, M., Ishiguro, H., andHagita, N. (2009). How to Approach Humans ?-Strategies for
+Social Robots toInitiate Interaction-. volume 28, pages 109–116.</p>
+<p><strong>[Spalanzani, 2015]</strong>  Spalanzani, A. (2015).Contribution à la navigation autonome enenvironnement dynamique et humain.
+thesis, MSTII.</p>
+<p><strong>[Talon et al., 2018]</strong>  Talon, C., Dautrême, E., Remy, E., Dirat, Y., and Strat, C. D. L.(2018). Analyse De Différents
+Algorithmes De Classification Par ApprentissageAutomatique Sur Un Cas D’usage Du Domaine Nucléaire. page 8.</p>
+<p><strong>[Tay et al., 2008]</strong>  Tay, M. K., Mekhnacha, K., Yguel, M., Coué, C., Pradalier, C.,Laugier, C., Fraichard, T., and
+Bessière, P. (2008). The Bayesian Occupation Filter.In Bessière, P., Laugier, C., and Siegwart, R.,
+editors,Probabilistic Reasoning andDecision Making in Sensory-Motor Systems, volume 46, pages 77–98. SpringerBerlin
+Heidelberg, Berlin, Heidelberg. ISSN : 1610-7438, 1610-742X Series Title :Springer Tracts in Advanced Robotics.</p>
+<p><strong>[Viola and Jones, ]</strong>  Viola, P. and Jones, M. Robust Real-time Object Detection.page 25.</p>
+<p><strong>[Wolpert and Macready, 1997]</strong>  Wolpert, D. and Macready, W. (1997). No free lunchtheorems for optimization.IEEE
+Transactions on Evolutionary Computation,1(1) :67–82. Conference Name : IEEE Transactions on Evolutionary Computation.</p>
+<p><strong>[Xiao-Long et al., 2017]</strong>  Xiao-Long, W., Chun-Fu, W., Guo-Dong, L., and Qing-Xie, C.(2017). A robot navigation
+method based on RFID and QR code in the warehouse.In2017 Chinese Automation Congress (CAC), pages 7837–7840.</p>
+<p><strong>[Zhao et al., 2019]</strong>  Zhao, Z.-Q., Zheng, P., Xu, S.-T., and Wu, X. (2019). ObjectDetection With Deep Learning : A
+Review.IEEE Transactions on Neural Networksand Learning Systems, 30(11) :3212–3232. Conference Name : IEEE
+Transactionson Neural Networks and Learning Systems.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../eda/conclusion.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../eda/conclusion.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

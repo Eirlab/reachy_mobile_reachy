@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introduction - Reachy Mobile</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Reachy Mobile</li><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../eda/introduction.html" class="active"><strong aria-hidden="true">2.</strong> État de l'art</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../eda/introduction.html" class="active"><strong aria-hidden="true">2.1.</strong> Introduction</a></li><li class="chapter-item "><a href="../eda/navigation-dans-une-foule.html"><strong aria-hidden="true">2.2.</strong> Navigation dans une foule</a></li><li class="chapter-item "><a href="../eda/acceptation-d-un-robot-dans-la-societe.html"><strong aria-hidden="true">2.3.</strong> Acceptation d'un robot dans la société</a></li><li class="chapter-item "><a href="../eda/contenu-des-interactions-en-utilisant-la-vision-artif-cielle.html"><strong aria-hidden="true">2.4.</strong> Contenu des interactions en utilisant la vision artificielle</a></li><li class="chapter-item "><a href="../eda/conclusion.html"><strong aria-hidden="true">2.5.</strong> Conclusion</a></li><li class="chapter-item "><a href="../eda/bibliographie.html"><strong aria-hidden="true">2.6.</strong> Bibliographie</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Reachy Mobile</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="État-de-lart"><a class="header" href="#État-de-lart">État de l'art</a></h1>
+<h2 id="résumé"><a class="header" href="#résumé">Résumé</a></h2>
+<p>Parmi les différents cobots existant, les cobots de service sont ceux évoluant le plus proche des humains. Les
+utilisations de ces derniers sont variées (guidage dans un aéroport, aide à la personne ...) et la construction d'un
+cobot de service implique de relever plusieurs défis.</p>
+<p>Dans le cas d'un cobot de service mobile, il est nécessaire de faire en sorte que ce robot puisse se déplacer dans un
+environnement dynamique et incertain avec une certaine fiabilité. Pour cela une modélisation du monde, comme celle par
+grille d'occupation probabiliste, est utilisée pour permettre au cobot de traduire ce que ses capteurs perçoivent et sa
+position dans l'environnement. De plus une stratégie d'élaboration de trajectoires prenant en compte l'incertitude sur
+l'environnement et le dynamisme de ce dernier est nécessaire. Pour ce défi, les méthodes délibératives et plus
+particulièrement l'algorithme \textit{riskRRT} permettent de fournir une solutions.</p>
+<p>En plus de la navigation, un cobot de service a pour rôle d'interagir avec les humains. Pour cela il est nécessaire
+d'étudier et de proposer une implémentation des règles sociales par la théorie proxémique. Au-delà du respect des règles
+sociales, il est nécessaire de mettre en place un moyen de communication entre le cobot et les humains. Plusieurs
+techniques peuvent être utilisées comme la reconnaissance vocale, la détection de gestes ou l'\textit{eye-contact}.
+L'intégration de ces règles et de cette communication est une phase clé permettant de passer d'un robot ayant la
+capacité de naviguer dans une foule à un robot interagissant convenablement avec cette foule.</p>
+<p>Finalement, lorsqu'un robot de service est capable de naviguer dans une foule et d'interagir correctement avec des
+humains, il reste à fournir du contenu lors de ces interactions pour que le cobot ait une réelle utilité. Ces
+interactions peuvent avoir différentes formes comme guider les utilisateurs vers des points d'intérêts, faire visiter un
+espace ou dans notre cas jouer à des jeux simples. Dans le cadre des jeux, nous pouvons citer un jeu de plateau, le
+tictactoe qui nécessite de détecter des formes sur un plateau pour jouer et établir une stratégie de jeux. Ou le
+chifoumi qui nécessite de détecter la forme de la main pour savoir qui entre le robot et l'humain a gagné. Ces deux
+détections sont résolues en utilisant du \textit{deep learning} permettant de s'adapter à une grande variété de
+situations.</p>
+<h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>Depuis la révolution industrielle, les automates puis la robotique
+tendent à aider l'humain dans les différentes tâches qu'il doit
+réaliser, principalement dans les tâches de production en usine.
+Cependant, nombre de robots possèdent sont performants lorsqu'ils sont
+isolés (parfois en cage) et que l'humain n'est là que pour contrôler
+globalement l'ensemble des procédés. Imaginer un robot évoluant
+librement dans un magasin sans gêner, ni physiquement, ni
+psychologiquement, les usagers soulève des problématiques.</p>
+<p>Depuis 1996, J. E. Colgate, W. Wannasuphoprasit et M. A. Peshkin ont
+proposé une définition de la notion de cobotique, cette notion a été
+subdivisée avec le temps en trois grands domaines de la cobotique. D'une
+part la cobotique industrielle permettant de répondre aux tâches
+difficiles et pénibles ou à très faible valeur ajoutée. Le cobot asiste
+en direct les gestes de l'opérateur en démultipliant ses capacités pour
+manipuler en sécurité des pièces chaudes, lourdes, encombrantes, petites
+... La cobotique médicale, parfaitement illustrée par le cobot <a href="https://fr.wikipedia.org/wiki/Da_Vinci_(chirurgie)">Da
+Vinci</a> qui permet
+d'assister un chirurgien lors d'une opération. Finalement la cobotique
+qui va nous intéresser pendant ce projet, la cobotique dites conviviale,
+elle consiste à utiliser des robots, le plus souvent humanoïdes (par
+exemple le robot <a href="https://fr.wikipedia.org/wiki/NAO_(robotique)">NAO</a>),
+pour établir des communications et rendre des services. Cette
+utilisation prend son sens dans la robotique de service, où le robot
+humanoïde est par exemple appelé à guider, interagir et rendre des
+services<sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<p>C'est dans ce cadre de la cobotique de service que s'inscrit notre
+projet, en effet, notre client souhaite disposer d'un robot de service
+dans le cadre des 100 ans de l'ENSEIRB-MATMECA. L'objectif de ce robot
+est de fournir du contenu utile aux visiteurs comme leur indiquer la
+localisation des salles, des toilettes, proposer des jeux interactifs,
+etc. Pour se faire nous avons à notre disposition deux robots
+indépendants, d'une part un <a href="https://ez-wheel.com/fr/kit-de-developpement-pour-agvamr">robot de navigation
+EZ-WHEEL</a> et
+un <a href="https://www.pollen-robotics.com/">robot semi-humanoïde REACHY</a>.
+L'objectif de ce projet est d'intégrer les deux robots ensemble sur
+l'environnement ROS. Cette intégration couvre plusieurs domaines puisque
+nous devons à la fois réaliser l'intégration mécatronique, réaliser les
+algorithmes de navigation adéquats à ce nouveau robot et prévoir des
+interactions avec les visiteurs pour que ce robot soit une réelle valeur
+ajoutée à l'événement et non une curiosité à la limite de la vallée de
+l'étrange. Cela nous amène donc à la problématique générale de ce
+projet, comment concevoir un cobot destiné aux interactions humaines
+lors d'événements ?</p>
+<p>Le contexte de ce projet soulève d'abord une problématique de foule, en
+effet le robot devra évoluer dans un environnement densément peuplé, il
+devra même faire plus qu'une simple navigation dans cet environnement,
+il devra être capable de détecter les humains et interagir avec eux de
+manière adéquate. Dans cet optique, nous allons orienter notre état de
+l'art selon trois axes, premièrement les questions de navigation dans un
+environnement dynamique et incertain sont traitées. Nous rajouterons
+ensuite le fait qu'un humain n'est pas un simple objet en mouvement,
+mais qu'il obéit à certaines règles sociales. Pour que notre robot soit
+suffisamment accepté il est nécessaire d'étudier ces règles sociales
+pour, <em>in fine</em>, en faire un modèle et l'intégrer au robot. Finalement
+notre robot est amené à interagir avec les gens et à réaliser des jeux
+avec lui. Que ce soit pour l'interaction ou pour les jeux il est
+nécessaire qu'il possède la capacité de voir et de comprendre la
+sémantique derrière la vision, nous traitons donc des différents
+algorithmes qui seront utilisées.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Exemple d'un robot de service à l'aéroport de Genève :
+<a href="https://www.youtube.com/watch?v=Jdc_AmLVlVI">https://www.youtube.com/watch?v=Jdc_AmLVlVI</a></p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../eda/introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../eda/introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>
