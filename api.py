@@ -2,11 +2,12 @@
 This file implements point endpoints to add/ delete and get a cartesian point from compliant mode or rviz
 """
 import threading
-
 from flask import Blueprint, request, send_file
-from werkzeug.exceptions import NotFound
-import reachy
 from reachy_sdk import ReachySDK
+from werkzeug.exceptions import NotFound
+
+import reachy
+
 
 class ReachyAPI:
 
@@ -30,40 +31,40 @@ class ReachyAPI:
 
     def play(self):
         if request.method == 'POST':
-            # thread = threading.Thread(target=reachy.main())
+            # thread = threading.Thread(target=reachy.main, args=(self.reachy))
             # thread.start()
-            winner = reachy.main()
-            return winner, 200
+            winner = reachy.main(self.reachy)
+            return {'status': "Success"}, 200
 
     def head_on(self):
         if request.method == 'POST':
             self.reachy.turn_on('head')
-            return 200
+            return {'status': "Success"}, 200
 
     def head_off(self):
         if request.method == 'POST':
             self.reachy.turn_off('head')
-        return 200
+        return {'status': "Success"}, 200
 
     def head_lookat(self):
         if request.method == 'POST':
             data = request.get_json()
-            x = data['x']
-            y = data['y']
-            z = data['z']
-            duration = data['duration']
-            self.reachy.head.look_at(x, y, z, duration)
-            return 200
+            x = float(data['x'])
+            y = float(data['y'])
+            z = float(data['z'])
+            duration = float(data['duration'])
+            self.reachy.head.look_at(x=x, y=y, z=z, duration=duration)
+            return {'status': "Success"}, 200
 
     def head_happy(self):
         if request.method == 'POST':
             reachy.happy_antennas(self.reachy)
-            return 200
+            return {'status': "Success"}, 200
 
     def head_sad(self):
         if request.method == 'POST':
             reachy.sad_antennas(self.reachy)
-            return 200
+            return {'status': "Success"}, 200
 
     def camera_left(self):
         if request.method == 'GET':
@@ -76,4 +77,3 @@ class ReachyAPI:
             image = self.reachy.right_camera.wait_for_new_frame()
             return send_file(image, mimetype='image/jpeg')
         return "Reachy API"
-
