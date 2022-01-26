@@ -12,3 +12,5 @@ Reachy Mobile
   - [Contenu des interactions en utilisant la vision artificielle](eda/contenu-des-interactions-en-utilisant-la-vision-artif-cielle.md)
   - [Conclusion](eda/conclusion.md)
   - [Bibliographie](eda/bibliographie.md)
+- [Reachy](reachy/reachy.md)
+  - [Tictactoe](reachy/tictactoe.md)
