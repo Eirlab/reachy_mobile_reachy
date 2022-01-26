@@ -30,13 +30,13 @@ def run_game_loop(tictactoe_playground):
     logger.info('Checking if the board is completely empty.')
     # status, board = tictactoe_playground.analyze_board()
     status = False
+    cpt_idle_behavior=0
     while not status:
         status, board = tictactoe_playground.analyze_board()
-        status = np.any(board)
-        # if np.any(board):
-        #     status = False
-        # else:
-        #     status = True
+        if np.any(board) or not status:
+            status = False
+        else:
+            status = True
     while True:
         logger.info('Board cleaned')
         if tictactoe_playground.is_ready(board):
@@ -57,6 +57,7 @@ def run_game_loop(tictactoe_playground):
             continue
         if not reachy_turn:
             if tictactoe_playground.has_human_played(board, last_board):
+                cpt_idle_behavior=0
                 reachy_turn = True
                 if not tictactoe_playground.is_final(board):
                     logger.info('Next turn', extra={
@@ -64,7 +65,8 @@ def run_game_loop(tictactoe_playground):
                     })
                 tictactoe_playground.run_my_turn()
             else:
-                tictactoe_playground.run_random_idle_behavior()
+                cpt_idle_behavior += 1
+                tictactoe_playground.run_random_idle_behavior(cpt_idle_behavior)
 
         # If we have detected some cheating or any issue We reset the whole game
         if (tictactoe_playground.incoherent_board_detected(board) or
