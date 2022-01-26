@@ -3,6 +3,8 @@ Allows you to play a game of tictactoe with the reachy
 """
 import argparse
 import logging
+import time
+
 import numpy as np
 import zzlog
 from datetime import datetime
@@ -22,18 +24,19 @@ def run_game_loop(tictactoe_playground):
     :param tictactoe_playground: an instance of TictactoePlayground
     :return: the winner of the game
     """
-    logger.setLevel(logging.WARNING)
+    # logger.setLevel(logging.WARNING)
     logger.info('Game start')
     # Check that the board is empty (the 9 box of the grid have to be empty)
     logger.info('Checking if the board is completely empty.')
-    status, board = tictactoe_playground.analyze_board()
+    # status, board = tictactoe_playground.analyze_board()
     status = False
     while not status:
         status, board = tictactoe_playground.analyze_board()
-        if np.any(board):
-            status = False
-        else:
-            status = True
+        status = np.any(board)
+        # if np.any(board):
+        #     status = False
+        # else:
+        #     status = True
     while True:
         logger.info('Board cleaned')
         if tictactoe_playground.is_ready(board):
@@ -55,9 +58,10 @@ def run_game_loop(tictactoe_playground):
         if not reachy_turn:
             if tictactoe_playground.has_human_played(board, last_board):
                 reachy_turn = True
-                logger.info('Next turn', extra={
-                    'next_player': 'Reachy',
-                })
+                if not tictactoe_playground.is_final(board):
+                    logger.info('Next turn', extra={
+                        'next_player': 'Reachy',
+                    })
                 tictactoe_playground.run_my_turn()
             else:
                 tictactoe_playground.run_random_idle_behavior()
@@ -86,10 +90,11 @@ def run_game_loop(tictactoe_playground):
 
             last_board = board
             reachy_turn = False
-            tictactoe_playground.run_your_turn()
-            logger.info('Next turn', extra={
-                'next_player': 'Human',
-            })
+            if not tictactoe_playground.is_final(board):
+                tictactoe_playground.run_your_turn()
+                logger.info('Next turn', extra={
+                    'next_player': 'Human',
+                })
 
         # If the game is over, determine who is the winner
         # and behave accordingly
@@ -101,7 +106,7 @@ def run_game_loop(tictactoe_playground):
             elif winner == 'human':
                 tictactoe_playground.run_defeat_behavior()
             else:
-                tictactoe_playground.run_defeat_behavior()
+                tictactoe_playground.run_draw_behavior()
             return winner
 
     logger.info('Game end')

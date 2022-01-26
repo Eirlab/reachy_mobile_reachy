@@ -36,17 +36,23 @@ class TictactoePlayground(object):
         self.pawn_played = 0
 
     def setup(self):
-        logger.info('Setup the playground')
         self.reachy.turn_on('head')
-        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
-        time.sleep(1)
-        self.reachy.head.look_at(x=1, y=0, z=-0.6, duration=1)
-        time.sleep(1)
-        self.reachy.turn_off('head')
+        self.reachy.turn_on('r_arm')
         self.reachy.head.l_antenna.speed_limit = 50.0
         self.reachy.head.r_antenna.speed_limit = 50.0
+
         self.reachy.head.l_antenna.goal_position = 0
         self.reachy.head.r_antenna.goal_position = 0
+        time.sleep(1)
+        self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
+        time.sleep(1)
+        self.goto_rest_position()
+        time.sleep(1)
+        # self.reachy.head.look_at(0.95, -0.5, -0.2, 1.0)
+        logger.info('Setup the playground')
+        self.reachy.head.look_at(x=1, y=0, z=-0.8, duration=1)
+        time.sleep(1)
+        self.reachy.turn_off('head')
 
     def __enter__(self):
         return self
@@ -95,11 +101,13 @@ class TictactoePlayground(object):
         return coin
 
     def analyze_board(self):
-        time.sleep(6)
+        # time.sleep(6)
+        time.sleep(2)
         print("Waiting for image")
         img = self.reachy.right_camera.wait_for_new_frame()
         print("Receiving new frame")
-        time.sleep(3)
+        # time.sleep(3)
+        time.sleep(1)
         i = np.random.randint(1000)
         path = f'/home/reachy/reachy_mobile_reachy/tictactoe/images/{i}.jpg'
         cv.imwrite(path, img)
@@ -169,6 +177,10 @@ class TictactoePlayground(object):
         t = Thread(target=ears_no)
         t.start()
 
+        self.reachy.turn_on('r_arm')
+        self.reachy.turn_on('head')
+        self.reachy.head.l_antenna.speed_limit = 70.0
+        self.reachy.head.r_antenna.speed_limit = 70.0
         self.goto_base_position()
         self.reachy.turn_on('r_arm')
         self.reachy.turn_on('head')
@@ -216,9 +228,14 @@ class TictactoePlayground(object):
     def play_pawn(self, grab_index, box_index):
         self.reachy.r_arm.r_gripper.speed_limit = 80
         self.reachy.r_arm.r_gripper.compliant = False
+        self.reachy.turn_on('head')
         self.reachy.turn_on('r_arm')
         logger.info(f'BOX_INDEX = {box_index}')
         # Goto base position
+        self.reachy.head.look_at(0.95, 0, 0, 1.0)
+
+        time.sleep(1)
+        self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
         self.goto_base_position()
         self.reachy.r_arm.r_gripper.goal_position = -40  # open the gripper
         path = f'/home/reachy/dev/reachy-tictactoe_2021/reachy_tictactoe/moves-2021_nemo/grab_{grab_index}.npz'
@@ -229,6 +246,8 @@ class TictactoePlayground(object):
         time.sleep(2)
         self.reachy.head.l_antenna.goal_position = 45
         self.reachy.head.r_antenna.goal_position = -45
+        self.reachy.head.look_at(0.95, 0, -0.7, 1.0)
+        self.reachy.turn_off('head')
         if grab_index >= 4:
             goto(
                 goal_positions={
@@ -258,7 +277,8 @@ class TictactoePlayground(object):
             self.goto_position(path)
         path = '/home/reachy/dev/reachy-tictactoe_2021/reachy_tictactoe/moves-2021_nemo/back_rest.npz'
         self.goto_position(path)
-        self.goto_rest_position()
+        self.goto_base_position()
+        # self.goto_rest_position()
 
     def is_final(self, board):
         winner = self.get_winner(board)
@@ -310,13 +330,18 @@ class TictactoePlayground(object):
 
     def run_celebration(self):
         logger.info('Reachy is playing its win behavior')
+        self.reachy.turn_on('head')
+        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
+        time.sleep(1)
         behavior.happy(self.reachy)
 
     def run_draw_behavior(self):
+        self.reachy.turn_on('head')
         logger.info('Reachy is playing its draw behavior')
         behavior.surprise(self.reachy)
 
     def run_defeat_behavior(self):
+        self.reachy.turn_on('head')
         logger.info('Reachy is playing its defeat behavior')
         behavior.sad(self.reachy)
 
@@ -330,7 +355,7 @@ class TictactoePlayground(object):
         self.trajectoryPlayer(path)
         logger.info('My turn')
         self.goto_rest_position()
-        self.reachy.head.look_at(x=1, y=0, z=-0.6, duration=1)
+        self.reachy.head.look_at(x=1, y=0, z=-0.7, duration=0.7)
         self.reachy.turn_off('head')
 
     def run_your_turn(self):
@@ -343,7 +368,7 @@ class TictactoePlayground(object):
         self.trajectoryPlayer(path)
         logger.info('Your  turn')
         self.goto_rest_position()
-        self.reachy.head.look_at(x=1, y=0, z=-0.6, duration=1)
+        self.reachy.head.look_at(x=1, y=0, z=-0.7, duration=0.7)
         self.reachy.turn_off('head')
 
     # Robot lower-level control functions
@@ -355,7 +380,7 @@ class TictactoePlayground(object):
         listMoves = move['move'].tolist()
         listTraj = {}
         for key, val in listMoves.items():
-            logger.info('self.' + key + '')
+            # logger.info('self.' + key + '')
             listTraj[eval('self.' + key)] = float(val)
 
         goto(
@@ -398,7 +423,7 @@ class TictactoePlayground(object):
             duration=1.0,
             interpolation_mode=InterpolationMode.MINIMUM_JERK
         )
-        time.sleep(1.25)
+        # time.sleep(1.25)
         self.reachy.r_arm.r_shoulder_roll.comliant = True
         self.reachy.r_arm.r_arm_yaw.comliant = True
         self.reachy.r_arm.r_elbow_pitch.comliant = True
@@ -413,7 +438,7 @@ class TictactoePlayground(object):
         self.reachy.turn_on('r_arm')
         move = np.load(path)
         move.allow_pickle = 1
-        logger.info(list(move.keys()))
+        # logger.info(list(move.keys()))
         listMoves = move['move'].tolist()
         listTraj = [val for key, val in listMoves.items()]
         listTraj = np.array(listTraj).T.tolist()
