@@ -32,9 +32,8 @@ def sad_antennas(reachy):
     reachy.head.r_antenna.goal_position = 0.0
 
 
-def main():
+def main(reachy):
     global first_play
-    reachy = ReachySDK(host='localhost')
     reachy.turn_on('head')
     #reachy.head.look_at(0.95, -0, -0.0, 1.0)
     reachy.head.look_at(0.95, -0.5, -0.0, 1.0)
@@ -62,9 +61,11 @@ def main():
             #reachy.head.r_antenna.goal_position = 0.0
             print("Play !")
             first_play = True
-            game_launcher.main(reachy, '/home/reachy/reachy_mobile_reachy/gamelog')
+            winner = game_launcher.main(reachy, '/home/reachy/reachy_mobile_reachy/gamelog')
             reachy.turn_off('head')
             reachy.turn_off('r_arm')
+            return winner
 
 if __name__ == '__main__':
-    main()
+    reachy = ReachySDK(host='localhost')
+    main(reachy)
