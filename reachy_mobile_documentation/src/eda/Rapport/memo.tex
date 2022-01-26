@@ -1,0 +1,71 @@
+%%%%%%%%%%%%%
+%  Figures  %
+%%%%%%%%%%%%%
+
+\begin{figure}%[h]
+	\centering
+	\includegraphics[width=\linewidth]{images/xxxx}
+	\caption{My caption}
+	\label{fig:my-label}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%  Listings (code)  %
+%%%%%%%%%%%%%%%%%%%%%
+
+\lstinline|short code without syntax highlighting|
+
+\begin{lstlisting}[language=My language,caption=My caption,label=code:label]
+// My code
+\end{lstlisting}
+
+\lstinputlisting[language=My language,caption=My caption,label=code:label]{files/code.py}
+
+
+%%%%%%%%%%%%%
+%  Itemize  %
+%%%%%%%%%%%%%
+
+\begin{itemize}
+	\item 
+\end{itemize}
+
+\begin{enumerate}
+	\item 
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%
+%  Glossary  %
+%%%%%%%%%%%%%%
+
+\gls{term}
+\glspl{term}
+
+\acrshort{term}
+\acrlong{term}
+\acrfull{term}
+
+
+%%%%%%%%%
+%  URL  %
+%%%%%%%%%
+
+\href{https://www.latex-project.org}{Link}
+\url{https://www.latex-project.org}
+
+\hyperlink{link-label}{any sentence} % a link to the \hypertarget{link-label}
+\hypertarget{link-label}{this sentence}
+
+
+%%%%%%%%%%%%%%%%%%%
+%  Miscellaneous  %
+%%%%%%%%%%%%%%%%%%%
+
+\footnote{Footnote text}
+\autoref{fig:label} % Print "Figure X"
+\ref{fig:label} % Print "X"
+
+\chapter{Chapter} \label{chap:label}
+\autoref{chap:label}
