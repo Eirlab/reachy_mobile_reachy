@@ -57,6 +57,7 @@ def main(reachy):
             shoulder = pose[KeypointType.LEFT_SHOULDER]
             wrist = pose[KeypointType.LEFT_WRIST]
             difference = shoulder.point.y - wrist.point.y
+            print(difference)
             if difference > 0:
                 config.detection[i] = 1
                 config.counter[i] += 1
