@@ -3,7 +3,8 @@ This file implements endpoints for Reachy API allowing to control rechy mobile r
 """
 from flask import Blueprint, request, send_file
 from reachy_sdk import ReachySDK
-
+import sys
+sys.path.insert(0, "../")
 import reachy
 
 
