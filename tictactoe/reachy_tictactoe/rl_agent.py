@@ -36,27 +36,25 @@ def score(board):
         return 0
 
 
-def minimax(board, player):
+def minmax(board, player):
     if get_winner(board) != 'nobody':
         return score(board)
     elif player == 2:
         possible_actions = np.where(np.array(board) == 0)[0]
-        temp = [-10000] * 10000
+        temp = [-1000] * 9
         for possible in possible_actions:
             next_board = board.copy()
-            next_board[possible] = player
-            player = 1
-            temp[possible] = minimax(next_board, player)
-            return max(temp)
-    elif player == 1:
+            next_board[possible] = 2
+            temp[possible] = minmax(next_board, 1)
+        return max(temp)
+    else:
         possible_actions = np.where(np.array(board) == 0)[0]
-        temp = [10000] * 10000
+        temp = [1000] * 9
         for possible in possible_actions:
             next_board = board.copy()
-            next_board[possible] = player
-            player = 2
-            temp[possible] = minimax(next_board, player)
-            return min(temp)
+            next_board[possible] = 1
+            temp[possible] = minmax(next_board, 2)
+        return min(temp)
 
 
 def best_move(board, player=2):
@@ -66,10 +64,11 @@ def best_move(board, player=2):
     for action in possible_actions:
         next_board = board.copy()
         next_board[action] = player
-        score = minimax(next_board, player)
+        score = minmax(next_board, 1)
         if score > best:
             best = score
             best_move = action
+    logger.warning(best)
     logger.warning(best_move)
     return best_move
 
