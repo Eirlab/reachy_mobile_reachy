@@ -84,10 +84,21 @@ class TictactoePlayground(object):
         z = np.random.rand() * dz - 0.5
         self.reachy.head.look_at(0.5, y, z, duration=1.5)
 
-    @staticmethod
-    def run_random_idle_behavior():
+    def run_random_idle_behavior(self, cpt_idle_behavior):
         logger.info('Reachy is playing a random idle behavior')
-        time.sleep(2)
+        if cpt_idle_behavior % 3 == 0:
+            self.reachy.turn_on('head')
+            self.reachy.head.l_antenna.goal_position = 180
+            self.reachy.head.r_antenna.goal_position = -180
+            self.reachy.head.look_at(1, 0, 0, duration=1)
+            time.sleep(4)
+            self.reachy.head.look_at(1, 0, -0.7, duration=1)
+            self.reachy.head.l_antenna.goal_position = 0
+            self.reachy.head.r_antenna.goal_position = 0
+            time.sleep(3)
+            self.reachy.turn_off('head')
+        else:
+            time.sleep(2)
 
     @staticmethod
     def coin_flip():
