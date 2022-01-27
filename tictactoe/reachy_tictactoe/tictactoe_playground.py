@@ -273,6 +273,19 @@ class TictactoePlayground(object):
         self.reachy.r_arm.r_gripper.goal_position = -5  # close the gripper to take the cylinder
         time.sleep(2)
 
+        while self.reachy.force_sensors.r_force_gripper.force < 300:
+            logger.warning(self.reachy.force_sensors.r_force_gripper)
+            self.reachy.head.l_antenna.goal_position = 180
+            self.reachy.head.r_antenna.goal_position = -180
+            self.reachy.r_arm.r_gripper.goal_position = -40
+            self.reachy.head.look_at(0.95, 0, 0, 1.0)
+            time.sleep(2)
+            self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
+            self.reachy.r_arm.r_gripper.goal_position = -5
+            time.sleep(2)
+        self.reachy.head.l_antenna.goal_position = 45
+        self.reachy.head.r_antenna.goal_position = -45
+
         self.reachy.head.look_at(0.95, 0, -0.7, 1.0)
         self.reachy.turn_off_smoothly('head')
         if grab_index >= 4:
