@@ -50,6 +50,7 @@ def run_game_loop(tictactoe_playground):
     else:
         tictactoe_playground.run_your_turn()
     while True:
+        tictactoe_playground.random_antenna()
         status, board = tictactoe_playground.analyze_board()
         logger.info(f'ok = {status}')
         if not status:
