@@ -19,7 +19,7 @@ def value_actions(board, next_player=1):
     return best_move(board)
 
 
-def random(board, next_player=1):
+def random_action(board, next_player=1):
     possible_actions = np.where(np.array(board) == 0)[0]
     logger.info(possible_actions)
     random.shuffle(possible_actions)

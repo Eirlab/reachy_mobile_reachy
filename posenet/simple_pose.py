@@ -43,32 +43,94 @@ def happy_antennas(reachy):
     reachy.head.r_antenna.goal_position = 0.0
 
 
+def pose_net(reachy):
+    numpy_image = reachy.right_camera.wait_for_new_frame()
+    pil_image = Image.fromarray(numpy_image, 'RGB')
+    engine = PoseEngine(
+        'posenet/models/mobilenet/posenet_mobilenet_v1_075_481_641_quant_decoder_edgetpu.tflite')
+    poses, inference_time = engine.DetectPosesInImage(pil_image)
+    for i in range(len(poses)):
+        pose = poses[i].keypoints
+        shoulder = pose[KeypointType.LEFT_SHOULDER]
+        wrist = pose[KeypointType.LEFT_WRIST]
+        difference = shoulder.point.y - wrist.point.y
+        print(difference)
+        if difference > 0:
+            reachy.head.l_antenna.goal_position = 0.0
+            counter_change = True
+            config.detection[i] = 1
+            config.counter[i] += 1
+            if config.counter[i] == 2:
+                reachy.head.r_antenna.goal_position = 0.0
+            if config.counter[i] == 3:
+                happy_antennas(reachy)
+                config.counter[i] = 0
+                config.detection[i] = 2
+                return
+
+        else:
+            config.detection[i] = 0
+            counter_change = False
+        return counter_change
+
+
 def main(reachy):
+    y = 0
+    turn_right = True
+    counter_change = True
+    reachy.head.l_antenna.speed_limit = 0.0
+    reachy.head.r_antenna.speed_limit = 0.0
     while True:
-        numpy_image = reachy.right_camera.wait_for_new_frame()
-        pil_image = Image.fromarray(numpy_image, 'RGB')
-        engine = PoseEngine(
-            'posenet/models/mobilenet/posenet_mobilenet_v1_075_481_641_quant_decoder_edgetpu.tflite')
-        poses, inference_time = engine.DetectPosesInImage(pil_image)
-        reachy.head.l_antenna.speed_limit = 85.0
-        reachy.head.r_antenna.speed_limit = 85.0
-        for i in range(len(poses)):
-            pose = poses[i].keypoints
-            shoulder = pose[KeypointType.LEFT_SHOULDER]
-            wrist = pose[KeypointType.LEFT_WRIST]
-            difference = shoulder.point.y - wrist.point.y
-            print(difference)
-            if difference > 0:
-                config.detection[i] = 1
-                config.counter[i] += 1
-                if config.counter[i] == 2:
-                    reachy.head.l_antenna.goal_position = 0.0
-                elif config.counter[i] == 3:
-                    reachy.head.r_antenna.goal_position = 0.0
-                if config.counter[i] >= 2:
-                    happy_antennas(reachy)
-                    config.counter[i] = 0
-                    config.detection[i] = 2
-                    return
-                config.detection[i] = 0
-        time.sleep(1.0)
+        time.sleep(0.5)
+        for i in range(20):
+            if config.detection[i] == 2:
+                return
+        if counter_change:
+            print("counter changed")
+            counter_change = pose_net(reachy)
+        else:
+            print("counter NOT changed")
+            if y < 0.5 and turn_right:
+                y += 0.65
+            else:
+                turn_right = False
+                if y > -0.5:
+                    y -= 0.65
+                else:
+                    turn_right = True
+                    y += 0.65
+            reachy.head.l_antenna.goal_position = 140.0
+            reachy.head.r_antenna.goal_position = -140.0
+            reachy.head.look_at(0.95, y, -0, 0.5)
+            time.sleep(0.5)
+            config.counter = [0] * 20
+            counter_change = pose_net(reachy)
+
+# def main(reachy):
+#     while True:
+#         numpy_image = reachy.right_camera.wait_for_new_frame()
+#         pil_image = Image.fromarray(numpy_image, 'RGB')
+#         engine = PoseEngine(
+#             'posenet/models/mobilenet/posenet_mobilenet_v1_075_481_641_quant_decoder_edgetpu.tflite')
+#         poses, inference_time = engine.DetectPosesInImage(pil_image)
+#         reachy.head.l_antenna.speed_limit = 85.0
+#         reachy.head.r_antenna.speed_limit = 85.0
+#         for i in range(len(poses)):
+#             pose = poses[i].keypoints
+#             shoulder = pose[KeypointType.LEFT_SHOULDER]
+#             wrist = pose[KeypointType.LEFT_WRIST]
+#             difference = shoulder.point.y - wrist.point.y
+#             if difference > 0:
+#                 config.detection[i] = 1
+#                 config.counter[i] += 1
+#                 if config.counter[i] == 2:
+#                     reachy.head.l_antenna.goal_position = 0.0
+#                 elif config.counter[i] == 3:
+#                     reachy.head.r_antenna.goal_position = 0.0
+#                 if config.counter[i] >= 2:
+#                     happy_antennas(reachy)
+#                     config.counter[i] = 0
+#                     config.detection[i] = 2
+#                     return
+#                 config.detection[i] = 0
+#         time.sleep(1.0)
