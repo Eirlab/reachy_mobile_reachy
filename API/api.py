@@ -5,10 +5,10 @@ import sys
 import time
 
 from PIL import Image
-from flask import Blueprint, request, send_file, render_template
+from flask import Blueprint, request, render_template
 from reachy_sdk import ReachySDK
 from requests import post, get
-import numpy as np
+
 sys.path.insert(0, "../")
 
 import reachy
@@ -60,16 +60,40 @@ class ReachyAPI:
         return render_template(
             template_name_or_list='index.html')
 
-    def error_404(self, e=None):
+    @staticmethod
+    def error_404(e=None):
+        """
+        METHOD : GET
+        ROUTE : /404
+        BRIEF : Error page for reachy API
+        """
         return render_template(template_name_or_list='404.html'), 404
 
-    def error_500(self, e=None):
+    @staticmethod
+    def error_500(e=None):
+        """
+        METHOD : GET
+        ROUTE : /500
+        BRIEF : Error page for reachy API
+        """
         return render_template(template_name_or_list='500.html'), 500
 
-    def reachy(self):
+    @staticmethod
+    def reachy():
+        """
+        METHOD : GET
+        ROUTE : /reachy
+        BRIEF : Home  page for reachy API
+        """
         return render_template(template_name_or_list='reachy.html')
 
-    def ezwheel(self):
+    @staticmethod
+    def ezwheel():
+        """
+        METHOD : GET
+        ROUTE : /ezwheel
+        BRIEF : Home  page for ezwheel API
+        """
         return render_template(template_name_or_list='ezwheel.html', statut="Undefined")
 
     def play(self):
@@ -78,11 +102,13 @@ class ReachyAPI:
         ROUTE : /play
         PARAMETERS : {}
         BRIEF : Play a tictactoe game (blocking function)
-        :return: {'status': "Success", 'data' : 'winner'} at the end of the game
         """
         if request.method == 'POST':
-            winner = reachy.main(self.reachy)
-            return render_template(template_name_or_list='reachy.html', win=winner)
+            posenet = bool(request.form.get('posenet'))
+            tictactoe = bool(request.form.get('tictactoe'))
+            navigation = bool(request.form.get('navigation'))
+            winner = reachy.main(self.reachy, posenet, tictactoe, navigation)
+            return render_template(template_name_or_list='index.html', win=winner)
 
     def head_on(self):
         """
@@ -118,7 +144,6 @@ class ReachyAPI:
         """
         if request.method == 'POST':
             self.reachy.turn_on('head')
-            data = request.get_json()
             x = float(request.form.get('lookat_x'))
             y = float(request.form.get('lookat_y'))
             z = float(request.form.get('lookat_z'))
@@ -176,7 +201,7 @@ class ReachyAPI:
         if request.method == 'POST':
             self.reachy.left_camera.start_autofocus()
             time.sleep(10.0)
-            return render_template(template_name_or_list='reachy.html',autofocus_left = "Autofocus done")
+            return render_template(template_name_or_list='reachy.html', autofocus_left="Autofocus done")
 
     def camera_right(self):
         """
@@ -202,7 +227,7 @@ class ReachyAPI:
         if request.method == 'POST':
             self.reachy.right_camera.start_autofocus()
             time.sleep(10.0)
-            return render_template(template_name_or_list='reachy.html',autofocus_right = "Autofocus done")
+            return render_template(template_name_or_list='reachy.html', autofocus_right="Autofocus done")
 
     def ezwheel_goal(self):
         """
@@ -240,10 +265,13 @@ class ReachyAPI:
         BRIEF : Do a POST request on 10.10.0.1:5000/cancel
         """
         if request.method == 'POST':
-            response = get(url=self.ezwheel_url + 'cancel')
+            get(url=self.ezwheel_url + 'cancel')
             return render_template(template_name_or_list='ezwheel.html', statut="Cancelled")
 
     def set_head_on(self):
+        """
+        Allow the robot to move the head
+        """
         if self.reachy.head.joints.neck_disk_bottom.compliant and \
                 self.reachy.head.joints.neck_disk_middle.compliant and \
                 self.reachy.head.joints.neck_disk_middle.compliant:
