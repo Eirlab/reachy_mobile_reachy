@@ -1,18 +1,98 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div id="content" class="container-fluid">
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h1 mt-3 mb-0 text-gray-800">Dashboard</h1>
-        </div>
-        <div class="card shadow mb-4">
-        <a href="/head/on" class="d-block card-header py-3" data-toggle="collapse"
-                   role="button" aria-expanded="true" aria-controls="newTimelapse">
-                    <h6 class="m-0 font-weight-bold text-primary">Rendre la tete compliant</h6>
+<div id="content" class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h1 mt-3 mb-0 text-gray-800">EZ-WHEEL</h1>
+    </div>
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#goal" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="goal">
+            <h6 class="m-0 font-weight-bold text-primary">Naviguer jusqu'aux coordonnées</h6>
         </a>
+        <div class="collapse show card-body mb-4" id="goal">
+            <form action="/ezwheel/goal" method="POST">
+                <!-- Button send form -->
+                <div class="row">
+                    <div class="col-auto m-2">
+                        <div class="form-group">
+                            <label for="goal_x">x</label>
+                            <input type="text" class="form-control" name="goal_x"
+                                   placeholder="x" required>
+                        </div>
+                    </div>
+                    <div class="col-auto m-2">
+                        <div class="form-group">
+                            <label for="goal_y">y</label>
+                            <input type="text" class="form-control" name="goal_y"
+                                   placeholder="y" required>
+                        </div>
+                    </div>
+                    <div class="col-auto m-2">
+                        <div class="form-group">
+                            <label for="goal_z">theta</label>
+                            <input type="text" class="form-control" name="goal_theta"
+                                   placeholder="theta" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto m-2">
+                    <button type="submit" class="form-control btn btn-primary">Go !</button>
+                </div>
+            </form>
         </div>
     </div>
+
+    <div class="card shadow mb-4">
+        <a href="#status" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="status">
+            <h6 class="m-0 font-weight-bold text-primary">Statut de la navigation</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="status">
+            <form action="/ezwheel/status" method="POST">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Status de la navigation
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="status_text">{{ status }}</span></div>
+                    </div>
+                    <div class="col-auto mr-2">
+                        <i class="fas fa-heartbeat fa-2x text-gray-300"></i>
+                    </div>
+                    <div class="col-auto mr-2">
+                        <button type="submit" class="form-control btn btn-primary">Mettre à jour</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#cancel" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="cancel">
+            <h6 class="m-0 font-weight-bold text-danger">Stopper la navigation</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="cancel">
+            <form action="/ezwheel/cancel" method="POST">
+                <!-- Button send form -->
+                <div class="row">
+
+                    <div class="col-lg-12 m-2">
+                        <button type="submit" class="form-control btn btn-danger">STOP</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
 {% endblock %}
 
 
