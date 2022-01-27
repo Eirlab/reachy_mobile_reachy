@@ -12,8 +12,10 @@ from glob import glob
 
 if __package__ is None or __package__ == '':
     from tictactoe_playground import TictactoePlayground
+    from rl_agent import value_actions
 else:
     from tictactoe.reachy_tictactoe.tictactoe_playground import TictactoePlayground
+    from tictactoe.reachy_tictactoe.rl_agent import random_action
 
 logger = logging.getLogger('reachy.tictactoe')
 
@@ -30,35 +32,39 @@ def run_game_loop(tictactoe_playground):
     logger.info('Checking if the board is completely empty.')
     # status, board = tictactoe_playground.analyze_board()
     status = False
-    cpt_idle_behavior=0
+    cpt_idle_behavior = 0
     while not status:
         status, board = tictactoe_playground.analyze_board()
         if np.any(board) or not status:
             status = False
         else:
             status = True
-    while True:
-        logger.info('Board cleaned')
-        if tictactoe_playground.is_ready(board):
-            break
-        tictactoe_playground.run_random_idle_behavior()
+    # while True:
+    #     logger.info('Board cleaned')
+    #     if tictactoe_playground.is_ready(board):
+    #         break
+    #     tictactoe_playground.run_random_idle_behavior()
     last_board = tictactoe_playground.reset()
     logger.info(f'size last_board = {np.shape(last_board)}')
+    logger.info(f'size last_board = {np.shape(last_board)}')
+    first_round = True
     reachy_turn = tictactoe_playground.coin_flip()
     if reachy_turn:
+        first_round = True
         tictactoe_playground.run_my_turn()
     else:
         tictactoe_playground.run_your_turn()
     while True:
         tictactoe_playground.random_antenna()
-        status, board = tictactoe_playground.analyze_board()
-        logger.info(f'ok = {status}')
+
         if not status:
             logger.warning('Invalid board detected')
+            status, board = tictactoe_playground.analyze_board()
+            logger.info(f'ok = {status}')
             continue
         if not reachy_turn:
             if tictactoe_playground.has_human_played(board, last_board):
-                cpt_idle_behavior=0
+                cpt_idle_behavior = 0
                 reachy_turn = True
                 if not tictactoe_playground.is_final(board):
                     logger.info('Next turn', extra={
@@ -88,7 +94,11 @@ def run_game_loop(tictactoe_playground):
         # When it's the robot's turn to play
         # We decide which action to take and plays it
         if (not tictactoe_playground.is_final(board)) and reachy_turn:
-            action, _ = tictactoe_playground.choose_next_action(board)
+            if first_round:
+                action = random_action(board)
+                first_round = False
+            else:
+                action, _ = tictactoe_playground.choose_next_action(board)
             board = tictactoe_playground.play(action, board)
 
             last_board = board
@@ -111,7 +121,8 @@ def run_game_loop(tictactoe_playground):
             else:
                 tictactoe_playground.run_draw_behavior()
             return winner
-
+        status, board = tictactoe_playground.analyze_board()
+        logger.info(f'ok = {status}')
     logger.info('Game end')
 
 
