@@ -26,7 +26,7 @@ def run_game_loop(tictactoe_playground):
     :param tictactoe_playground: an instance of TictactoePlayground
     :return: the winner of the game
     """
-    # logger.setLevel(logging.WARNING)
+    logger.setLevel(logging.WARNING)
     logger.info('Game start')
     # Check that the board is empty (the 9 box of the grid have to be empty)
     logger.info('Checking if the board is completely empty.')
@@ -48,7 +48,8 @@ def run_game_loop(tictactoe_playground):
     logger.info(f'size last_board = {np.shape(last_board)}')
     logger.info(f'size last_board = {np.shape(last_board)}')
     first_round = True
-    reachy_turn = tictactoe_playground.coin_flip()
+    # reachy_turn = tictactoe_playground.coin_flip()
+    reachy_turn = True
     if reachy_turn:
         first_round = True
         tictactoe_playground.run_my_turn()

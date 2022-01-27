@@ -33,13 +33,13 @@ def sad_antennas(reachy):
 def main(reachy):
     global first_play
     reachy.turn_on('head')
-    reachy.head.look_at(0.95, 0.5, -0.2, 1.0)
     reachy.head.l_antenna.goal_position = 140.0
     reachy.head.r_antenna.goal_position = -140.0
-    time.sleep(5)
-    output = simple_pose.main(reachy)
+    reachy.head.look_at(1, 0.0, 0.0, 1)
+    time.sleep(3)
+    # output = simple_pose.main(reachy)
     while True:
-        # config.detection[0] = 2
+        config.detection[0] = 2
         for i in range(len(config.detection)):
             if config.detection[i] == 1:
                 happy_antennas(reachy)
@@ -48,10 +48,10 @@ def main(reachy):
             elif config.detection[i] == 2 and not first_play:
                 first_play = True
                 winner = game_launcher.main(reachy, '/home/reachy/reachy_mobile_reachy/gamelog')
-                reachy.turn_off('head')
-                reachy.turn_off('r_arm')
+                reachy.turn_off_smoothly('head')
+                reachy.turn_off_smoothly('r_arm')
                 return winner
-
+    return None
 if __name__ == '__main__':
     reachy = ReachySDK(host='localhost')
     main(reachy)

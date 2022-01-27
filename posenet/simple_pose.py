@@ -80,19 +80,14 @@ def main(reachy):
     counter_change = True
     reachy.head.l_antenna.speed_limit = 0.0
     reachy.head.r_antenna.speed_limit = 0.0
-    # previous_counter = [0] * 20
     while True:
         time.sleep(0.5)
         for i in range(20):
-            # if previous_counter[i] != config.counter[i]:
-            #     counter_change = True
             if config.detection[i] == 2:
                 return
-        # previous_counter = config.counter
         if counter_change:
             print("counter changed")
             counter_change = pose_net(reachy)
-            # time.sleep(4.0)
         else:
             print("counter NOT changed")
             if y < 0.5 and turn_right:
