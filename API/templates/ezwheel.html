@@ -51,13 +51,13 @@
             <h6 class="m-0 font-weight-bold text-primary">Statut de la navigation</h6>
         </a>
         <div class="collapse show card-body mb-4" id="status">
-            <form action="/ezwheel/status" method="POST">
+            <form action="/ezwheel/status" method="GET">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Status de la navigation
+                            Statut de la navigation
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="status_text">{{ status }}</span></div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="statut_text">{{ statut }}</span></div>
                     </div>
                     <div class="col-auto mr-2">
                         <i class="fas fa-heartbeat fa-2x text-gray-300"></i>
@@ -93,8 +93,4 @@
 
 </div>
 
-{% endblock %}
-
-
-{% block endscript %}
 {% endblock %}
