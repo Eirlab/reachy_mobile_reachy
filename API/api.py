@@ -2,11 +2,11 @@
 This file implements endpoints for Reachy API allowing to control rechy mobile robot
 """
 import sys
-
+from PIL import Image
 from flask import Blueprint, request, send_file, render_template
 from reachy_sdk import ReachySDK
 from requests import post, get
-
+import numpy as np
 sys.path.insert(0, "../")
 
 import reachy
@@ -113,11 +113,12 @@ class ReachyAPI:
         :return: {'status': "Success"} at the end of the action
         """
         if request.method == 'POST':
+            self.reachy.turn_on('head')
             data = request.get_json()
-            x = float(data['x'])
-            y = float(data['y'])
-            z = float(data['z'])
-            duration = float(data['duration'])
+            x = float(request.form.get('lookat_x'))
+            y = float(request.form.get('lookat_y'))
+            z = float(request.form.get('lookat_z'))
+            duration = float(request.form.get('lookat_duration'))
             self.reachy.head.look_at(x=x, y=y, z=z, duration=duration)
             return render_template(template_name_or_list='reachy.html')
 
@@ -130,6 +131,7 @@ class ReachyAPI:
         :return: {'status': "Success"}
         """
         if request.method == 'POST':
+            self.set_head_on()
             reachy.happy_antennas(self.reachy)
             return render_template(template_name_or_list='reachy.html')
 
@@ -142,6 +144,7 @@ class ReachyAPI:
         :return: {'status': "Success"}
         """
         if request.method == 'POST':
+            self.set_head_on()
             reachy.sad_antennas(self.reachy)
             return render_template(template_name_or_list='reachy.html')
 
@@ -154,7 +157,8 @@ class ReachyAPI:
         """
         if request.method == 'GET':
             image = self.reachy.left_camera.wait_for_new_frame()
-            # image.save('left.jpg')
+            image = Image.fromarray(image)
+            image.save('left.jpg')
             return render_template(template_name_or_list='reachy.html')
 
     def camera_right(self):
@@ -166,6 +170,8 @@ class ReachyAPI:
         """
         if request.method == 'GET':
             image = self.reachy.right_camera.wait_for_new_frame()
+            image = Image.fromarray(image)
+            image.save('right.jpg')
             return render_template(template_name_or_list='reachy.html')
 
     def ezwheel_goal(self):
@@ -180,9 +186,8 @@ class ReachyAPI:
             x = request.form.get('goal_x')
             y = request.form.get('goal_y')
             theta = request.form.get('goal_theta')
-            print(x,y,theta)
             data = {'x': float(x), 'y': float(y), 'theta': float(theta)}
-            post(url=self.ezwheel_url+'/goal', json=data)
+            post(url=self.ezwheel_url + '/goal', json=data)
             return render_template(template_name_or_list='ezwheel.html', statut="Running")
 
     def ezwheel_status(self):
@@ -193,7 +198,7 @@ class ReachyAPI:
         BRIEF : Do a GET request on 10.10.0.1:5000/status
         """
         if request.method == 'GET':
-            response = get(url=self.ezwheel_url+'status')
+            response = get(url=self.ezwheel_url + 'status')
             print(response.text)
             return render_template(template_name_or_list='ezwheel.html', statut=response.text)
 
@@ -205,5 +210,12 @@ class ReachyAPI:
         BRIEF : Do a POST request on 10.10.0.1:5000/cancel
         """
         if request.method == 'POST':
-            response = get(url=self.ezwheel_url+'cancel')
+            response = get(url=self.ezwheel_url + 'cancel')
             return render_template(template_name_or_list='ezwheel.html', statut="Cancelled")
+
+    @staticmethod
+    def set_head_on():
+        if self.reachy.head.joints.neck_disk_bottom.compliant and \
+                self.reachy.head.joints.neck_disk_middle.compliant and \
+                self.reachy.head.joints.neck_disk_middle.compliant:
+            self.reachy.turn_on('head')

@@ -37,9 +37,9 @@ def main(reachy):
     reachy.head.l_antenna.goal_position = 140.0
     reachy.head.r_antenna.goal_position = -140.0
     time.sleep(5)
-    output = simple_pose.main(reachy)
+    # output = simple_pose.main(reachy)
     while True:
-        # config.detection[0] = 2
+        config.detection[0] = 2
         for i in range(len(config.detection)):
             if config.detection[i] == 1:
                 happy_antennas(reachy)
