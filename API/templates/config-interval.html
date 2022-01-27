@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="content" class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h1 mt-3 mb-0 text-gray-800">Configuration de l'intervalle entre chaque photo</h1>
+        </div>
+
+        <p>Actuellement, l'intervalle est de <b>{{ current_hour_interval }}h {{ current_minute_interval }}m
+        {{ current_second_interval }}s</b>. Pour le changer, vous pouvez remplir le formulaire ci-dessous.</p>
+        <form action="" method="POST">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="hour_interval">Heures</label>
+                        <input type="number" class="form-control" id="hour_interval" name="hour_interval"
+                               value="{{ current_hour_interval }}" min="0" max="23" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="hour_interval">Minutes</label>
+                        <input type="number" class="form-control" id="minute_interval" name="minute_interval"
+                               value="{{ current_minute_interval }}" min="0" max="59" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="hour_interval">Secondes</label>
+                        <input type="number" class="form-control" id="second_interval" name="second_interval"
+                               value="{{ current_second_interval }}" min="0" max="59" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="submit" class="form-control">Modifier l'intervalle</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

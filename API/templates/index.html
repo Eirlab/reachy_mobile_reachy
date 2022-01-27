@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="content" class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h1 mt-3 mb-0 text-gray-800">Dashboard</h1>
+    </div>
+    <form action="/reachy/play" method="POST">
+        <!-- Button send form -->
+        <div class="row">
+            <div class="col-lg-12">
+                <button type="submit" class="form-control btn btn-primary">Lancer le programme</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block endscript %}
+{% endblock %}
