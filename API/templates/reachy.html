@@ -63,7 +63,7 @@
            role="button" aria-expanded="true" aria-controls="lookat">
             <h6 class="m-0 font-weight-bold text-primary">Regarder aux coordonnées</h6>
         </a>
-        <div class="collapse hide card-body mb-4" id="lookat">
+        <div class="collapse show card-body mb-4" id="lookat">
             <form action="/reachy/head/lookat" method="POST">
                 <!-- Button send form -->
                 <div class="row">
@@ -105,39 +105,38 @@
 
     <div class="card shadow mb-4">
         <!-- Card Header - Accordion -->
-        <a href="#cameraleft" class="d-block card-header py-3" data-toggle="collapse"
-           role="button" aria-expanded="true" aria-controls="cameraleft">
-            <h6 class="m-0 font-weight-bold text-primary">Image de la caméra gauche</h6>
+        <a href="#camera" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="camera">
+            <h6 class="m-0 font-weight-bold text-primary">Caméra du Reachy</h6>
         </a>
-        <div class="collapse hide card-body mb-4" id="cameraleft">
-            <form action="/reachy/camera/left" method="GET">
-                <!-- Button send form -->
-                <div class="col-lg-12 m-2">
-                    <button type="submit" class="form-control btn btn-primary">Récupérer l'image</button>
+        <div class="collapse show card-body mb-4" id="camera">
+            <div class="row">
+                <div class="col m-2">
+                    <form action="/reachy/camera/left" method="GET">
+                        <h6 class="m-2 font-weight-bold text-primary">Caméra Gauche</h6>
+                        <button type="submit" class="form-control btn btn-primary m-3">Actualiser l'image</button>
+                        <h6 class="m-2 font-weight-bold text-primary">Dernière image</h6>
+                        <img src="{{url_for('static', filename='left.jpg')}}" width="100%"/>
+                    </form>
+                    <form action="/reachy/camera/left/autofocus" method="POST">
+                        <button type="submit" class="form-control btn btn-secondary m-3">Réaliser l'autofocus</button>
+                        <h6 class="m-2 font-weight-bold text-primary">{{autofocus_left}}</h6>
+                    </form>
                 </div>
-            </form>
+                <div class="col m-2">
+                    <form action="/reachy/camera/right" method="GET">
+                        <h6 class="m-2 font-weight-bold text-primary">Caméra Droite</h6>
+                        <button type="submit" class="form-control btn btn-primary m-3">Actualiser l'image</button>
+                        <h6 class="m-2 font-weight-bold text-primary">Dernière image</h6>
+                        <img src="{{url_for('static', filename='right.jpg')}}" width="100%"/>
+                    </form>
+                    <form action="/reachy/camera/right/autofocus" method="POST">
+                        <button type="submit" class="form-control btn btn-secondary m-3">Réaliser l'autofocus</button>
+                        <h6 class="m-2 font-weight-bold text-primary">{{autofocus_right}}</h6>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="card shadow mb-4">
-        <!-- Card Header - Accordion -->
-        <a href="#cameraright" class="d-block card-header py-3" data-toggle="collapse"
-           role="button" aria-expanded="true" aria-controls="cameraright">
-            <h6 class="m-0 font-weight-bold text-primary">Image de la caméra droite</h6>
-        </a>
-        <div class="collapse hide card-body mb-4" id="cameraright">
-            <form action="/reachy/camera/right" method="GET">
-                <!-- Button send form -->
-                <div class="col-lg-12 m-2">
-                    <button type="submit" class="form-control btn btn-primary">Récupérer l'image</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
 </div>
-{% endblock %}
-
-
-{% block endscript %}
 {% endblock %}

@@ -2,6 +2,8 @@
 This file implements endpoints for Reachy API allowing to control rechy mobile robot
 """
 import sys
+import time
+
 from PIL import Image
 from flask import Blueprint, request, send_file, render_template
 from reachy_sdk import ReachySDK
@@ -35,6 +37,8 @@ class ReachyAPI:
         self.bp.route('/reachy/head/sad', methods=['POST'])(self.head_sad)
         self.bp.route('/reachy/camera/left', methods=['GET'])(self.camera_left)
         self.bp.route('/reachy/camera/right', methods=['GET'])(self.camera_right)
+        self.bp.route('/reachy/camera/left/autofocus', methods=['POST'])(self.camera_left_autofocus)
+        self.bp.route('/reachy/camera/right/autofocus', methods=['POST'])(self.camera_right_autofocus)
 
         self.bp.route('/ezwheel', methods=['GET'])(self.ezwheel)
         self.bp.route('/ezwheel/goal', methods=['POST'])(self.ezwheel_goal)
@@ -158,8 +162,21 @@ class ReachyAPI:
         if request.method == 'GET':
             image = self.reachy.left_camera.wait_for_new_frame()
             image = Image.fromarray(image)
-            image.save('left.jpg')
+            image.save('static/left.jpg')
             return render_template(template_name_or_list='reachy.html')
+
+    def camera_left_autofocus(self):
+        """
+        METHOD : POST
+        ROUTE : /camera/left/autofocus
+        PARAMETERS : {}
+        BRIEF : Autofocus the left camera
+        :return: {'status': "Success"}
+        """
+        if request.method == 'POST':
+            self.reachy.left_camera.start_autofocus()
+            time.sleep(10.0)
+            return render_template(template_name_or_list='reachy.html',autofocus_left = "Autofocus done")
 
     def camera_right(self):
         """
@@ -171,8 +188,21 @@ class ReachyAPI:
         if request.method == 'GET':
             image = self.reachy.right_camera.wait_for_new_frame()
             image = Image.fromarray(image)
-            image.save('right.jpg')
+            image.save('static/right.jpg')
             return render_template(template_name_or_list='reachy.html')
+
+    def camera_right_autofocus(self):
+        """
+        METHOD : POST
+        ROUTE : /camera/right/autofocus
+        PARAMETERS : {}
+        BRIEF : Autofocus the right camera
+        :return: {'status': "Success"}
+        """
+        if request.method == 'POST':
+            self.reachy.right_camera.start_autofocus()
+            time.sleep(10.0)
+            return render_template(template_name_or_list='reachy.html',autofocus_right = "Autofocus done")
 
     def ezwheel_goal(self):
         """
@@ -213,8 +243,7 @@ class ReachyAPI:
             response = get(url=self.ezwheel_url + 'cancel')
             return render_template(template_name_or_list='ezwheel.html', statut="Cancelled")
 
-    @staticmethod
-    def set_head_on():
+    def set_head_on(self):
         if self.reachy.head.joints.neck_disk_bottom.compliant and \
                 self.reachy.head.joints.neck_disk_middle.compliant and \
                 self.reachy.head.joints.neck_disk_middle.compliant:
