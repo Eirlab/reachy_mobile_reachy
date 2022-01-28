@@ -22,7 +22,8 @@ class ReachyRunAPI:
         self.create_app()
         socketio = SocketIO(self.app, logger=False, cors_allowed_origins='*')
         self.setup_app()
-        socketio.run(self.app, host="0.0.0.0")
+        self.app.run(host='0.0.0.0', port=8000, debug=True)
+        # socketio.run(self.app, host="0.0.0.0")
 
     def create_app(self, test_config=None):
         """

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="content" class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h1 mt-3 mb-0 text-gray-800">Dashboard</h1>
+    </div>
+    <div class="card shadow mb-4">
+        <a href="#play" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="play">
+            <h6 class="m-0 font-weight-bold text-primary">Programme principal</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="play">
+            <div class="row">
+                <div class="col m-2">
+                    <form action="/reachy/play" method="POST">
+                        <button type="submit" class="form-control btn btn-primary">Lancer !</button>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="posenet" name="posenet">
+                            <label class="form-check-label" for="posenet">Détection de squelette</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="tictactoe" name="tictactoe" checked>
+                            <label class="form-check-label" for="tictactoe">Tic Tac Toe</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="navigation" name="navigation">
+                            <label class="form-check-label" for="navigation">Navigation</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="col m-2">
+                    <h1 class="m-0 font-weight-bold text-success" style="text-align: center;">
+                        {{win}}
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

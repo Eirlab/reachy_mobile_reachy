@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="content" class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h1 mt-3 mb-0 text-gray-800">Reachy</h1>
+    </div>
+
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#head" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="head">
+            <h6 class="m-0 font-weight-bold text-primary">Allumage de la tête</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="head">
+            <div class="row">
+                <div class="col m-2">
+                    <form action="/reachy/head/on" method="POST">
+                        <!-- Button send form -->
+                        <button type="submit" class="form-control btn btn-primary">Rendre la tête rigide</button>
+                    </form>
+                </div>
+                <div class="col m-2">
+                    <form action="/reachy/head/off" method="POST">
+                        <!-- Button send form -->
+                        <button type="submit" class="form-control btn btn-primary">Rendre la tête molle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#emotion" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="emotion">
+            <h6 class="m-0 font-weight-bold text-primary">Emotions</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="emotion">
+            <div class="row">
+                <div class="col m-2">
+
+                    <form action="/reachy/head/happy" method="POST">
+                        <!-- Button send form -->
+
+                        <button type="submit" class="form-control btn btn-primary">Rendre le reachy heureux</button>
+                    </form>
+                </div>
+                <div class="col m-2">
+                    <form action="/reachy/head/sad" method="POST">
+                        <!-- Button send form -->
+                        <button type="submit" class="form-control btn btn-primary">Rendre le reachy triste</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#lookat" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="lookat">
+            <h6 class="m-0 font-weight-bold text-primary">Regarder aux coordonnées</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="lookat">
+            <form action="/reachy/head/lookat" method="POST">
+                <!-- Button send form -->
+                <div class="row">
+                    <div class="col-auto m-2">
+                        <div class="form-group">
+                            <label for="lookat_x">x</label>
+                            <input type="text" class="form-control" name="lookat_x"
+                                   placeholder="x" required>
+                        </div>
+                    </div>
+                    <div class="col-auto m-2">
+                        <div class="form-group">
+                            <label for="lookat_y">y</label>
+                            <input type="text" class="form-control" name="lookat_y"
+                                   placeholder="y" required>
+                        </div>
+                    </div>
+                    <div class="col-auto m-2">
+                        <div class="form-group">
+                            <label for="lookat_z">z</label>
+                            <input type="text" class="form-control" name="lookat_z"
+                                   placeholder="z" required>
+                        </div>
+                    </div>
+                    <div class="col-auto m-2">
+                        <div class="form-group">
+                            <label for="lookat_duration">duration</label>
+                            <input type="text" class="form-control" name="lookat_duration"
+                                   placeholder="duration" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 m-2">
+                    <button type="submit" class="form-control btn btn-primary">Bouger la tête</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#camera" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="camera">
+            <h6 class="m-0 font-weight-bold text-primary">Caméra du Reachy</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="camera">
+            <div class="row">
+                <div class="col m-2">
+                    <form action="/reachy/camera/left" method="GET">
+                        <h6 class="m-2 font-weight-bold text-primary">Caméra Gauche</h6>
+                        <button type="submit" class="form-control btn btn-primary m-3">Actualiser l'image</button>
+                        <h6 class="m-2 font-weight-bold text-primary">Dernière image</h6>
+                        <img src="{{url_for('static', filename='left.jpg')}}" width="100%"/>
+                    </form>
+                    <form action="/reachy/camera/left/autofocus" method="POST">
+                        <button type="submit" class="form-control btn btn-secondary m-3">Réaliser l'autofocus</button>
+                        <h6 class="m-2 font-weight-bold text-primary">{{autofocus_left}}</h6>
+                    </form>
+                </div>
+                <div class="col m-2">
+                    <form action="/reachy/camera/right" method="GET">
+                        <h6 class="m-2 font-weight-bold text-primary">Caméra Droite</h6>
+                        <button type="submit" class="form-control btn btn-primary m-3">Actualiser l'image</button>
+                        <h6 class="m-2 font-weight-bold text-primary">Dernière image</h6>
+                        <img src="{{url_for('static', filename='right.jpg')}}" width="100%"/>
+                    </form>
+                    <form action="/reachy/camera/right/autofocus" method="POST">
+                        <button type="submit" class="form-control btn btn-secondary m-3">Réaliser l'autofocus</button>
+                        <h6 class="m-2 font-weight-bold text-primary">{{autofocus_right}}</h6>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
