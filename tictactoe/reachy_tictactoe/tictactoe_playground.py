@@ -113,6 +113,27 @@ class TictactoePlayground(object):
         else:
             time.sleep(2)
 
+    def grap_cylinder(self):
+        # r_gripper_goal_position = -5
+        while True:
+            r_gripper_goal_position = -5
+            while self.reachy.force_sensors.r_force_gripper.force < 300 and r_gripper_goal_position < 20:
+                self.reachy.r_arm.r_gripper.goal_position = r_gripper_goal_position
+                r_gripper_goal_position += 5
+                logger.warning(self.reachy.force_sensors.r_force_gripper)
+                time.sleep(0.5)
+
+            if self.reachy.force_sensors.r_force_gripper.force > 300:
+                return
+            else:
+                self.reachy.head.l_antenna.goal_position = 180
+                self.reachy.head.r_antenna.goal_position = -180
+                self.reachy.r_arm.r_gripper.goal_position = -40
+                self.reachy.head.look_at(0.95, 0, 0, 1.0)
+                time.sleep(2)
+                self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
+                self.reachy.r_arm.r_gripper.goal_position = -5
+
     @staticmethod
     def coin_flip():
         coin = np.random.rand() > 0.5
@@ -270,19 +291,8 @@ class TictactoePlayground(object):
         self.goto_position(path)
         time.sleep(2)
         self.reachy.r_arm.r_gripper.compliant = False
-        self.reachy.r_arm.r_gripper.goal_position = -5  # close the gripper to take the cylinder
-        time.sleep(2)
-
-        while self.reachy.force_sensors.r_force_gripper.force < 300:
-            logger.warning(self.reachy.force_sensors.r_force_gripper)
-            self.reachy.head.l_antenna.goal_position = 180
-            self.reachy.head.r_antenna.goal_position = -180
-            self.reachy.r_arm.r_gripper.goal_position = -40
-            self.reachy.head.look_at(0.95, 0, 0, 1.0)
-            time.sleep(2)
-            self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
-            self.reachy.r_arm.r_gripper.goal_position = -5
-            time.sleep(2)
+        self.reachy.r_arm.r_gripper.goal_position = -5
+        self.grap_cylinder()
         self.reachy.head.l_antenna.goal_position = 45
         self.reachy.head.r_antenna.goal_position = -45
 
