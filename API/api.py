@@ -4,6 +4,13 @@ This file implements endpoints for Reachy API allowing to control rechy mobile r
 import sys
 import time
 
+import cv2
+from PIL import Image
+from flask import Blueprint, request, render_template
+from reachy_sdk import ReachySDK
+import sys
+import time
+
 from PIL import Image
 from flask import Blueprint, request, render_template
 from reachy_sdk import ReachySDK
@@ -12,6 +19,7 @@ from requests import post, get
 sys.path.insert(0, "../")
 
 import reachy
+import config
 
 
 class ReachyAPI:
@@ -44,9 +52,9 @@ class ReachyAPI:
         self.bp.route('/ezwheel/goal', methods=['POST'])(self.ezwheel_goal)
         self.bp.route('/ezwheel/cancel', methods=['POST'])(self.ezwheel_cancel)
         self.bp.route('/ezwheel/status', methods=['GET'])(self.ezwheel_status)
-
-        self.reachy = ReachySDK(host='localhost')
-        # self.reachy = "reachy"
+        self.reachy_robot = ReachySDK(host='localhost')
+        config.reachy = self.reachy_robot
+        # self.reachy_robot = "reachy"
         self.ezwheel_url = "http://10.10.0.1:5000/"
 
     @staticmethod
@@ -107,7 +115,7 @@ class ReachyAPI:
             posenet = bool(request.form.get('posenet'))
             tictactoe = bool(request.form.get('tictactoe'))
             navigation = bool(request.form.get('navigation'))
-            winner = reachy.main(self.reachy, posenet, tictactoe, navigation)
+            winner = reachy.main(config.reachy)
             return render_template(template_name_or_list='index.html', win=winner)
 
     def head_on(self):
@@ -119,7 +127,7 @@ class ReachyAPI:
         :return: {'status': "Success"}
         """
         if request.method == 'POST':
-            self.reachy.turn_on('head')
+            self.reachy_robot.turn_on('head')
             return render_template(template_name_or_list='reachy.html')
 
     def head_off(self):
@@ -131,7 +139,7 @@ class ReachyAPI:
         :return: {'status': "Success"}
         """
         if request.method == 'POST':
-            self.reachy.turn_off('head')
+            self.reachy_robot.turn_off('head')
             return render_template(template_name_or_list='reachy.html')
 
     def head_lookat(self):
@@ -143,12 +151,12 @@ class ReachyAPI:
         :return: {'status': "Success"} at the end of the action
         """
         if request.method == 'POST':
-            self.reachy.turn_on('head')
+            self.reachy_robot.turn_on('head')
             x = float(request.form.get('lookat_x'))
             y = float(request.form.get('lookat_y'))
             z = float(request.form.get('lookat_z'))
             duration = float(request.form.get('lookat_duration'))
-            self.reachy.head.look_at(x=x, y=y, z=z, duration=duration)
+            self.reachy_robot.head.look_at(x=x, y=y, z=z, duration=duration)
             return render_template(template_name_or_list='reachy.html')
 
     def head_happy(self):
@@ -161,7 +169,7 @@ class ReachyAPI:
         """
         if request.method == 'POST':
             self.set_head_on()
-            reachy.happy_antennas(self.reachy)
+            reachy.happy_antennas(self.reachy_robot)
             return render_template(template_name_or_list='reachy.html')
 
     def head_sad(self):
@@ -174,7 +182,7 @@ class ReachyAPI:
         """
         if request.method == 'POST':
             self.set_head_on()
-            reachy.sad_antennas(self.reachy)
+            reachy.sad_antennas(self.reachy_robot)
             return render_template(template_name_or_list='reachy.html')
 
     def camera_left(self):
@@ -185,9 +193,8 @@ class ReachyAPI:
         :return: a flask response with the image
         """
         if request.method == 'GET':
-            image = self.reachy.left_camera.wait_for_new_frame()
-            image = Image.fromarray(image)
-            image.save('static/left.jpg')
+            image = self.reachy_robot.left_camera.wait_for_new_frame()
+            cv2.imwrite('static/left.jpg', image)
             return render_template(template_name_or_list='reachy.html')
 
     def camera_left_autofocus(self):
@@ -199,7 +206,7 @@ class ReachyAPI:
         :return: {'status': "Success"}
         """
         if request.method == 'POST':
-            self.reachy.left_camera.start_autofocus()
+            self.reachy_robot.left_camera.start_autofocus()
             time.sleep(10.0)
             return render_template(template_name_or_list='reachy.html', autofocus_left="Autofocus done")
 
@@ -211,9 +218,8 @@ class ReachyAPI:
         :return: a flask response with the image
         """
         if request.method == 'GET':
-            image = self.reachy.right_camera.wait_for_new_frame()
-            image = Image.fromarray(image)
-            image.save('static/right.jpg')
+            image = self.reachy_robot.right_camera.wait_for_new_frame()
+            cv2.imwrite('static/right.jpg', image)
             return render_template(template_name_or_list='reachy.html')
 
     def camera_right_autofocus(self):
@@ -225,7 +231,7 @@ class ReachyAPI:
         :return: {'status': "Success"}
         """
         if request.method == 'POST':
-            self.reachy.right_camera.start_autofocus()
+            self.reachy_robot.right_camera.start_autofocus()
             time.sleep(10.0)
             return render_template(template_name_or_list='reachy.html', autofocus_right="Autofocus done")
 
@@ -272,7 +278,7 @@ class ReachyAPI:
         """
         Allow the robot to move the head
         """
-        if self.reachy.head.joints.neck_disk_bottom.compliant and \
-                self.reachy.head.joints.neck_disk_middle.compliant and \
-                self.reachy.head.joints.neck_disk_middle.compliant:
-            self.reachy.turn_on('head')
+        if self.reachy_robot.head.joints.neck_disk_bottom.compliant and \
+                self.reachy_robot.head.joints.neck_disk_middle.compliant and \
+                self.reachy_robot.head.joints.neck_disk_middle.compliant:
+            self.reachy_robot.turn_on('head')
