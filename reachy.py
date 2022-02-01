@@ -42,7 +42,7 @@ def navigation_function():
         time.sleep(30)
 
 
-def main(reachy, posenet=1, tictactoe=1, navigation=True):
+def main(reachy, posenet=1, tictactoe=1, navigation=False):
     global first_play
     if navigation:
         print("launch navigation")
@@ -50,15 +50,12 @@ def main(reachy, posenet=1, tictactoe=1, navigation=True):
         thread.start()
     if tictactoe:
         reachy.turn_on('head')
-        print("Reachy Tic Tac Toe")
         reachy.head.l_antenna.goal_position = 140.0
-        print("Reachy Tic Tac Toe")
         reachy.head.r_antenna.goal_position = -140.0
-        print("Reachy Tic Tac Toe")
         reachy.head.look_at(1, 0.0, 0.0, 1)
         output = simple_pose.main(reachy)
-        # config.detection[0] = 2
-    print("Reachy Tic Tac Toe")
+        time.sleep(2)
+    # config.detection[0] = 2
     while True:
         print("Reachy Tic Tac Toe")
         for i in range(len(config.detection)):
@@ -72,8 +69,6 @@ def main(reachy, posenet=1, tictactoe=1, navigation=True):
                 reachy.turn_off_smoothly('head')
                 reachy.turn_off_smoothly('r_arm')
                 return winner
-
-    return None
 
 
 if __name__ == '__main__':

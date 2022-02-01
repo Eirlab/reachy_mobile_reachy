@@ -50,11 +50,11 @@ def run_game_loop(tictactoe_playground):
     first_round = True
     # reachy_turn = tictactoe_playground.coin_flip()
     reachy_turn = True
-    if reachy_turn:
-        first_round = True
-        tictactoe_playground.run_my_turn()
-    else:
-        tictactoe_playground.run_your_turn()
+    first_round = True
+    # if reachy_turn:
+    #          tictactoe_playground.run_my_turn()
+    # else:
+    #     tictactoe_playground.run_your_turn()
     while True:
         tictactoe_playground.random_antenna()
 
@@ -71,7 +71,7 @@ def run_game_loop(tictactoe_playground):
                     logger.info('Next turn', extra={
                         'next_player': 'Reachy',
                     })
-                tictactoe_playground.run_my_turn()
+                # tictactoe_playground.run_my_turn()
             else:
                 cpt_idle_behavior += 1
                 tictactoe_playground.run_random_idle_behavior(cpt_idle_behavior)
@@ -105,7 +105,7 @@ def run_game_loop(tictactoe_playground):
             last_board = board
             reachy_turn = False
             if not tictactoe_playground.is_final(board):
-                tictactoe_playground.run_your_turn()
+                # tictactoe_playground.run_your_turn()
                 logger.info('Next turn', extra={
                     'next_player': 'Human',
                 })
@@ -156,7 +156,6 @@ def main(reachy, log):
 
     with TictactoePlayground(reachy) as tictactoe_playground:
         tictactoe_playground.setup()
-
         game_played = 0
         winner = run_game_loop(tictactoe_playground)
         if tictactoe_playground.need_cooldown():
