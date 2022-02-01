@@ -53,10 +53,10 @@ def draw_objects(draw, objs, labels):
 def get_board_configuration(image):
     board = np.zeros((3, 3), dtype=np.uint8)
     image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
-    y1 = 120
-    y2 = 430
-    x1 = 50
-    x2 = 380
+    y1 = 135
+    y2 = 415
+    x1 = 70
+    x2 = 355
     image = image[y1:y2, x1:x2]
     sanity_check = True
     path_model = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/models/tfliteV6' \
