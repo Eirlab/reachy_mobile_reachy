@@ -18,3 +18,4 @@ Reachy Mobile
     - [Posenet](reachy/posenet.md)
   - [Ezwheel](ezwheel/ezwheel.md)
 - [Documentation développeur](developer.md)
+  - [Ezwheel](ezwheel/ezwheel_dev.md)

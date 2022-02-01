@@ -15,7 +15,7 @@ position du robot via les algorithmes de SLAM.
 La navigation permet au robot de se déplacer de la position actuelle à la position cible désignée sur la carte en
 utilisant la carte, l'encodeur du robot et le capteur de distance.
 
-## Lancement
+## Lancement de la navigation
 
 Sur la base ez-wheel d'EirLab la stack de navigation démarre automatiquement au démarrage du robot.
 
@@ -42,4 +42,14 @@ la position cible.
 
 Sinon, sans utiliser rviz vous pouvez utiliser l'API fournie par le robot pour donner un objectif de navigation en
 effectuant une requête POST sur l'URL `http://<IP_ROBOT>:5000/goal` avec les paramètres `x`, `y` et `theta` qui
-définissent la position cible. Pour plus d'informations sur l'[API](à venir)
+définissent la position cible. Pour plus d'informations sur l'[API](ezwheel_dev.md)
+
+## Lancement du SLAM
+
+Si vous souhaiter réaliser un SLAM sur la carte, vous pouvez lancer le SLAM en lançant la commande `roslaunch reachy_mobile_slam reachy_mobile_slam.launch`
+
+Pour enregistrer la map lancez simplement `rosrun map_server map_saver -f /path/to/maps/map`
+
+## Lancement de la téléoperation
+
+Si vous souhaitez téléopérer le robot, vous pouvez lancer le téléoperation en lançant la commande `roslaunch reachy_mobile_teleop reachy_mobile_teleop.launch`
