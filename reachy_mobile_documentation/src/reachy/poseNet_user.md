@@ -14,7 +14,7 @@ Reachy est équipé du Coral USB Accelerator qui est un accessoire qui ajoute le
 
 ## PoseNet avec Reachy
 
-PoseNet permet à un utilisateur d'intéragir avec Reachy. Reachy réalise des va-et-vient de gauche à droite avec sa tête. 
-Lorsque une personne levant la main gauche est detectée, le va-et-vient s'arrête tant que l'utilisateur garde la main levée. 
-Si l'utilisateur garde sa main levée plus de 10 seconde environ, le Tic-tac-toe se lance
-Dans le cas contraire, Reachy recommence les va-et-vient jusqu'à detecter une personne levant la main
+PoseNet permet à un utilisateur d'intéragir avec Reachy. 
+Lorsque une personne lève une des deux main, les antennes de reachy se mettent en mouvement pour indiquer qu'il a bien vu l'utilisateur
+Si l'utilisateur garde sa main levée suffisament longtemps (3 secondes environ), reachy devient content et le Tic-tac-toe se lance
+Dans le cas contraire, Reachy baisse ses antennes pour signifier qu'il est triste.
