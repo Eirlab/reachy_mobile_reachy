@@ -11,6 +11,30 @@
         <!-- Card Header - Accordion -->
         <a href="#head" class="d-block card-header py-3" data-toggle="collapse"
            role="button" aria-expanded="true" aria-controls="head">
+            <h6 class="m-0 font-weight-bold text-primary">Allumage du bras</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="head">
+            <div class="row">
+                <div class="col m-2">
+                    <form action="/reachy/reachy/on" method="POST">
+                        <!-- Button send form -->
+                        <button type="submit" class="form-control btn btn-primary">Rendre le bras rigide</button>
+                    </form>
+                </div>
+                <div class="col m-2">
+                    <form action="/reachy/reachy/off" method="POST">
+                        <!-- Button send form -->
+                        <button type="submit" class="form-control btn btn-primary">Rendre le bras mou</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#head" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="head">
             <h6 class="m-0 font-weight-bold text-primary">Allumage de la tête</h6>
         </a>
         <div class="collapse show card-body mb-4" id="head">

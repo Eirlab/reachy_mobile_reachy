@@ -37,6 +37,8 @@ class ReachyAPI:
         self.bp.route('/500', methods=['GET'])(self.error_500)
 
         self.bp.route('/reachy', methods=['GET'])(self.reachy)
+        self.bp.route('/reachy/on', methods=['POST'])(self.reachy_on)
+        self.bp.route('/reachy/off', methods=['POST'])(self.reachy_off)
         self.bp.route('/reachy/play', methods=['POST'])(self.play)
         self.bp.route('/reachy/head/on', methods=['POST'])(self.head_on)
         self.bp.route('/reachy/head/off', methods=['POST'])(self.head_off)
@@ -103,6 +105,26 @@ class ReachyAPI:
         BRIEF : Home  page for ezwheel API
         """
         return render_template(template_name_or_list='ezwheel.html', statut="Undefined")
+
+    def reachy_on(self):
+        """
+        METHOD : POST
+        ROUTE : /reachy/on
+        BRIEF : Turn on reachy (only head and right arm)
+        """
+        if request.method == 'POST':
+            self.reachy_robot.turn_on("r_arm")
+            return render_template(template_name_or_list='reachy.html')
+
+    def reachy_off(self):
+        """
+        METHOD : POST
+        ROUTE : /reachy/off
+        BRIEF : Turn off reachy (only head and right arm)
+        """
+        if request.method == 'POST':
+            self.reachy_robot.turn_off("r_arm")
+            return render_template(template_name_or_list='reachy.html')
 
     def play(self):
         """
