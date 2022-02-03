@@ -14,13 +14,13 @@ import time
 
 from PIL import Image
 from flask import Blueprint, request, render_template
-# from reachy_sdk import ReachySDK
+from reachy_sdk import ReachySDK
 from requests import post, get
 
 sys.path.insert(0, "../")
 
-# import reachy
-# import config
+import reachy
+import config
 
 
 class ReachyAPI:
@@ -57,9 +57,9 @@ class ReachyAPI:
         self.bp.route('/ezwheel/goal', methods=['POST'])(self.ezwheel_goal)
         self.bp.route('/ezwheel/cancel', methods=['POST'])(self.ezwheel_cancel)
         self.bp.route('/ezwheel/status', methods=['GET'])(self.ezwheel_status)
-        # self.reachy_robot = ReachySDK(host='localhost')
-        # config.reachy = self.reachy_robot
-        self.reachy_robot = "reachy"
+        self.reachy_robot = ReachySDK(host='localhost')
+        config.reachy = self.reachy_robot
+        # self.reachy_robot = "reachy"
         self.ezwheel_url = "http://10.10.0.1:5000/"
 
     @staticmethod
