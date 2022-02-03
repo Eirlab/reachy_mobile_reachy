@@ -7,6 +7,7 @@ from playsound import playsound
 from posenet import config, simple_pose
 from tictactoe.reachy_tictactoe import game_launcher
 from reachy_sdk import ReachySDK
+
 import config
 
 first_play = False
@@ -67,7 +68,7 @@ def navigation_function():
                 post(url='http://10.10.0.1:5000/cancel')
                 time.sleep(1)
 
-def main_global(reachy, tictactoe=True, navigation=True, posenet=True):
+def main_global(reachy, posenet=True, tictactoe=True, navigation=True):
     global playing
 
     if navigation:
@@ -77,7 +78,7 @@ def main_global(reachy, tictactoe=True, navigation=True, posenet=True):
     if tictactoe:
         print("launch tictactoe")
 
-        while True:
+        while config.running:
             reachy.turn_on('head')
             print("head ON")
 
