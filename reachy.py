@@ -77,7 +77,7 @@ def main_global(reachy, tictactoe=True, navigation=True, posenet=True):
     if tictactoe:
         print("launch tictactoe")
 
-        while config.running:
+        while True:
             reachy.turn_on('head')
             print("head ON")
 
@@ -91,7 +91,7 @@ def main_global(reachy, tictactoe=True, navigation=True, posenet=True):
 
             print("waiting for a player")
             if posenet:
-                output = simple_pose.main(reachy)
+                output = simple_pose.main(reachy, navigation)
 
             print("Playing Reachy Tic Tac Toe")
             playing = True

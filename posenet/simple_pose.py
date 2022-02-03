@@ -95,7 +95,7 @@ def draw_pose(dwg, pose, src_size, inference_box, color='yellow', threshold=0.2)
         dwg.add(dwg.line(start=(ax, ay), end=(bx, by), stroke=color, stroke_width=2))
 
 
-def main(reachy):
+def main(reachy, navigation):
     counter_not_change = 0
     counter_img = 0     #images taken counter
     # reachy.head.l_antenna.speed_limit = 0.0
@@ -130,15 +130,18 @@ def main(reachy):
                 config.detection[i] = 1
                 config.counter[i] += 1
                 if config.counter[i] == 15:
-                    post(url='http://10.10.0.1:5000/cancel')
+                    if navigation:
+                        post(url='http://10.10.0.1:5000/cancel')
                     reachy.head.l_antenna.speed_limit = 0.0
                     reachy.head.l_antenna.goal_position = 0.0
                 elif config.counter[i] == 30:
-                    post(url='http://10.10.0.1:5000/cancel')
+                    if navigation:
+                        post(url='http://10.10.0.1:5000/cancel')
                     reachy.head.r_antenna.speed_limit = 0.0
                     reachy.head.r_antenna.goal_position = 0.0
                 if config.counter[i] >= 45:
-                    post(url='http://10.10.0.1:5000/cancel')
+                    if navigation:
+                        post(url='http://10.10.0.1:5000/cancel')
                     playsound('/home/reachy/reachy_mobile_reachy/sounds/sonBB8_content2.mp3')
                     happy_antennas(reachy)
                     config.counter[i] = 0
