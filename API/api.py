@@ -9,13 +9,13 @@ import time
 import cv2
 from flask import Blueprint, request, render_template
 from flask import send_file
-from reachy_sdk import ReachySDK
+# from reachy_sdk import ReachySDK
 from requests import post, get
 
 sys.path.append('/home/reachy/reachy_mobile_reachy/')
 
-import reachy
-import config
+# import reachy
+# import config
 
 class ReachyAPI:
     """
@@ -51,9 +51,9 @@ class ReachyAPI:
         self.bp.route('/ezwheel/goal', methods=['POST'])(self.ezwheel_goal)
         self.bp.route('/ezwheel/cancel', methods=['POST'])(self.ezwheel_cancel)
         self.bp.route('/ezwheel/status', methods=['GET'])(self.ezwheel_status)
-        self.reachy_robot = ReachySDK(host='localhost')
-        config.reachy = self.reachy_robot
-        # self.reachy_robot = "reachy"
+        # self.reachy_robot = ReachySDK(host='localhost')
+        # config.reachy = self.reachy_robot
+        self.reachy_robot = "reachy"
         self.ezwheel_url = "http://10.10.0.1:5000/"
 
     @staticmethod
@@ -92,7 +92,7 @@ class ReachyAPI:
         ROUTE : /reachy
         BRIEF : Home  page for reachy API
         """
-        return render_template(template_name_or_list='reachy.html')
+        return render_template(template_name_or_list='reachy.html', latest='no_image')
 
     @staticmethod
     def ezwheel():
@@ -111,7 +111,7 @@ class ReachyAPI:
         """
         if request.method == 'POST':
             self.reachy_robot.turn_on("r_arm")
-            return render_template(template_name_or_list='reachy.html')
+            return render_template(template_name_or_list='reachy.html', latest='no_image')
 
     def reachy_off(self):
         """
@@ -121,7 +121,7 @@ class ReachyAPI:
         """
         if request.method == 'POST':
             self.reachy_robot.turn_off("r_arm")
-            return render_template(template_name_or_list='reachy.html')
+            return render_template(template_name_or_list='reachy.html', latest='no_image')
 
     def play(self):
         """
@@ -144,7 +144,7 @@ class ReachyAPI:
         """
         if request.method == 'POST':
             self.reachy_robot.turn_on('head')
-            return render_template(template_name_or_list='reachy.html')
+            return render_template(template_name_or_list='reachy.html', latest='no_image')
 
     def head_off(self):
         """
@@ -156,7 +156,7 @@ class ReachyAPI:
         """
         if request.method == 'POST':
             self.reachy_robot.turn_off('head')
-            return render_template(template_name_or_list='reachy.html')
+            return render_template(template_name_or_list='reachy.html', latest='no_image')
 
     def head_lookat(self):
         """
@@ -173,7 +173,7 @@ class ReachyAPI:
             z = float(request.form.get('lookat_z'))
             duration = float(request.form.get('lookat_duration'))
             self.reachy_robot.head.look_at(x=x, y=y, z=z, duration=duration)
-            return render_template(template_name_or_list='reachy.html')
+            return render_template(template_name_or_list='reachy.html', latest='no_image')
 
     def head_happy(self):
         """
@@ -186,7 +186,7 @@ class ReachyAPI:
         if request.method == 'POST':
             self.set_head_on()
             reachy.happy_antennas(self.reachy_robot)
-            return render_template(template_name_or_list='reachy.html')
+            return render_template(template_name_or_list='reachy.html', latest='no_image')
 
     def head_sad(self):
         """
@@ -211,7 +211,7 @@ class ReachyAPI:
         if request.method == 'GET':
             image = self.reachy_robot.left_camera.wait_for_new_frame()
             cv2.imwrite('static/left.jpg', image)
-            return render_template(template_name_or_list='reachy.html')
+            return render_template(template_name_or_list='reachy.html', latest='no_image')
 
     def camera_left_autofocus(self):
         """
@@ -224,7 +224,7 @@ class ReachyAPI:
         if request.method == 'POST':
             self.reachy_robot.left_camera.start_autofocus()
             time.sleep(10.0)
-            return render_template(template_name_or_list='reachy.html', autofocus_left="Autofocus done")
+            return render_template(template_name_or_list='reachy.html', autofocus_left="Autofocus done", latest='no_image')
 
     def camera_right(self):
         """
@@ -236,7 +236,7 @@ class ReachyAPI:
         if request.method == 'GET':
             image = self.reachy_robot.right_camera.wait_for_new_frame()
             cv2.imwrite('static/right.jpg', image)
-            return render_template(template_name_or_list='reachy.html')
+            return render_template(template_name_or_list='reachy.html', latest='no_image')
 
     def camera_right_autofocus(self):
         """
@@ -249,14 +249,14 @@ class ReachyAPI:
         if request.method == 'POST':
             self.reachy_robot.right_camera.start_autofocus()
             time.sleep(10.0)
-            return render_template(template_name_or_list='reachy.html', autofocus_right="Autofocus done")
+            return render_template(template_name_or_list='reachy.html', autofocus_right="Autofocus done", latest='no_image')
 
     def detection(self):
         """
         METHOD : POST
         ROUTE : /detection
         PARAMETERS : {}
-        BRIEF : Send
+        BRIEF : Parse the image in ticactoe/images forlder and return the list of file
         :return:
         """
         file = os.listdir('../tictactoe/images/')
@@ -271,6 +271,11 @@ class ReachyAPI:
         return render_template(template_name_or_list='reachy.html', files=file, latest=latest)
 
     def detection_get(self, filename):
+        """
+        METHOD : GET
+        ROUTE : /detection/<filename>
+        BRIEF : Return the image in ticactoe/images/<filename>
+        """
         file_path = "/home/sedelpeuch/catkin_ws/src/reachy_mobile_reachy/tictactoe" + "/images" + "/" + filename
 
         # Return 404 if path doesn't exist
@@ -283,7 +288,7 @@ class ReachyAPI:
 
         # Show directory contents
         files = sorted(os.listdir(file_path))
-        return render_template('reachy.html', files=files)
+        return render_template('reachy.html', files=files, latest='no_image')
 
     def ezwheel_goal(self):
         """
