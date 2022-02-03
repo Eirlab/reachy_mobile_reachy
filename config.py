@@ -1,1 +1,2 @@
 reachy = None
+running = False

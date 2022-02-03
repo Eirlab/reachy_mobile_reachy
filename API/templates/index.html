@@ -38,5 +38,23 @@
             </div>
         </div>
     </div>
+
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#cancel" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="cancel">
+            <h6 class="m-0 font-weight-bold text-danger">Stopper le programme</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="cancel">
+            <form action="/reachy/stop" method="POST">
+                <!-- Button send form -->
+                <div class="row">
+
+                    <div class="col-lg-12 m-2">
+                        <button type="submit" class="form-control btn btn-danger">STOP</button>
+                    </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

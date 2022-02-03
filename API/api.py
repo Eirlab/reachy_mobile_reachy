@@ -9,13 +9,15 @@ import time
 import cv2
 from flask import Blueprint, request, render_template
 from flask import send_file
-# from reachy_sdk import ReachySDK
+from reachy_sdk import ReachySDK
 from requests import post, get
+
+import config
 
 sys.path.append('/home/reachy/reachy_mobile_reachy/')
 
-# import reachy
-# import config
+import reachy
+import config
 
 class ReachyAPI:
     """
@@ -35,6 +37,7 @@ class ReachyAPI:
         self.bp.route('/reachy/on', methods=['POST'])(self.reachy_on)
         self.bp.route('/reachy/off', methods=['POST'])(self.reachy_off)
         self.bp.route('/reachy/play', methods=['POST'])(self.play)
+        self.bp.route('/reachy/stop', methods=['POST'])(self.stop)
         self.bp.route('/reachy/head/on', methods=['POST'])(self.head_on)
         self.bp.route('/reachy/head/off', methods=['POST'])(self.head_off)
         self.bp.route('/reachy/head/lookat', methods=['POST'])(self.head_lookat)
@@ -51,9 +54,9 @@ class ReachyAPI:
         self.bp.route('/ezwheel/goal', methods=['POST'])(self.ezwheel_goal)
         self.bp.route('/ezwheel/cancel', methods=['POST'])(self.ezwheel_cancel)
         self.bp.route('/ezwheel/status', methods=['GET'])(self.ezwheel_status)
-        # self.reachy_robot = ReachySDK(host='localhost')
-        # config.reachy = self.reachy_robot
-        self.reachy_robot = "reachy"
+        self.reachy_robot = ReachySDK(host='localhost')
+        config.reachy = self.reachy_robot
+        # self.reachy_robot = "reachy"
         self.ezwheel_url = "http://10.10.0.1:5000/"
 
     @staticmethod
@@ -131,8 +134,22 @@ class ReachyAPI:
         BRIEF : Play a tictactoe game (blocking function)
         """
         if request.method == 'POST':
-            reachy.main_global(self.reachy_robot)
-            return render_template(template_name_or_list='index.html')
+            config.running = True
+            posenet = bool(request.form.get('posenet'))
+            tictactoe = bool(request.form.get('tictactoe'))
+            navigation = bool(request.form.get('navigation'))
+            reachy.main_global(self.reachy_robot, posenet, tictactoe, navigation)
+            return render_template(template_name_or_list='index.html', winner="Running")
+
+    def stop(self):
+        """
+        METHOD : POST
+        ROUTE : /stop
+        BRIEF : Stop all actions
+        """
+        if request.method == 'POST':
+            config.running = False
+            return render_template(template_name_or_list='index.html', winner="Stopped")
 
     def head_on(self):
         """

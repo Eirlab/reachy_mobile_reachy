@@ -1,6 +1,7 @@
 """
 Allows you to play a game of tictactoe with the reachy
 """
+import config
 import argparse
 import logging
 import time
@@ -56,7 +57,7 @@ def run_game_loop(tictactoe_playground):
     #          tictactoe_playground.run_my_turn()
     # else:
     #     tictactoe_playground.run_your_turn()
-    while True:
+    while True and config.running:
         tictactoe_playground.random_antenna()
 
         if not status:
