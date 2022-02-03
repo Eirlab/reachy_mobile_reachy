@@ -27,7 +27,7 @@ from tflite_runtime.interpreter import load_delegate
 # TODO: Adds support for window and MAC
 EDGETPU_SHARED_LIB = 'libedgetpu.so.1'
 POSENET_SHARED_LIB = os.path.join(
-    'posenet/posenet_lib', os.uname().machine, 'posenet_decoder.so')
+    '/home/reachy/reachy_mobile_reachy/posenet/posenet_lib', os.uname().machine, 'posenet_decoder.so')
 
 
 class KeypointType(enum.IntEnum):

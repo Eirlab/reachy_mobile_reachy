@@ -10,6 +10,7 @@ import numpy as np
 from cv2 import cv2 as cv
 from reachy_sdk.trajectory import goto
 from reachy_sdk.trajectory.interpolation import InterpolationMode
+from playsound import playsound
 
 if __package__ is None or __package__ == '':
     from utils import piece2id, id2piece, piece2player
@@ -46,11 +47,15 @@ class TictactoePlayground(object):
         # time.sleep(1)
         # self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
         # time.sleep(1)
-        self.goto_rest_position()
-        time.sleep(1)
-        # self.reachy.head.look_at(0.95, -0.5, -0.2, 1.0)
         logger.info('Setup the playground')
-        self.reachy.head.look_at(x=1, y=0, z=-0.8, duration=1)
+        path = f'/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/back_sleep.npz'
+        self.goto_position(path)
+        self.goto_rest_position()
+        # path = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/go_sleep.npz'
+        # self.trajectoryPlayer(path)
+        # self.reachy.head.look_at(0.95, -0.5, -0.2, 1.0)
+
+        self.reachy.head.look_at(x=1, y=0.2, z=-0.8, duration=1)
         time.sleep(1)
         self.reachy.turn_off('head')
 
@@ -91,48 +96,62 @@ class TictactoePlayground(object):
         self.reachy.turn_on('head')
         self.reachy.head.l_antenna.speed_limit = 120.0
         self.reachy.head.r_antenna.speed_limit = 120.0
-        time.sleep(0.5)
+        # time.sleep(0.5)
         self.reachy.head.l_antenna.goal_position = l_antenna
         self.reachy.head.r_antenna.goal_position = r_antenna
-        # time.sleep(2)
+        time.sleep(2)
         # self.reachy.turn_off('head')
 
     def run_random_idle_behavior(self, cpt_idle_behavior):
         logger.info('Reachy is playing a random idle behavior')
-        if cpt_idle_behavior % 3 == 0:
+        if cpt_idle_behavior % 2 == 0:
             self.reachy.turn_on('head')
             self.reachy.head.l_antenna.goal_position = 180
             self.reachy.head.r_antenna.goal_position = -180
-            self.reachy.head.look_at(1, 0, 0, duration=1)
-            time.sleep(4)
-            self.reachy.head.look_at(1, 0, -0.7, duration=1)
+            self.reachy.head.look_at(1, 0.2, 0, duration=1)
+            time.sleep(2)
+            playsound('/home/reachy/reachy_mobile_reachy/sounds/4.wav')
+            time.sleep(2)
+            self.reachy.head.look_at(1, 0.2, -0.7, duration=1)
             self.reachy.head.l_antenna.goal_position = 0
             self.reachy.head.r_antenna.goal_position = 0
-            time.sleep(3)
+            time.sleep(2)
             self.reachy.turn_off_smoothly('head')
         else:
             time.sleep(2)
 
-    def grap_cylinder(self):
+    def grab_cylinder(self):
         # r_gripper_goal_position = -5
-        while True:
-            r_gripper_goal_position = -5
-            while self.reachy.force_sensors.r_force_gripper.force < 300 and r_gripper_goal_position < 20:
-                self.reachy.r_arm.r_gripper.goal_position = r_gripper_goal_position
-                r_gripper_goal_position += 5
-                # logger.warning(self.reachy.force_sensors.r_force_gripper)
-                time.sleep(0.5)
+        self.reachy.r_arm.r_gripper.goal_position = 20
+        time.sleep(1)
+        while self.reachy.force_sensors.r_force_gripper.force < 300:
+            print(self.reachy.force_sensors.r_force_gripper.force)
+            self.reachy.head.l_antenna.goal_position = 180
+            self.reachy.head.r_antenna.goal_position = -180
+            self.reachy.r_arm.r_gripper.goal_position = -40
+            time.sleep(2)
+            self.reachy.r_arm.r_gripper.goal_position = 20
+            time.sleep(1)
+        return
 
-            if self.reachy.force_sensors.r_force_gripper.force > 300:
-                return
-            else:
-                self.reachy.head.l_antenna.goal_position = 180
-                self.reachy.head.r_antenna.goal_position = -180
-                self.reachy.r_arm.r_gripper.goal_position = -40
-                self.reachy.head.look_at(0.95, 0, 0, 1.0)
-                time.sleep(2)
-                self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
-                self.reachy.r_arm.r_gripper.goal_position = -5
+        # while True:
+        #     r_gripper_goal_position = -5
+        #     while self.reachy.force_sensors.r_force_gripper.force < 300 and r_gripper_goal_position < 20:
+        #         self.reachy.r_arm.r_gripper.goal_position = r_gripper_goal_position
+        #         r_gripper_goal_position += 5
+        #         # logger.warning(self.reachy.force_sensors.r_force_gripper)
+        #         time.sleep(0.5)
+        #
+        #     if self.reachy.force_sensors.r_force_gripper.force > 300:
+        #         return
+        #     else:
+        #         self.reachy.head.l_antenna.goal_position = 180
+        #         self.reachy.head.r_antenna.goal_position = -180
+        #         self.reachy.r_arm.r_gripper.goal_position = -40
+        #         self.reachy.head.look_at(0.95, 0, 0, 1.0)
+        #         time.sleep(2)
+        #         self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
+        #         self.reachy.r_arm.r_gripper.goal_position = -5
 
     @staticmethod
     def coin_flip():
@@ -190,6 +209,7 @@ class TictactoePlayground(object):
         logger.info(f'last board = {last_board}')
         logger.info(f'current board = {board}')
         delta = board - last_board
+        playsound('/home/reachy/reachy_mobile_reachy/sounds/BB8_triche.mp3')
         # Nothing changed
         if np.all(delta == 0):
             return False
@@ -227,21 +247,25 @@ class TictactoePlayground(object):
         self.reachy.turn_on('r_arm')
         self.reachy.turn_on('head')
         path = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/back_sleep.npz'
-        self.reachy.goto_position(path)
+        self.goto_position(path)
         self.reachy.head.l_antenna.speed_limit = 70.0
         self.reachy.head.r_antenna.speed_limit = 70.0
+
+        self.reachy.head.l_antenna.goal_position = 180
+        self.reachy.head.r_antenna.goal_position = -180
+        time.sleep(2)
         # self.goto_base_position()
         self.goto_rest_position()
         self.reachy.turn_on('r_arm')
         self.reachy.turn_on('head')
-        self.reachy.head.look_at(0.5, 0, -0.4, duration=1)
+        self.reachy.head.look_at(0.5, 0.2, -0.4, duration=1)
         path = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/shuffle-board.npz'
         self.trajectoryPlayer(path)
         self.goto_rest_position()
         path = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/go_sleep.npz'
         self.trajectoryPlayer(path)
         self.reachy.turn_off_smoothly('r_arm')
-        self.reachy.head.look_at(1, 0, 0, duration=1)
+        self.reachy.head.look_at(1, 0.2, 0, duration=1)
         t.join()
 
     @staticmethod
@@ -282,9 +306,9 @@ class TictactoePlayground(object):
         self.reachy.r_arm.r_gripper.speed_limit = 80
         self.reachy.r_arm.r_gripper.compliant = False
         self.reachy.turn_on('head')
-        self.reachy.turn_on('r_arm')
-        path = f'/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/back_sleep.npz'
-        self.goto_position(path)
+        # self.reachy.turn_on('r_arm')
+        # path = f'/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/back_sleep.npz'
+        # self.goto_position(path)
         logger.info(f'BOX_INDEX = {box_index}')
         # Goto base position
         self.reachy.head.look_at(0.95, 0, 0, 1.0)
@@ -293,18 +317,32 @@ class TictactoePlayground(object):
         time.sleep(1)
         self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
         # self.goto_base_position()
-        self.goto_rest_position()
-        self.reachy.r_arm.r_gripper.goal_position = -40  # open the gripper
+        # self.goto_rest_position()
+        # self.reachy.r_arm.r_gripper.goal_position = -35  # open the gripper
+        # time.sleep(1)
         path = f'/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/grab.npz'
         self.trajectoryPlayer(path)
-        time.sleep(2)
+        # time.sleep(1)
         self.reachy.r_arm.r_gripper.compliant = False
-        self.reachy.r_arm.r_gripper.goal_position = -5
-        self.grap_cylinder()
+        # self.reachy.r_arm.r_gripper.goal_position = -5
+        self.reachy.r_arm.r_gripper.goal_position = 14
+        time.sleep(2)
+        while self.reachy.force_sensors.r_force_gripper.force < 300:
+            self.reachy.head.l_antenna.goal_position = 180
+            self.reachy.head.r_antenna.goal_position = -180
+            self.reachy.r_arm.r_gripper.goal_position = -35
+            self.reachy.head.look_at(0.95, 0.2, 0, 1.0)
+            time.sleep(2)
+            self.reachy.head.look_at(0.95, -0.9, -0.7, 1.0)
+            self.reachy.r_arm.r_gripper.goal_position = 16
+            time.sleep(2)
+
+        # self.grab_cylinder()
         self.reachy.head.l_antenna.goal_position = 45
         self.reachy.head.r_antenna.goal_position = -45
 
-        self.reachy.head.look_at(0.95, 0, -0.7, 1.0)
+        self.reachy.head.look_at(0.95, 0.2, -0.2, 1.0)
+        self.reachy.head.look_at(0.95, 0.2, -0.7, 1.0)
         self.reachy.turn_off_smoothly('head')
         if grab_index >= 4:
             goto(
@@ -315,16 +353,18 @@ class TictactoePlayground(object):
                 duration=1.0,
                 interpolation_mode=InterpolationMode.MINIMUM_JERK
             )
-        path = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/lift.npz'
+        # path = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/lift.npz'
+        # self.goto_position(path)
+        path = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/grab_back.npz'
         self.goto_position(path)
         time.sleep(0.1)
         # Put it in box_index
         path = f'/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/put_{box_index}.npz'
         self.trajectoryPlayer(path)
-        time.sleep(1)
+        # time.sleep(0.5)
         self.reachy.r_arm.r_gripper.compliant = False
-        self.reachy.r_arm.r_gripper.goal_position = -40
-        time.sleep(2)
+        self.reachy.r_arm.r_gripper.goal_position = -20
+        time.sleep(1)
         # Go back to rest position
         path = f'/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/back_{box_index}_upright.npz'
         self.goto_position(path)
@@ -336,10 +376,10 @@ class TictactoePlayground(object):
         path = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/back_rest.npz'
         self.goto_position(path)
         # self.goto_base_position()
-        self.goto_rest_position()
-        path = f'/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/go_sleep.npz'
-        self.trajectoryPlayer(path)
-        self.reachy.turn_off_smoothly('r_arm')
+        # self.goto_rest_position()
+        # path = f'/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/go_sleep.npz'
+        # self.trajectoryPlayer(path)
+        # self.reachy.turn_off_smoothly('r_arm')
 
     def is_final(self, board):
         winner = self.get_winner(board)
@@ -393,8 +433,10 @@ class TictactoePlayground(object):
         logger.info('Reachy is playing its win behavior')
         self.reachy.turn_on('head')
         self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
+        playsound('/home/reachy/reachy_mobile_reachy/sounds/BB8_wahou.mp3')
         time.sleep(1)
         behavior.happy(self.reachy)
+        playsound('/home/reachy/reachy_mobile_reachy/sounds/BB8_wahou.mp3')
 
     def run_draw_behavior(self):
         self.reachy.turn_on('head')
@@ -430,13 +472,13 @@ class TictactoePlayground(object):
         self.reachy.turn_on('r_arm')
         self.reachy.turn_on('head')
 
-        self.reachy.head.look_at(x=1, y=0, z=-0.0, duration=1)
+        self.reachy.head.look_at(x=1, y=0.2, z=-0.0, duration=1)
         logger.info('Your turn')
         path = '/home/reachy/dev/reachy-tictactoe_2021/reachy_tictactoe/moves-2021_nemo/your-turn.npz'
         self.trajectoryPlayer(path)
         logger.info('Your  turn')
         self.goto_rest_position()
-        self.reachy.head.look_at(x=1, y=0, z=-0.7, duration=0.7)
+        self.reachy.head.look_at(x=1, y=0.2, z=-0.7, duration=0.7)
         self.reachy.turn_off_smoothly('reachy')
 
     # Robot lower-level control functions
@@ -468,7 +510,7 @@ class TictactoePlayground(object):
                             self.reachy.r_arm.r_forearm_yaw: -15,
                             self.reachy.r_arm.r_wrist_pitch: -50,
                             self.reachy.r_arm.r_wrist_roll: 0},
-            duration=1.0,
+            duration=0.5,
             interpolation_mode=InterpolationMode.MINIMUM_JERK
         )
         time.sleep(0.1)
@@ -510,7 +552,7 @@ class TictactoePlayground(object):
         listMoves = move['move'].tolist()
         listTraj = [val for key, val in listMoves.items()]
         listTraj = np.array(listTraj).T.tolist()
-        sampling_frequency = 100  # en hertz
+        sampling_frequency = 200  # en hertz
         recorded_joints = []
         for joint, val in listMoves.items():
             if 'neck' in joint:
@@ -579,7 +621,7 @@ class TictactoePlayground(object):
 
     def wait_for_cooldown(self):
         self.goto_rest_position()
-        self.reachy.head.look_at(0.5, 0, -0.65, duration=1.25)
+        self.reachy.head.look_at(0.5, 0.2, -0.65, duration=1.25)
         self.reachy.turn_off_smoothly('reachy')
         while True:
             listNameJoints = [
@@ -622,7 +664,7 @@ class TictactoePlayground(object):
             time.sleep(30)
 
     def enter_sleep_mode(self):
-        self.reachy.head.look_at(0.5, 0, -0.65, duration=1.25)
+        self.reachy.head.look_at(0.5, 0.2, -0.65, duration=1.25)
         self.reachy.turn_off_smoothly('head')
         self._idle_running = Event()
         self._idle_running.set()

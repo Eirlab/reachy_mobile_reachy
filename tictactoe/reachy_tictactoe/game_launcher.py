@@ -9,6 +9,7 @@ import numpy as np
 import zzlog
 from datetime import datetime
 from glob import glob
+from playsound import playsound
 
 if __package__ is None or __package__ == '':
     from tictactoe_playground import TictactoePlayground
@@ -110,19 +111,27 @@ def run_game_loop(tictactoe_playground):
                     'next_player': 'Human',
                 })
 
+                playsound('/home/reachy/reachy_mobile_reachy/sounds/BB8_tour.mp3')
+
         # If the game is over, determine who is the winner
         # and behave accordingly
         if tictactoe_playground.is_final(board):
             winner = tictactoe_playground.get_winner(board)
 
             if winner == 'robot':
+                # playsound('/home/reachy/reachy_mobile_reachy/sounds/BB8_wahou.mp3')
                 tictactoe_playground.run_celebration()
             elif winner == 'human':
+                playsound('/home/reachy/reachy_mobile_reachy/sounds/sonBB8_bof.mp3')
                 tictactoe_playground.run_defeat_behavior()
             else:
+                playsound('/home/reachy/reachy_mobile_reachy/sounds/sonBB8_content.mp3')
                 tictactoe_playground.run_draw_behavior()
+            path = '/home/reachy/reachy_mobile_reachy/tictactoe/reachy_tictactoe/moves-reachy_mobile/go_sleep.npz'
+            tictactoe_playground.trajectoryPlayer(path)
             return winner
         status, board = tictactoe_playground.analyze_board()
+
         logger.info(f'ok = {status}')
     logger.info('Game end')
 

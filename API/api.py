@@ -12,12 +12,10 @@ from flask import send_file
 from reachy_sdk import ReachySDK
 from requests import post, get
 
-sys.path.insert(0, "../")
-
+sys.path.append('/home/reachy/reachy_mobile_reachy/')
 
 import reachy
 import config
-
 
 class ReachyAPI:
     """
@@ -133,11 +131,8 @@ class ReachyAPI:
         BRIEF : Play a tictactoe game (blocking function)
         """
         if request.method == 'POST':
-            posenet = bool(request.form.get('posenet'))
-            tictactoe = bool(request.form.get('tictactoe'))
-            navigation = bool(request.form.get('navigation'))
-            winner = reachy.main(config.reachy, posenet, tictactoe, navigation)
-            return render_template(template_name_or_list='index.html', win=winner)
+            reachy.main_global(self.reachy_robot)
+            return render_template(template_name_or_list='index.html')
 
     def head_on(self):
         """
@@ -326,7 +321,7 @@ class ReachyAPI:
         BRIEF : Do a POST request on 10.10.0.1:5000/cancel
         """
         if request.method == 'POST':
-            get(url=self.ezwheel_url + 'cancel')
+            post(url=self.ezwheel_url + 'cancel')
             return render_template(template_name_or_list='ezwheel.html', statut="Cancelled")
 
     def set_head_on(self):

@@ -20,6 +20,9 @@ from cv2 import cv2
 import cairosvg
 import svgwrite
 from PIL import ImageDraw
+from playsound import playsound
+
+from requests import post
 
 if __package__ is None or __package__ == '':
     from pose_engine import PoseEngine
@@ -102,7 +105,7 @@ def main(reachy):
         numpy_image = reachy.left_camera.wait_for_new_frame()
         pil_image = Image.fromarray(numpy_image, 'RGB')
         engine = PoseEngine(
-            'posenet/models/mobilenet/posenet_mobilenet_v1_075_481_641_quant_decoder_edgetpu.tflite')
+            '/home/reachy/reachy_mobile_reachy/posenet/models/mobilenet/posenet_mobilenet_v1_075_481_641_quant_decoder_edgetpu.tflite')
         poses, inference_time = engine.DetectPosesInImage(pil_image)
         if counter_img == 50:  #save draw outputs every 50 images
             counter_img = 0
@@ -127,12 +130,16 @@ def main(reachy):
                 config.detection[i] = 1
                 config.counter[i] += 1
                 if config.counter[i] == 15:
+                    post(url='http://10.10.0.1:5000/cancel')
                     reachy.head.l_antenna.speed_limit = 0.0
                     reachy.head.l_antenna.goal_position = 0.0
                 elif config.counter[i] == 30:
+                    post(url='http://10.10.0.1:5000/cancel')
                     reachy.head.r_antenna.speed_limit = 0.0
                     reachy.head.r_antenna.goal_position = 0.0
                 if config.counter[i] >= 45:
+                    post(url='http://10.10.0.1:5000/cancel')
+                    playsound('/home/reachy/reachy_mobile_reachy/sounds/sonBB8_content2.mp3')
                     happy_antennas(reachy)
                     config.counter[i] = 0
                     config.detection[i] = 2

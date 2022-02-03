@@ -1,12 +1,15 @@
 import threading
 import time
 
-from requests import post
+from requests import post, get
 
+from playsound import playsound
 from posenet import config, simple_pose
 from tictactoe.reachy_tictactoe import game_launcher
 from reachy_sdk import ReachySDK
+
 first_play = False
+playing = False
 
 
 def happy_antennas(reachy):
@@ -31,15 +34,38 @@ def sad_antennas(reachy):
 
 
 def navigation_function():
+    global playing
+
+    nav_goals = [
+        {'x': 8.52, 'y': -1.57, 'theta': 1.57},
+        {'x': 5.76, 'y': 0.661, 'theta': 0.0},
+        {'x': -9.31, 'y': 4.84, 'theta': 0.0},
+        {'x': 3.91, 'y': -0.385, 'theta': 0.0}
+    ]
+
     while True:
-        print("Navigate to 5.76")
-        data = {'x': 5.76, 'y': 0.661, 'theta': 0.0}
-        post(url='http://10.10.0.1:5000/' + '/goal', json=data)
-        time.sleep(30)
-        print("Navigate to 9.46")
-        data = {'x': 9.46, 'y': -1.47, 'theta': 0.0}
-        post(url='http://10.10.0.1:5000/' + '/goal', json=data)
-        time.sleep(30)
+        i = 0
+        while i < len(nav_goals):
+            print("Navigate to coordinates: ", nav_goals[i])
+
+            post(url='http://10.10.0.1:5000/goal', json=nav_goals[i])
+            i += 1
+
+            response = get(url='http://10.10.0.1:5000/status')
+            time_1s = time.time()
+            while response.text == 'Running':
+                if time_1s + 0.5 < time.time():
+                    response = get(url='http://10.10.0.1:5000/status')
+                    time_1s = time.time()
+
+            if response.text == 'Preempted':
+                i -= 1
+                time.sleep(10)
+
+            while playing:
+                post(url='http://10.10.0.1:5000/cancel')
+                time.sleep(1)
+
 
 
 def main(reachy, posenet=1, tictactoe=1, navigation=False):
@@ -49,13 +75,20 @@ def main(reachy, posenet=1, tictactoe=1, navigation=False):
         thread = threading.Thread(target=navigation_function, daemon=True)
         thread.start()
     if tictactoe:
+        print("launch tictactoe")
         reachy.turn_on('head')
+        reachy.head.l_antenna.goal_position = -140.0
+        reachy.head.r_antenna.goal_position = 140.0
+        time.sleep(1)
+        reachy.head.look_at(1, 0.0, 0.0, 1)
         reachy.head.l_antenna.goal_position = 140.0
         reachy.head.r_antenna.goal_position = -140.0
-        reachy.head.look_at(1, 0.0, 0.0, 1)
+        playsound('/home/reachy/reachy_mobile_reachy/sounds/sonBB8_content.mp3')
         output = simple_pose.main(reachy)
-        time.sleep(2)
     # config.detection[0] = 2
+    # reachy.right_camera.start_autofocus()
+
+    # time.sleep(10)
     while True:
         print("Reachy Tic Tac Toe")
         for i in range(len(config.detection)):
@@ -66,11 +99,49 @@ def main(reachy, posenet=1, tictactoe=1, navigation=False):
             elif config.detection[i] == 2 and not first_play:
                 first_play = True
                 winner = game_launcher.main(reachy, '/home/reachy/reachy_mobile_reachy/gamelog')
+                time.sleep(15)
                 reachy.turn_off_smoothly('head')
                 reachy.turn_off_smoothly('r_arm')
                 return winner
 
 
+def main_global(reachy, tictactoe=True, navigation=True):
+    global playing
+
+    if navigation:
+        print("launch navigation")
+        thread = threading.Thread(target=navigation_function, daemon=True)
+        thread.start()
+    if tictactoe:
+        print("launch tictactoe")
+
+        while True:
+            reachy.turn_on('head')
+            print("head ON")
+
+            reachy.head.l_antenna.goal_position = -140.0
+            reachy.head.r_antenna.goal_position = 140.0
+            time.sleep(1)
+            reachy.head.look_at(1, 0.0, 0.0, 1)
+            reachy.head.l_antenna.goal_position = 140.0
+            reachy.head.r_antenna.goal_position = -140.0
+            playsound('/home/reachy/reachy_mobile_reachy/sounds/sonBB8_content.mp3')
+
+            print("waiting for a player")
+            output = simple_pose.main(reachy)
+
+            print("Playing Reachy Tic Tac Toe")
+            playing = True
+            winner = game_launcher.main(reachy, '/home/reachy/reachy_mobile_reachy/gamelog')
+            print("quitting...")
+            print("waiting for 10 seconds")
+            time.sleep(10)
+
+            reachy.turn_off_smoothly('r_arm')
+            playing = False
+
+
+
 if __name__ == '__main__':
     reachy = ReachySDK(host='localhost')
-    main(reachy)
+    main_global(reachy)
