@@ -1,25 +1,26 @@
 """
 This file implements endpoints for Reachy API allowing to control rechy mobile robot
 """
+import os
 import sys
 import time
 
 import cv2
 from PIL import Image
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, send_file
 from reachy_sdk import ReachySDK
 import sys
 import time
 
 from PIL import Image
 from flask import Blueprint, request, render_template
-from reachy_sdk import ReachySDK
+# from reachy_sdk import ReachySDK
 from requests import post, get
 
 sys.path.insert(0, "../")
 
-import reachy
-import config
+# import reachy
+# import config
 
 
 class ReachyAPI:
@@ -49,14 +50,16 @@ class ReachyAPI:
         self.bp.route('/reachy/camera/right', methods=['GET'])(self.camera_right)
         self.bp.route('/reachy/camera/left/autofocus', methods=['POST'])(self.camera_left_autofocus)
         self.bp.route('/reachy/camera/right/autofocus', methods=['POST'])(self.camera_right_autofocus)
+        self.bp.route('/reachy/detection', methods=['POST'])(self.detection)
+        self.bp.route('/reachy/detection/<filename>', methods=['GET'])(self.detection_get)
 
         self.bp.route('/ezwheel', methods=['GET'])(self.ezwheel)
         self.bp.route('/ezwheel/goal', methods=['POST'])(self.ezwheel_goal)
         self.bp.route('/ezwheel/cancel', methods=['POST'])(self.ezwheel_cancel)
         self.bp.route('/ezwheel/status', methods=['GET'])(self.ezwheel_status)
-        self.reachy_robot = ReachySDK(host='localhost')
-        config.reachy = self.reachy_robot
-        # self.reachy_robot = "reachy"
+        # self.reachy_robot = ReachySDK(host='localhost')
+        # config.reachy = self.reachy_robot
+        self.reachy_robot = "reachy"
         self.ezwheel_url = "http://10.10.0.1:5000/"
 
     @staticmethod
@@ -137,7 +140,7 @@ class ReachyAPI:
             posenet = bool(request.form.get('posenet'))
             tictactoe = bool(request.form.get('tictactoe'))
             navigation = bool(request.form.get('navigation'))
-            winner = reachy.main(config.reachy)
+            winner = reachy.main(config.reachy, posenet, tictactoe, navigation)
             return render_template(template_name_or_list='index.html', win=winner)
 
     def head_on(self):
@@ -256,6 +259,28 @@ class ReachyAPI:
             self.reachy_robot.right_camera.start_autofocus()
             time.sleep(10.0)
             return render_template(template_name_or_list='reachy.html', autofocus_right="Autofocus done")
+
+    def detection(self):
+        # Check if path is a file and serve
+        if os.path.isfile("/home/sedelpeuch/catkin_ws/src/reachy_mobile_reachy/tictactoe" + "/images"):
+            return send_file("/home/sedelpeuch/catkin_ws/src/reachy_mobile_reachy/tictactoe" + "/images")
+        file = os.listdir('../tictactoe/images/')
+        return render_template(template_name_or_list='reachy.html', files=file)
+
+    def detection_get(self, filename):
+        file_path = "/home/sedelpeuch/catkin_ws/src/reachy_mobile_reachy/tictactoe" + "/images" + "/" + filename
+
+        # Return 404 if path doesn't exist
+        if not os.path.exists(file_path) or filename == '':
+            return render_template('404.html')
+
+        # Check if path is a file and serve
+        if os.path.isfile(file_path):
+            return send_file(file_path)
+
+        # Show directory contents
+        files = sorted(os.listdir(file_path))
+        return render_template('reachy.html', files=files)
 
     def ezwheel_goal(self):
         """

@@ -162,5 +162,36 @@
             </div>
         </div>
     </div>
+
+       <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#lookat" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="lookat">
+            <h6 class="m-0 font-weight-bold text-primary">Photos analysées</h6>
+        </a>
+        <div class="collapse show card-body mb-4" id="detection">
+            <form action="/reachy/detection" method="POST">
+                <div class="col-lg-12 m-2">
+                    <button type="submit" class="form-control btn btn-primary">Rafraichir</button>
+                </div>
+            </form>
+        </div>
+    <ul class="list-group">
+        {% if files %}
+        {% for file in files %}
+        <li class="list-group-item">
+            <a class="link-primary" href="{{ (request.path + '/' if request.path != '/' else '') + file }}">
+                {{ file }}
+            </a>
+        </li>
+        {% endfor %}
+        {% else %}
+        <p class="font-italic">Aucune photo analysée</p>
+        {% endif %}
+
+    </ul>
+               </div>
+
 </div>
+
 {% endblock %}
