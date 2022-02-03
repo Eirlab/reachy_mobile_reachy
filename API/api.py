@@ -2,22 +2,18 @@
 This file implements endpoints for Reachy API allowing to control rechy mobile robot
 """
 import os
+import re
 import sys
 import time
 
 import cv2
-from PIL import Image
-from flask import Blueprint, request, render_template, send_file
-from reachy_sdk import ReachySDK
-import sys
-import time
-
-from PIL import Image
 from flask import Blueprint, request, render_template
+from flask import send_file
 from reachy_sdk import ReachySDK
 from requests import post, get
 
 sys.path.insert(0, "../")
+
 
 import reachy
 import config
@@ -261,11 +257,23 @@ class ReachyAPI:
             return render_template(template_name_or_list='reachy.html', autofocus_right="Autofocus done")
 
     def detection(self):
-        # Check if path is a file and serve
-        if os.path.isfile("/home/sedelpeuch/catkin_ws/src/reachy_mobile_reachy/tictactoe" + "/images"):
-            return send_file("/home/sedelpeuch/catkin_ws/src/reachy_mobile_reachy/tictactoe" + "/images")
+        """
+        METHOD : POST
+        ROUTE : /detection
+        PARAMETERS : {}
+        BRIEF : Send
+        :return:
+        """
         file = os.listdir('../tictactoe/images/')
-        return render_template(template_name_or_list='reachy.html', files=file)
+        # keep only file begin by xxxx-xx-xx
+        file = [f for f in file if re.match(r'\d{4}-\d{2}-\d{2}', f)]
+        file.sort(reverse=True)
+        try:
+            latest = file[0]
+        except IndexError:
+            latest = 'no_image'
+        file = file[:10]
+        return render_template(template_name_or_list='reachy.html', files=file, latest=latest)
 
     def detection_get(self, filename):
         file_path = "/home/sedelpeuch/catkin_ws/src/reachy_mobile_reachy/tictactoe" + "/images" + "/" + filename
