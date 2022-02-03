@@ -14,5 +14,4 @@ renderer = ["html"]
 [output.html]
 default-theme = "ayu"
 fold.enable = true
-fold.level = 2
 
