@@ -12,8 +12,6 @@ from flask import send_file
 from reachy_sdk import ReachySDK
 from requests import post, get
 
-import config
-
 sys.path.append('/home/reachy/reachy_mobile_reachy/')
 
 import reachy
