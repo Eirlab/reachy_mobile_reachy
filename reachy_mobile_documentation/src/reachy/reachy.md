@@ -11,7 +11,7 @@ de détecter les squelettes des personnes passant devant ses caméras.
 
 Le Reachy est capable de se déplacer en étant fixé sur la base mobile Ezwheel via une plaque et un tube d'Alluminium.
 
-![reachy_mobile](images/reachy_mobile.png)
+![reachy_mobile](images/reachy1.jpg)
 
 ## Lancement du projet
 

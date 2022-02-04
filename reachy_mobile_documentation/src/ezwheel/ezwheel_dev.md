@@ -1,5 +1,10 @@
 # Ezwheel
 
+Trois principaux blocs ont été développés pour la gestion de la base mobile : le développement du package
+ros `reachy_mobile_ezwheel` (contenant les packages `reachy_mobile_navigation`, `reachy_mobile_description`
+, `reachy_mobile_slam` et `reachy_mobile_teleop`), le développement d'une API permettant d'exposer les fonctions de
+contrôle de la base ainsi que de la classe `SimpleNavigationGoals` permettant de gérer les objectifs de navigation.
+
 ## <class> Paramètres de navigation </class>
 
 Seuls les paramètres que nous avons modifié par rapport aux valeurs par défaut sont inscrites ci-dessous
@@ -91,7 +96,8 @@ Crée et envoie un message sur le topic **/move_base_simple/goal** pour se dépl
 
 <method> is_arrived </method>
 
-Renvoie le **GoalStatus** de la dernière requête envoyée parmis la liste suivante : "Running", "Rejected", "Preempted", "Aborted", "Succeeded", "Lost" or "Undefined".
+Renvoie le **GoalStatus** de la dernière requête envoyée parmis la liste suivante : "Running", "Rejected", "Preempted"
+, "Aborted", "Succeeded", "Lost" or "Undefined".
 
 <method> cancel_all_goals </method>
 
@@ -99,23 +105,27 @@ Met fin à tous les déplacements en cours et tous les objectifs en attente.
 
 ## <class> API </class>
 
-L'API est une api flask nous permettant de transmettre un ordre de navigation, d'obtenir le statut de la navigation et de l'annuler.
+L'API est une api flask nous permettant de transmettre un ordre de navigation, d'obtenir le statut de la navigation et
+de l'annuler.
 
 <method> goal </method>
 
 - Méthode : POST
 - Route : /goal
 - Données : {"x": float, "y": float, "theta": float}
+- Résumé : Envoie un ordre de navigation
 
 <method> status </method>
 
 - Méthode : GET
 - Route : /status
 - Données : Aucune
+- Résumé : Renvoie le statut de la navigation
 
 <method> cancel </method>
 
 - Méthode : POST
 - Route : /cancel
 - Données : Aucune
+- Résumé : Annule la navigation en cours
 
