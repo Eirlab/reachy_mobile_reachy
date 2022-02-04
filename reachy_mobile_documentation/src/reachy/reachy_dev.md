@@ -6,7 +6,30 @@ tictactoe, la détection de squelette par PoseNet ainsi qu'une API permettant de
 
 ## <class> Contrôleur général </class>
 
+Le contrôleur général permet d'orchestrer les actions de Reachy il est appelé lorsque l'on effectue une requête POST sur
+le point de terminaison `/play` de l'API ci-dessous ou lorsqu'on effectue la commande `python3 reachy.py` depuis le
+dossier `reachy_mobile_reachy`.
+
+Le contrôleur prend en paramètres 3 booléens (posenet, navigation et tictactoe) qui détermine si on veut activer ou non
+les fonctionnalités correspondantes. Si navigation est activée, un thread est lancé permettant de se déplacer de point en
+point sur la carte. Si posenet est activé alors le tictactoe ne sera lancé que si le robot détecte un squelette levant
+la main.
+
+Ce fichier permet de définir le comportement général du robot, mais les interactions avec les utilisateurs (sons,
+mouvements de la tête, mouvements des antennes) sont disséminées dans les différents blocs.
+
 ## <class> API </class>
+
+L'API permet de contrôler le robot à distance, elle se lance automatiquement au démarrage du robot ou via un terminal
+depuis le répertoire `reachy_mobile_reachy/API` : `python3 run_api.py`
+
+Il suffit ensuite de se rendre en `<IP_ROBOT>:8000` pour accéder à l'API.
+
+Le front de l'API est défini dans le dossier `API/templates` et se base principalement sur de l'html en utilisant
+bootstrap.
+
+Le back de l'API est défini dans `API/api.py` et est constitué d'une API Flask dont les points de terminaisons sont
+ci-dessous.
 
 <method> index </method>
 - Méthode : GET
