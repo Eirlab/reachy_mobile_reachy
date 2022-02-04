@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Ezwheel - Reachy Mobile</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Reachy Mobile</li><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../eda/eda.html"><strong aria-hidden="true">2.</strong> État de l'art</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../eda/introduction.html"><strong aria-hidden="true">2.1.</strong> Introduction</a></li><li class="chapter-item "><a href="../eda/navigation-dans-une-foule.html"><strong aria-hidden="true">2.2.</strong> Navigation dans une foule</a></li><li class="chapter-item "><a href="../eda/acceptation-d-un-robot-dans-la-societe.html"><strong aria-hidden="true">2.3.</strong> Acceptation d'un robot dans la société</a></li><li class="chapter-item "><a href="../eda/contenu-des-interactions-en-utilisant-la-vision-artif-cielle.html"><strong aria-hidden="true">2.4.</strong> Contenu des interactions en utilisant la vision artificielle</a></li><li class="chapter-item "><a href="../eda/conclusion.html"><strong aria-hidden="true">2.5.</strong> Conclusion</a></li><li class="chapter-item "><a href="../eda/bibliographie.html"><strong aria-hidden="true">2.6.</strong> Bibliographie</a></li></ol></li><li class="chapter-item "><a href="../user.html"><strong aria-hidden="true">3.</strong> Documentation utilisateur</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../ezwheel/ezwheel.html"><strong aria-hidden="true">3.1.</strong> Ezwheel</a></li><li class="chapter-item "><a href="../reachy/reachy.html"><strong aria-hidden="true">3.2.</strong> Reachy</a></li><li class="chapter-item "><a href="../reachy/tictactoe.html"><strong aria-hidden="true">3.3.</strong> Tictactoe</a></li><li class="chapter-item "><a href="../reachy/poseNet_user.html"><strong aria-hidden="true">3.4.</strong> Posenet</a></li></ol></li><li class="chapter-item expanded "><a href="../developer.html"><strong aria-hidden="true">4.</strong> Documentation développeur</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ezwheel/ezwheel_dev.html" class="active"><strong aria-hidden="true">4.1.</strong> Ezwheel</a></li><li class="chapter-item "><a href="../reachy/reachy_dev.html"><strong aria-hidden="true">4.2.</strong> Reachy</a></li><li class="chapter-item "><a href="../reachy/poseNet_dev.html"><strong aria-hidden="true">4.3.</strong> Posenet</a></li><li class="chapter-item "><a href="../reachy/tictactoe_dev.html"><strong aria-hidden="true">4.4.</strong> Tictactoe</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Reachy Mobile</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="ezwheel"><a class="header" href="#ezwheel">Ezwheel</a></h1>
+<p>Trois principaux blocs ont été développés pour la gestion de la base mobile : le développement du package
+ros <code>reachy_mobile_ezwheel</code> (contenant les packages <code>reachy_mobile_navigation</code>, <code>reachy_mobile_description</code>
+, <code>reachy_mobile_slam</code> et <code>reachy_mobile_teleop</code>), le développement d'une API permettant d'exposer les fonctions de
+contrôle de la base ainsi que de la classe <code>SimpleNavigationGoals</code> permettant de gérer les objectifs de navigation.</p>
+<h2 id="class-paramètres-de-navigation-class"><a class="header" href="#class-paramètres-de-navigation-class"><class> Paramètres de navigation </class></a></h2>
+<p>Seuls les paramètres que nous avons modifié par rapport aux valeurs par défaut sont inscrites ci-dessous</p>
+<p><method> TebLocalPlannerROS </method></p>
+<ul>
+<li><strong>odom_topic</strong>: /swd_diff_drive_controller/odom</li>
+</ul>
+<p><member> Trajectory </member></p>
+<ul>
+<li><strong>global_plan_overwrite_orientation</strong>: False</li>
+<li><strong>max_global_plan_lookahead_dist</strong>: 0.5</li>
+<li><strong>feasibility_check_no_poses</strong>: 5</li>
+</ul>
+<p><member> Robot </member></p>
+<ul>
+<li><strong>max_vel_x</strong>: 3</li>
+<li><strong>max_vel_x_backwards</strong>: 0.01</li>
+<li><strong>max_vel_theta</strong>: 3</li>
+<li><strong>footprint_model</strong>:
+<ul>
+<li><strong>type</strong>: &quot;polygon&quot;</li>
+<li><strong>vertices</strong>: <code>[[0.12, 0.267], [0.12, -0.267], [-0.415, -0.2], [-0.415, 0.2]]</code></li>
+</ul>
+</li>
+</ul>
+<p><member> Goal Tolerance </member></p>
+<ul>
+<li><strong>xy_goal_tolerance</strong>: 0.4</li>
+<li><strong>yaw_goal_tolerance</strong>: 0.4</li>
+<li><strong>free_goal_vel</strong>: True</li>
+</ul>
+<p><member> Obstacle parameters </member></p>
+<ul>
+<li><strong>min_obstacle_dist</strong>: 0.15</li>
+<li><strong>obstacle_poses_affected</strong>: 20</li>
+<li><strong>costmap_converter_rate</strong>: 10</li>
+</ul>
+<p><member> Optimization parameters </member></p>
+<ul>
+<li><strong>penalty_epsilon</strong>: 0.01</li>
+<li><strong>weight_kinematics_forward_drive</strong>: 1000</li>
+<li><strong>weight_kinematics_turning_radius</strong>: 100</li>
+<li><strong>weight_optimaltime</strong>: 10</li>
+</ul>
+<p><method> costmap_common_param_reachy </method></p>
+<ul>
+<li><strong>obstacle_range</strong>: 5.0</li>
+<li><strong>raytrace_range</strong>: 20.0</li>
+<li><strong>footprint</strong>: <code>[[0.12, 0.267], [0.12, -0.267], [-0.415, -0.2], [-0.415, 0.2]]</code></li>
+<li><strong>inflation_radius</strong>: 0.50</li>
+<li><strong>cost_scaling_factor</strong>: 1.0</li>
+<li><strong>observation_sources</strong>: scan</li>
+<li><strong>scan</strong>: {sensor_frame: laser_1, data_type: LaserScan, topic: /laser_1/scan, marking: true, clearing: true}</li>
+</ul>
+<p><method> global_costmap_param </method></p>
+<ul>
+<li><strong>rolling_window</strong>: true</li>
+<li><strong>width</strong>: 40.0</li>
+<li><strong>height</strong>: 40.0</li>
+<li><strong>resolution</strong>: 0.2</li>
+</ul>
+<p><method> local_costmap_param </method></p>
+<ul>
+<li><strong>rolling_window</strong>: true</li>
+<li><strong>width</strong>: 8.0</li>
+<li><strong>height</strong>: 8.0</li>
+<li><strong>resolution</strong>: 0.1</li>
+</ul>
+<h2 id="class-simplenavigationgoals-class"><a class="header" href="#class-simplenavigationgoals-class"><class> SimpleNavigationGoals </class></a></h2>
+<p>Cette classe a pour but de générer les différents messages nécessaire pour communiquer avec le robot en utilisant
+l'action serveur <strong>move_base</strong>.</p>
+<p><method> __init__ </method></p>
+<p>Cette fonction instancier la classe et récupère un accès au <strong>move_base</strong> action server. Elle initialise aussi les
+différents champs des messages qui seront envoyés.</p>
+<p><method> go_to </method></p>
+<p>Crée et envoie un message sur le topic <strong>/move_base_simple/goal</strong> pour se déplacer sur la carte</p>
+<p><member> Paramètres </member></p>
+<ul>
+<li><strong>x</strong>: Position en x</li>
+<li><strong>y</strong>: Position en y</li>
+<li><strong>theta</strong>: Orientation</li>
+<li><strong>wait_for_result</strong>: timeout avant d'annuler le déplacement</li>
+<li><strong>frame</strong>: Nom de la frame dans laquelle se trouve le point</li>
+<li><strong>blocking</strong>: Si True, la fonction bloque jusqu'à ce que le robot arrive à la position</li>
+</ul>
+<p><method> is_arrived </method></p>
+<p>Renvoie le <strong>GoalStatus</strong> de la dernière requête envoyée parmis la liste suivante : &quot;Running&quot;, &quot;Rejected&quot;, &quot;Preempted&quot;
+, &quot;Aborted&quot;, &quot;Succeeded&quot;, &quot;Lost&quot; or &quot;Undefined&quot;.</p>
+<p><method> cancel_all_goals </method></p>
+<p>Met fin à tous les déplacements en cours et tous les objectifs en attente.</p>
+<h2 id="class-api-class"><a class="header" href="#class-api-class"><class> API </class></a></h2>
+<p>L'API est une api flask nous permettant de transmettre un ordre de navigation, d'obtenir le statut de la navigation et
+de l'annuler.</p>
+<p><method> goal </method></p>
+<ul>
+<li>Méthode : POST</li>
+<li>Route : /goal</li>
+<li>Données : {&quot;x&quot;: float, &quot;y&quot;: float, &quot;theta&quot;: float}</li>
+<li>Résumé : Envoie un ordre de navigation</li>
+</ul>
+<p><method> status </method></p>
+<ul>
+<li>Méthode : GET</li>
+<li>Route : /status</li>
+<li>Données : Aucune</li>
+<li>Résumé : Renvoie le statut de la navigation</li>
+</ul>
+<p><method> cancel </method></p>
+<ul>
+<li>Méthode : POST</li>
+<li>Route : /cancel</li>
+<li>Données : Aucune</li>
+<li>Résumé : Annule la navigation en cours</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../developer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../reachy/reachy_dev.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../developer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../reachy/reachy_dev.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

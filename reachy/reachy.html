@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Reachy Mobile</li><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../eda/introduction.html"><strong aria-hidden="true">2.</strong> État de l'art</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../eda/introduction.html"><strong aria-hidden="true">2.1.</strong> Introduction</a></li><li class="chapter-item "><a href="../eda/navigation-dans-une-foule.html"><strong aria-hidden="true">2.2.</strong> Navigation dans une foule</a></li><li class="chapter-item "><a href="../eda/acceptation-d-un-robot-dans-la-societe.html"><strong aria-hidden="true">2.3.</strong> Acceptation d'un robot dans la société</a></li><li class="chapter-item "><a href="../eda/contenu-des-interactions-en-utilisant-la-vision-artif-cielle.html"><strong aria-hidden="true">2.4.</strong> Contenu des interactions en utilisant la vision artificielle</a></li><li class="chapter-item "><a href="../eda/conclusion.html"><strong aria-hidden="true">2.5.</strong> Conclusion</a></li><li class="chapter-item "><a href="../eda/bibliographie.html"><strong aria-hidden="true">2.6.</strong> Bibliographie</a></li></ol></li><li class="chapter-item expanded "><a href="../reachy/reachy.html" class="active"><strong aria-hidden="true">3.</strong> Reachy</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../reachy/tictactoe.html"><strong aria-hidden="true">3.1.</strong> Tictactoe</a></li></ol></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Reachy Mobile</li><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../eda/eda.html"><strong aria-hidden="true">2.</strong> État de l'art</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../eda/introduction.html"><strong aria-hidden="true">2.1.</strong> Introduction</a></li><li class="chapter-item "><a href="../eda/navigation-dans-une-foule.html"><strong aria-hidden="true">2.2.</strong> Navigation dans une foule</a></li><li class="chapter-item "><a href="../eda/acceptation-d-un-robot-dans-la-societe.html"><strong aria-hidden="true">2.3.</strong> Acceptation d'un robot dans la société</a></li><li class="chapter-item "><a href="../eda/contenu-des-interactions-en-utilisant-la-vision-artif-cielle.html"><strong aria-hidden="true">2.4.</strong> Contenu des interactions en utilisant la vision artificielle</a></li><li class="chapter-item "><a href="../eda/conclusion.html"><strong aria-hidden="true">2.5.</strong> Conclusion</a></li><li class="chapter-item "><a href="../eda/bibliographie.html"><strong aria-hidden="true">2.6.</strong> Bibliographie</a></li></ol></li><li class="chapter-item expanded "><a href="../user.html"><strong aria-hidden="true">3.</strong> Documentation utilisateur</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../ezwheel/ezwheel.html"><strong aria-hidden="true">3.1.</strong> Ezwheel</a></li><li class="chapter-item expanded "><a href="../reachy/reachy.html" class="active"><strong aria-hidden="true">3.2.</strong> Reachy</a></li><li class="chapter-item "><a href="../reachy/tictactoe.html"><strong aria-hidden="true">3.3.</strong> Tictactoe</a></li><li class="chapter-item "><a href="../reachy/poseNet_user.html"><strong aria-hidden="true">3.4.</strong> Posenet</a></li></ol></li><li class="chapter-item "><a href="../developer.html"><strong aria-hidden="true">4.</strong> Documentation développeur</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../ezwheel/ezwheel_dev.html"><strong aria-hidden="true">4.1.</strong> Ezwheel</a></li><li class="chapter-item "><a href="../reachy/reachy_dev.html"><strong aria-hidden="true">4.2.</strong> Reachy</a></li><li class="chapter-item "><a href="../reachy/poseNet_dev.html"><strong aria-hidden="true">4.3.</strong> Posenet</a></li><li class="chapter-item "><a href="../reachy/tictactoe_dev.html"><strong aria-hidden="true">4.4.</strong> Tictactoe</a></li></ol></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -144,12 +144,28 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="reachy"><a class="header" href="#reachy">Reachy</a></h1>
+<p>Dans le cadre du projet Reachy Mobile le robot Reachy a deux objectifs principaux. Détecter les utilisateurs voulant
+interagir avec lui et proposer des interactions avec eux. Il doit aussi communiquer avec la base mobile Ezwheel pour
+donner les ordres de déplacement.</p>
+<p>Concernant les interactions avec les utilisateurs, le robot Reachy est principalement capable de jouer
+au <a href="tictactoe.html">Tictactoe</a>, il peut aussi émettre des bruits et utiliser ses antennes pour transmettre des émotions.
+Pour la reconnaissance d'utilisateurs vouant jouer avec lui le réseau <a href="poseNet_user.html">PoseNet</a> est utilisé, permettant
+de détecter les squelettes des personnes passant devant ses caméras.</p>
+<p>Le Reachy est capable de se déplacer en étant fixé sur la base mobile Ezwheel via une plaque et un tube d'Alluminium.</p>
+<p><img src="images/reachy1.jpg" alt="reachy_mobile" /></p>
+<h2 id="lancement-du-projet"><a class="header" href="#lancement-du-projet">Lancement du projet</a></h2>
+<p>Pour lancer le projet commencez par allumer la base mobile puis le Reachy, connectez vous au Wifi de la base mobile dont
+le mot de passe est <code>swd_starterkit</code>, puis allez à l'adresse <code>http://10.10.0.1:8000</code> vous accederez à la page d'accueil
+du projet</p>
+<p><img src="images/api.png" alt="reachy_mobile_home" /></p>
+<p>Depuis cette page vous pouvez contrôler les différentes composantes du projet et lancer les différents scénarios, voir
+la documentation de l'<a href="reachy_dev.html">API</a> pour plus d'informations.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="../eda/bibliographie.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="../ezwheel/ezwheel.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
@@ -163,7 +179,7 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="../eda/bibliographie.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="../ezwheel/ezwheel.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
