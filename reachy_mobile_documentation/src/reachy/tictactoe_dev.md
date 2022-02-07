@@ -41,8 +41,7 @@ quantification), l'étape finale consiste à le compiler avec le compilateur Edg
 
 ![training](images/training_pipeline.png)
 
-Pour plus d'informations au sujet de l'API TOD TF1
-voir [ré-entrainer un réseau de neurone avec TOD TF1](https://github.com/ta18/tod_tf1).
+Pour plus d'informations au sujet de l'API TOD TF1 et son installation voir [ré-entrainer un réseau de neurone avec TOD TF1](https://github.com/ta18/tod_tf1).
 
 ### le réseau SSDmobilnetV2
 
@@ -110,6 +109,8 @@ La confiance moyenne dans la détection pour :
 - les cubes est de : 87,65%
 - les cylindres est de : 89,09%
 - les cases vides est de : 86,82%
+
+Le modèle entrainé qui est un fichier .tflite est présent dans `reachy_mobile_reachy/tictactoe/reachy_tictactoe/models`. Il doit être accompagné du fichier label.txt. 
 
 # Stratégie de jeu
 

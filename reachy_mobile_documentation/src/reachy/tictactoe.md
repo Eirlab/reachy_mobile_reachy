@@ -30,8 +30,7 @@ pièces (cubes) sur la grille. Une fois que vous avez joué, Reachy va analyser 
 faut un peu de temps pour tout détecter, mais une fois que c'est bon, il va prendre sa pièce et jouer à son tour. Et
 ainsi de suite jusqu'à ce que quelqu'un gagne.
 
-Lorsqu'une partie est terminée, une nouvelle partie est directement relancée. Ainsi, à la fin d'une partie, nettoyez le
-plateau et une nouvelle partie commencera.
+Lorsqu'une partie est terminée, le robot se remet en mode navigation, il vous faudra relever la main pour jouer une nouvelle partie de tictactoe. Ainsi, à la fin d'une partie, nettoyez le plateau en rangeant les pièces dans les filets et une nouvelle partie pourra être rejouée.
 
 
 
